@@ -36,7 +36,7 @@
     
     
       
-        <title>Container Predictive Maintenance - Reefer Container Management Service</title>
+        <title>Reefer Container Management Service</title>
       
     
     
@@ -96,7 +96,7 @@
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
     <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
     
-      <a href="#reefer-container-metric-as-iot" tabindex="1" class="md-skip">
+      <a href="#kstream-implementation-of-the-container-inventory-management" tabindex="1" class="md-skip">
         Skip to content
       </a>
     
@@ -121,7 +121,7 @@
               Reefer Container Management Service
             </span>
             <span class="md-header-nav__topic">
-              Container Predictive Maintenance
+              Kafka Streams Implementation
             </span>
           
         </div>
@@ -241,11 +241,77 @@
       
       
 
+  
 
-  <li class="md-nav__item">
-    <a href="../kstreams/" title="Kafka Streams Implementation" class="md-nav__link">
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+      
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        Kafka Streams Implementation
+      </label>
+    
+    <a href="./" title="Kafka Streams Implementation" class="md-nav__link md-nav__link--active">
       Kafka Streams Implementation
     </a>
+    
+      
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#start-with-maven" title="Start with maven" class="md-nav__link">
+    Start with maven
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#some-kafka-streams-apis" title="Some Kafka streams APIs" class="md-nav__link">
+    Some Kafka streams APIs
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tdd" title="TDD" class="md-nav__link">
+    TDD
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#resiliency" title="Resiliency" class="md-nav__link">
+    Resiliency
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#scaling" title="Scaling" class="md-nav__link">
+    Scaling
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+    
   </li>
 
     
@@ -265,76 +331,11 @@
       
       
 
-  
 
-
-  <li class="md-nav__item md-nav__item--active">
-    
-    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
-    
-      
-    
-    
-      <label class="md-nav__link md-nav__link--active" for="__toc">
-        Container Predictive Maintenance
-      </label>
-    
-    <a href="./" title="Container Predictive Maintenance" class="md-nav__link md-nav__link--active">
+  <li class="md-nav__item">
+    <a href="../metrics/" title="Container Predictive Maintenance" class="md-nav__link">
       Container Predictive Maintenance
     </a>
-    
-      
-<nav class="md-nav md-nav--secondary">
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">Table of contents</label>
-    <ul class="md-nav__list" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#data-set-creation-for-container-metrics" title="Data set creation for container metrics" class="md-nav__link">
-    Data set creation for container metrics
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#predictive-maintenance" title="Predictive maintenance" class="md-nav__link">
-    Predictive maintenance
-  </a>
-  
-    <nav class="md-nav">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#reefer-problem-types" title="Reefer problem types:" class="md-nav__link">
-    Reefer problem types:
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#data-set" title="Data set" class="md-nav__link">
-    Data set
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-      
-      
-      
-      
-    </ul>
-  
-</nav>
-    
   </li>
 
     
@@ -359,36 +360,37 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#data-set-creation-for-container-metrics" title="Data set creation for container metrics" class="md-nav__link">
-    Data set creation for container metrics
+  <a href="#start-with-maven" title="Start with maven" class="md-nav__link">
+    Start with maven
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#predictive-maintenance" title="Predictive maintenance" class="md-nav__link">
-    Predictive maintenance
-  </a>
-  
-    <nav class="md-nav">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#reefer-problem-types" title="Reefer problem types:" class="md-nav__link">
-    Reefer problem types:
+  <a href="#some-kafka-streams-apis" title="Some Kafka streams APIs" class="md-nav__link">
+    Some Kafka streams APIs
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
-  <a href="#data-set" title="Data set" class="md-nav__link">
-    Data set
+      
+        <li class="md-nav__item">
+  <a href="#tdd" title="TDD" class="md-nav__link">
+    TDD
   </a>
   
 </li>
-        
-      </ul>
-    </nav>
+      
+        <li class="md-nav__item">
+  <a href="#resiliency" title="Resiliency" class="md-nav__link">
+    Resiliency
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#scaling" title="Scaling" class="md-nav__link">
+    Scaling
+  </a>
   
 </li>
       
@@ -408,39 +410,57 @@
             <article class="md-content__inner md-typeset">
               
                 
-                  <a href="https://github.com/ibm-cloud-architecture/refarch-kc-container-ms/edit/master/docs/metrics.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
+                  <a href="https://github.com/ibm-cloud-architecture/refarch-kc-container-ms/edit/master/docs/kstreams/README.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
                 
                 
-                <h1 id="reefer-container-metric-as-iot">Reefer Container Metric as IoT</h1>
-<p>The reefer container is a Internet of Thing device that run motor, compressor to maintain cold inside the container.</p>
-<p><img alt="Reefer" src="../images/reefer.png" /></p>
-<p>The fleetms microservice is generating simulated container metrics events to emulate the container on ship. But this project will add capabilities to generate a lot of data to create training and test set for machine learning exercises for predictive maintentane and cold chain scoring.</p>
-<h2 id="data-set-creation-for-container-metrics">Data set creation for container metrics</h2>
-<p>As we are not in the business of reefer container shipment we do not have data set. </p>
-<h2 id="predictive-maintenance">Predictive maintenance</h2>
-<p>The success of predictive maintenance models depend on three main components: </p>
+                <h1 id="kstream-implementation-of-the-container-inventory-management">KStream implementation of the container inventory management</h1>
+<p>The <a href="https://kafka.apache.org/documentation/streams/">Apache Kafka Streams API</a> is a client library for building applications and microservices, where the input and output data are stored in Kafka clusters. It simplifies the implementation of the stateless or stateful event processing to transform and enrich data. It supports time windowing processing.</p>
+<p>We encourage to do <a href="https://kafka.apache.org/21/documentation/streams/tutorial">this tutorial</a> and read the <a href="">quickstart</a>. </p>
+<p>So the features in this project are:</p>
 <ul>
-<li>having the right data</li>
-<li>framing the problem appropriately </li>
-<li>evaluating the predictions properly</li>
+<li>Listen to ContainerAdded event from the <code>containers</code> topic and maintains a stateful table of container inventory. </li>
+<li>Listen to OrderCreated event from <code>orders</code> and assign a container from the inventory based on the pickup location and the container location and characteristics.</li>
+<li>Implemented as JAXRS application deployed on Liberty and packaged with dockerfile.</li>
+<li>Deploy to kubernetes or run with docker-compose</li>
 </ul>
-<h3 id="reefer-problem-types">Reefer problem types:</h3>
-<p>There are multiple different potential of issues that could happen to a refrigerator container. We are choosing to model the "Sensor Malfunctions: Sensors in the refrigeration unit need to be calibrated and cotnuously operational. An example of failure may come from the air sensor making inaccurate readings of temperatures, which lead to sploiled content. A potential reason may come from a faulty calibration, which can go unnoticed for a good time period. It may be diffiult to know if there is an issue. </p>
-<p>Other potential issues are:
-<em> Fluid leaks, like engine oil, coolant liquid. The preassure sensors added to the circuit may help identify preassure lost over time.
-</em> Faulty belts and hoses.
-<em> Faulty calibration: A non-calibrated reefer can cool at a slower or faster rate than desired.
-</em> Damaged Air Chute.
-<em> Condenser Issues like broken or damaged coils, clamps or bolts missing, and leaks.
-</em> Door Seals damaged. 
-* Blocked air passage: to keep the temperature homogenous inside the reefer.</p>
-<h3 id="data-set">Data set</h3>
-<p>Well we do not have data. But we may be able to simulate them. As this is not production work, we should be able to get the end to end story still working from a solution point of view.</p>
-<p>The historical data need to represent failure, and represent the characteristics of a Reefer container. We can imagine it includes a lot of sensors to get interesting correlated or independant features.</p>
-<p>We propose to code a simulator to create the training and test sets so we can build the model inside Jupiter notebook and with sklearn library. The simulator will be also use as an injector to real time event on loaded containers, used to travel goods, so we can trigger a maintenance order process.</p>
-<p>Here is a diagram for the data scientist environment:</p>
-<p><img alt="" src="../images/ds-env.png" /></p>
-<p>For modeling predictive maintenance we found <a href="https://medium.com/bigdatarepublic/machine-learning-for-predictive-maintenance-where-to-start-5f3b7586acfb">this article</a> from BigData Republique, on Medium, very interesting. </p>
+<h2 id="start-with-maven">Start with maven</h2>
+<p>Kafka stream delivers a Maven archetype to create a squeleton project.</p>
+<pre><code class="sh">mvn archetype:generate -DarchetypeGroupId=org.apache.kafka -DarchetypeArtifactId=streams-quickstart-java     -DarchetypeVersion=2.1.0     -DgroupId=kc-container     -DartifactId=kc-container-streams    -Dversion=0.1     -Dpackage=containerManager
+</code></pre>
+
+<p>We added a <code>.project</code> file to develop the code in Eclipse, imported the code into Eclipse and modify the <code>.classpath</code> too with the following lines:</p>
+<pre><code class="xml">    &lt;classpathentry kind=&quot;con&quot; path=&quot;org.eclipse.m2e.MAVEN2_CLASSPATH_CONTAINER&quot;&gt;
+        &lt;attributes&gt;
+            &lt;attribute name=&quot;maven.pomderived&quot; value=&quot;true&quot;/&gt;
+        &lt;/attributes&gt;
+    &lt;/classpathentry&gt;
+</code></pre>
+
+<h2 id="some-kafka-streams-apis">Some Kafka streams APIs</h2>
+<p>The stream configuration looks similar to consumer and producer configuration using the Kafka APIs. The new class is the KStream to manage a stream of structured events. It represents unbounded collection of immutable data elements or events.</p>
+<pre><code class="java">    props.put(StreamsConfig.APPLICATION_ID_CONFIG, &quot;container-streams&quot;);
+    props.put(StreamsConfig.BOOTSTRAP_SERVERS_CONFIG, &quot;localhost:9092&quot;);    
+    props.put(StreamsConfig.DEFAULT_KEY_SERDE_CLASS_CONFIG, Serdes.String().getClass());
+    props.put(StreamsConfig.DEFAULT_VALUE_SERDE_CLASS_CONFIG, Serdes.String().getClass());
+</code></pre>
+
+<p>Here is an example of terminal stream to print what is coming to the topic:</p>
+<pre><code class="java">   final StreamsBuilder builder = new StreamsBuilder();
+    builder.stream(&quot;orders&quot;)
+        .foreach((key,value) -&gt; System.out.println(&quot;received order &quot; + key 
+                    + &quot; &quot; + parser.fromJson((String)value, OrderEvent.class)));
+    final Topology topology = builder.build();
+    final KafkaStreams streams = new KafkaStreams(topology, props);
+    streams.start();
+</code></pre>
+
+<p>See detail of the Streams DSL API <a href="https://kafka.apache.org/21/documentation/streams/developer-guide/dsl-api.html">here</a>. </p>
+<h2 id="tdd">TDD</h2>
+<p>We want to document two major tests. One for building the internal view of the container inventory.</p>
+<p>The business logic we want to implement is to get an order with the source pickup city, the type of product, the quantity and the expected pickup date, manage the internal list of containers and search for a container located close to the pickup city from the order.
+The test is under kstreams/src/test/java/ut. </p>
+<h2 id="resiliency">Resiliency</h2>
+<h2 id="scaling">Scaling</h2>
                 
                   
                 
@@ -461,7 +481,7 @@
     <div class="md-footer-nav">
       <nav class="md-footer-nav__inner md-grid">
         
-          <a href="../flask/" title="Python FLask and Kafka Implementation" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+          <a href=".." title="Home" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
             <div class="md-flex__cell md-flex__cell--shrink">
               <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
             </div>
@@ -470,11 +490,25 @@
                 <span class="md-footer-nav__direction">
                   Previous
                 </span>
-                Python FLask and Kafka Implementation
+                Home
               </span>
             </div>
           </a>
         
+        
+          <a href="../flask/" title="Python FLask and Kafka Implementation" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Next
+                </span>
+                Python FLask and Kafka Implementation
+              </span>
+            </div>
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-forward md-footer-nav__button"></i>
+            </div>
+          </a>
         
       </nav>
     </div>

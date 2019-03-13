@@ -239,10 +239,53 @@
       
     
     
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        Home
+      </label>
+    
     <a href="." title="Home" class="md-nav__link md-nav__link--active">
       Home
     </a>
     
+      
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#component-view" title="Component view" class="md-nav__link">
+    Component view
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#container-inventory" title="Container inventory" class="md-nav__link">
+    Container inventory
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#assign-container-to-order" title="Assign container to order" class="md-nav__link">
+    Assign container to order
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+    
   </li>
 
     
@@ -252,8 +295,8 @@
 
 
   <li class="md-nav__item">
-    <a href="metrics/" title="Container Metrics" class="md-nav__link">
-      Container Metrics
+    <a href="kstreams/" title="Kafka Streams Implementation" class="md-nav__link">
+      Kafka Streams Implementation
     </a>
   </li>
 
@@ -264,8 +307,20 @@
 
 
   <li class="md-nav__item">
-    <a href="kstream/" title="Kafka Streams Implementation" class="md-nav__link">
-      Kafka Streams Implementation
+    <a href="flask/" title="Python FLask and Kafka Implementation" class="md-nav__link">
+      Python FLask and Kafka Implementation
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="metrics/" title="Container Predictive Maintenance" class="md-nav__link">
+      Container Predictive Maintenance
     </a>
   </li>
 
@@ -287,6 +342,36 @@
     
   
   
+    <label class="md-nav__title" for="__toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#component-view" title="Component view" class="md-nav__link">
+    Component view
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#container-inventory" title="Container inventory" class="md-nav__link">
+    Container inventory
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#assign-container-to-order" title="Assign container to order" class="md-nav__link">
+    Assign container to order
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -302,7 +387,7 @@
                 
                 <h1 id="container-management-microservice">Container management microservice</h1>
 <p>This project is part of the container shipment implementation solution you can read detail <a href="https://ibm-cloud-architecture.github.io/refarch-kc/">here.</a>.</p>
-<p>The goal of this Container management service to support the reefer containers inventory management and to process all the events related to the container entity. We want to support the following events:</p>
+<p>The goal of this Container management service is to support the reefer containers inventory management and to process all the events related to the container entity. We want to support the following events:</p>
 <ul>
 <li>ContainerAddedToInventory, ContainerRemovedFromInventory</li>
 <li>ContainerAtLocation</li>
@@ -312,11 +397,28 @@
 <li>ContainerOnShip, ContainerOffShip</li>
 <li>ContainerOnTruck, ContainerOffTruck</li>
 </ul>
-<p>This repository illustrate how to implement the assignContainerToOrder(order) function in different way:</p>
+<p>This repository illustrates how to implement this service in different ways: kStreams and Python. The features are:</p>
 <ul>
 <li>As a REST API end point calleable from other services.</li>
-<li>As a consumer of orderCreated event published in the Kafka <code>orders</code> topic.  </li>
+<li>As a kafka streams consumer of orderCreated event published in the Kafka <code>orders</code> topic: the code will look at the pickup location and searchdx in the container inventory the containers close to this location. </li>
+<li>As a kafka streams agent consuming container events from the <code>containers</code> topic and managing a stateful table to keep container inventory in memory.</li>
 </ul>
+<p>Finally an important element of this project is the integration of Kafka topic as datasource to develop a machine learning model for the container predictive maintenance. See details in <a href="./metrics">this note</a>.</p>
+<h2 id="component-view">Component view</h2>
+<p>As the service needs to offer some basic APIs and be able to consumer and produce events the code will have at least two main components: a kafka consumer and a HTTP server exposing REST APIs. The following diagram illustrates a python flask implementation packaged in docker container:</p>
+<p><img alt="" src="images/flask-container.png" />  </p>
+<p>and the implementation considerations and best practices are described <a href="flask/">here.</a></p>
+<p>The second diagram shows the same service implemented with Apache Kafka KStreams API in Java, deployed in Liberty server with JAXRS API:</p>
+<p><img alt="" src="images/kstreams-container.png" />  </p>
+<p>The implementation description is <a href="kstreams/">here.</a></p>
+<h2 id="container-inventory">Container inventory</h2>
+<p>We are providing a tool to publish container created events to the Kafka <code>container</code> topic. The python code is under the <code>tools</code> folder. It can be executed using our Python docker image with the command:</p>
+<pre><code class="shell">docker run -e KAFKA_BROKERS=$KAFKA_BROKERS -v $(pwd):/home --network=docker_default -ti ibmcase/python bash
+root@2f049cb7b4f2:/ cd home
+root@2f049cb7b4f2:/ python ProduceContainerCreatedEvent.py 
+</code></pre>
+
+<h2 id="assign-container-to-order">Assign container to order</h2>
 <p>The implementation will search the list of containers closed to the source location. We simplify the implementation by assuming mapping container (longitude, latitude) position to be in an area closed to the harbor close to the pickup location. We do not manage the time when the container will be there. We assume containers is at location at the time of the order is processed, is the same as the time of the pickup. We may fine tune that if we can make it simple.</p>
 <p>The output of this assignment processing is an event to the <code>orders</code> topic.</p>
                 
@@ -340,13 +442,13 @@
       <nav class="md-footer-nav__inner md-grid">
         
         
-          <a href="metrics/" title="Container Metrics" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+          <a href="kstreams/" title="Kafka Streams Implementation" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
             <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
               <span class="md-flex__ellipsis">
                 <span class="md-footer-nav__direction">
                   Next
                 </span>
-                Container Metrics
+                Kafka Streams Implementation
               </span>
             </div>
             <div class="md-flex__cell md-flex__cell--shrink">
