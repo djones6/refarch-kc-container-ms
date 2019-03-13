@@ -403,7 +403,7 @@
 <li>As a kafka streams consumer of orderCreated event published in the Kafka <code>orders</code> topic: the code will look at the pickup location and searchdx in the container inventory the containers close to this location. </li>
 <li>As a kafka streams agent consuming container events from the <code>containers</code> topic and managing a stateful table to keep container inventory in memory.</li>
 </ul>
-<p>Finally an important element of this project is the integration of Kafka topic as datasource to develop a machine learning model for the container predictive maintenance. See details in <a href="./metrics">this note</a>.</p>
+<p>Finally an important element of this project is the integration of Kafka topic as datasource to develop a machine learning model for the container predictive maintenance scoring. See details in <a href="./metrics">this note</a>.</p>
 <h2 id="component-view">Component view</h2>
 <p>As the service needs to offer some basic APIs and be able to consumer and produce events the code will have at least two main components: a kafka consumer and a HTTP server exposing REST APIs. The following diagram illustrates a python flask implementation packaged in docker container:</p>
 <p><img alt="" src="images/flask-container.png" />  </p>

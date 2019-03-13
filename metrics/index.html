@@ -322,6 +322,27 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#model" title="Model" class="md-nav__link">
+    Model
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#simple-environment" title="Simple environment" class="md-nav__link">
+    Simple environment
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#references" title="References" class="md-nav__link">
+    References
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -387,6 +408,27 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#model" title="Model" class="md-nav__link">
+    Model
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#simple-environment" title="Simple environment" class="md-nav__link">
+    Simple environment
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#references" title="References" class="md-nav__link">
+    References
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -424,9 +466,30 @@
 <li>framing the problem appropriately </li>
 <li>evaluating the predictions properly</li>
 </ul>
+<p>From a methodology point of view the Data Scientist needs to address the following questions:</p>
+<ul>
+<li>What type of failure to consider and which one to predict?</li>
+<li>What kind of failure is happening? slow degradation or instantaneous failure?</li>
+<li>What could be the relation between a product characteristics and the failure?</li>
+<li>What kind of measure exist to assess the given characteristic?</li>
+<li>Which measurements correspond to good functioning and which ones correspond to failure?</li>
+<li>How often metrics are reported?</li>
+<li>What question the model should answer?</li>
+<li>What kind of output should the model give?</li>
+<li>How long in advance should the model be able to indicate that a failure will occur?</li>
+<li>What are the business impact to do not predict the failure? and predicting false negative failure?</li>
+<li>What is the expected accuracy?  </li>
+</ul>
+<p>There are different meodeling approach to tackle predictive maintenance:</p>
+<ul>
+<li>regression model</li>
+<li>classification to predict failure for a given time period</li>
+<li>classify anomalous behavior: classes are not known in advance. Normal operation is known.</li>
+<li>compute probability of failure over time</li>
+</ul>
 <h3 id="reefer-problem-types">Reefer problem types:</h3>
-<p>There are multiple different potential of issues that could happen to a refrigerator container. We are choosing to model the "Sensor Malfunctions: Sensors in the refrigeration unit need to be calibrated and cotnuously operational. An example of failure may come from the air sensor making inaccurate readings of temperatures, which lead to sploiled content. A potential reason may come from a faulty calibration, which can go unnoticed for a good time period. It may be diffiult to know if there is an issue. </p>
-<p>Other potential issues are:
+<p>There are multiple different potential issues that could happen to a refrigerator container. We are choosing to model the "Sensor Malfunctions" issue: Sensors in the refrigeration unit need to be calibrated and be continuously operational. An example of failure may come from the air sensor making inaccurate readings of temperatures, which lead to sploiled content. A potential reason may come from a faulty calibration, which can go unnoticed for a good time period. It may be diffiult to know if there is an issue. </p>
+<p>The other common potential issues are:
 <em> Fluid leaks, like engine oil, coolant liquid. The preassure sensors added to the circuit may help identify preassure lost over time.
 </em> Faulty belts and hoses.
 <em> Faulty calibration: A non-calibrated reefer can cool at a slower or faster rate than desired.
@@ -434,12 +497,20 @@
 <em> Condenser Issues like broken or damaged coils, clamps or bolts missing, and leaks.
 </em> Door Seals damaged. 
 * Blocked air passage: to keep the temperature homogenous inside the reefer.</p>
+<p>So the question we want to answer is: does the Reefer keep accurate temperature overtime between what is set verus what is measured?</p>
 <h3 id="data-set">Data set</h3>
 <p>Well we do not have data. But we may be able to simulate them. As this is not production work, we should be able to get the end to end story still working from a solution point of view.</p>
 <p>The historical data need to represent failure, and represent the characteristics of a Reefer container. We can imagine it includes a lot of sensors to get interesting correlated or independant features.</p>
+<h3 id="model">Model</h3>
+<h3 id="simple-environment">Simple environment</h3>
 <p>We propose to code a simulator to create the training and test sets so we can build the model inside Jupiter notebook and with sklearn library. The simulator will be also use as an injector to real time event on loaded containers, used to travel goods, so we can trigger a maintenance order process.</p>
 <p>Here is a diagram for the data scientist environment:</p>
 <p><img alt="" src="../images/ds-env.png" /></p>
+<p>For the runtime execution we will plug the model as a consumer of <code>containerMetrics</code> topic which keeps container metrics in the form of event like below, keyed by containerID.</p>
+<pre><code class="json">
+</code></pre>
+
+<h3 id="references">References</h3>
 <p>For modeling predictive maintenance we found <a href="https://medium.com/bigdatarepublic/machine-learning-for-predictive-maintenance-where-to-start-5f3b7586acfb">this article</a> from BigData Republique, on Medium, very interesting. </p>
                 
                   
