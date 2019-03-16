@@ -489,14 +489,16 @@
 </ul>
 <h3 id="reefer-problem-types">Reefer problem types:</h3>
 <p>There are multiple different potential issues that could happen to a refrigerator container. We are choosing to model the "Sensor Malfunctions" issue: Sensors in the refrigeration unit need to be calibrated and be continuously operational. An example of failure may come from the air sensor making inaccurate readings of temperatures, which lead to sploiled content. A potential reason may come from a faulty calibration, which can go unnoticed for a good time period. It may be diffiult to know if there is an issue. </p>
-<p>The other common potential issues are:
-<em> Fluid leaks, like engine oil, coolant liquid. The preassure sensors added to the circuit may help identify preassure lost over time.
-</em> Faulty belts and hoses.
-<em> Faulty calibration: A non-calibrated reefer can cool at a slower or faster rate than desired.
-</em> Damaged Air Chute.
-<em> Condenser Issues like broken or damaged coils, clamps or bolts missing, and leaks.
-</em> Door Seals damaged. 
-* Blocked air passage: to keep the temperature homogenous inside the reefer.</p>
+<p>The other common potential issues are:</p>
+<ul>
+<li>Fluid leaks, like engine oil, coolant liquid. The preassure sensors added to the circuit may help identify preassure lost over time.</li>
+<li>Faulty belts and hoses.</li>
+<li>Faulty calibration: A non-calibrated reefer can cool at a slower or faster rate than desired.</li>
+<li>Damaged Air Chute.</li>
+<li>Condenser Issues like broken or damaged coils, clamps or bolts missing, and leaks.</li>
+<li>Door Seals damaged. </li>
+<li>Blocked air passage: to keep the temperature homogenous inside the reefer.</li>
+</ul>
 <p>So the question we want to answer is: does the Reefer keep accurate temperature overtime between what is set verus what is measured?</p>
 <h3 id="data-set">Data set</h3>
 <p>Well we do not have data. But we may be able to simulate them. As this is not production work, we should be able to get the end to end story still working from a solution point of view.</p>
@@ -507,7 +509,11 @@
 <p>Here is a diagram for the data scientist environment:</p>
 <p><img alt="" src="../images/ds-env.png" /></p>
 <p>For the runtime execution we will plug the model as a consumer of <code>containerMetrics</code> topic which keeps container metrics in the form of event like below, keyed by containerID.</p>
-<pre><code class="json">
+<pre><code class="json">{
+    &quot;timestamp&quot;: 1234567,
+    &quot;containerID&quot;: &quot;C10&quot;,
+
+}
 </code></pre>
 
 <h3 id="references">References</h3>

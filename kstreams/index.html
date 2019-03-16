@@ -96,7 +96,7 @@
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
     <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
     
-      <a href="#kstream-implementation-of-the-container-inventory-management" tabindex="1" class="md-skip">
+      <a href="#kafka-streams-implementation-of-the-container-inventory-management" tabindex="1" class="md-skip">
         Skip to content
       </a>
     
@@ -277,29 +277,56 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#some-kafka-streams-apis" title="Some Kafka streams APIs" class="md-nav__link">
-    Some Kafka streams APIs
+  <a href="#some-useful-kafka-streams-apis" title="Some useful Kafka streams APIs" class="md-nav__link">
+    Some useful Kafka streams APIs
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#tdd" title="TDD" class="md-nav__link">
-    TDD
+  <a href="#test-driven-development" title="Test Driven Development" class="md-nav__link">
+    Test Driven Development
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#container-inventory" title="Container inventory" class="md-nav__link">
+    Container inventory
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#container-to-order-assignment" title="Container to Order Assignment" class="md-nav__link">
+    Container to Order Assignment
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#run-tests" title="Run tests" class="md-nav__link">
+    Run tests
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-streams-flow-are-resilient" title="How streams flow are resilient?" class="md-nav__link">
+    How streams flow are resilient?
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#resiliency" title="Resiliency" class="md-nav__link">
-    Resiliency
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#scaling" title="Scaling" class="md-nav__link">
-    Scaling
+  <a href="#how-to-scale" title="How to scale?" class="md-nav__link">
+    How to scale?
   </a>
   
 </li>
@@ -367,29 +394,56 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#some-kafka-streams-apis" title="Some Kafka streams APIs" class="md-nav__link">
-    Some Kafka streams APIs
+  <a href="#some-useful-kafka-streams-apis" title="Some useful Kafka streams APIs" class="md-nav__link">
+    Some useful Kafka streams APIs
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#tdd" title="TDD" class="md-nav__link">
-    TDD
+  <a href="#test-driven-development" title="Test Driven Development" class="md-nav__link">
+    Test Driven Development
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#container-inventory" title="Container inventory" class="md-nav__link">
+    Container inventory
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#container-to-order-assignment" title="Container to Order Assignment" class="md-nav__link">
+    Container to Order Assignment
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#run-tests" title="Run tests" class="md-nav__link">
+    Run tests
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-streams-flow-are-resilient" title="How streams flow are resilient?" class="md-nav__link">
+    How streams flow are resilient?
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#resiliency" title="Resiliency" class="md-nav__link">
-    Resiliency
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#scaling" title="Scaling" class="md-nav__link">
-    Scaling
+  <a href="#how-to-scale" title="How to scale?" class="md-nav__link">
+    How to scale?
   </a>
   
 </li>
@@ -413,22 +467,25 @@
                   <a href="https://github.com/ibm-cloud-architecture/refarch-kc-container-ms/edit/master/docs/kstreams/README.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
                 
                 
-                <h1 id="kstream-implementation-of-the-container-inventory-management">KStream implementation of the container inventory management</h1>
+                <h1 id="kafka-streams-implementation-of-the-container-inventory-management">Kafka Streams implementation of the container inventory management</h1>
+<p>In this chapter we are presenting how to sue the Kafka Streams API combined with Kafkat event sourcing to implement the container inventory management. The component can be represented in the figure below:</p>
+<p><img alt="" src="../images/kstreams-container.png" /></p>
+<p>The container topics includes all the event about container life cycle. The application is java based and deployed in Liberty packaged into a docker image deployable on kubernetes. The service exposes some RESTful APIs to get a container by ID. No CUD operations as all is done via events. The Streams implementation keeps data in table.</p>
 <p>The <a href="https://kafka.apache.org/documentation/streams/">Apache Kafka Streams API</a> is a client library for building applications and microservices, where the input and output data are stored in Kafka clusters. It simplifies the implementation of the stateless or stateful event processing to transform and enrich data. It supports time windowing processing.</p>
-<p>We encourage to do <a href="https://kafka.apache.org/21/documentation/streams/tutorial">this tutorial</a> and read the <a href="">quickstart</a>. </p>
-<p>So the features in this project are:</p>
+<p>We encourage to do <a href="https://kafka.apache.org/21/documentation/streams/tutorial">this KStream tutorial</a>. </p>
+<p>The features we want to illustrate in this implementation, using KStreams are:</p>
 <ul>
-<li>Listen to ContainerAdded event from the <code>containers</code> topic and maintains a stateful table of container inventory. </li>
-<li>Listen to OrderCreated event from <code>orders</code> and assign a container from the inventory based on the pickup location and the container location and characteristics.</li>
+<li>Listen to ContainerAddedToInventory event from the <code>containers</code> topic and maintains a stateful table of containers. </li>
+<li>Listen to OrderCreated event from <code>orders</code> and assign a container from the inventory based on the pickup location and the container location and its characteristics.</li>
 <li>Implemented as JAXRS application deployed on Liberty and packaged with dockerfile.</li>
 <li>Deploy to kubernetes or run with docker-compose</li>
 </ul>
 <h2 id="start-with-maven">Start with maven</h2>
-<p>Kafka stream delivers a Maven archetype to create a squeleton project.</p>
+<p>Kafka stream delivers a Maven archetype to create a squeleton project. The following command can be used to create the base code.</p>
 <pre><code class="sh">mvn archetype:generate -DarchetypeGroupId=org.apache.kafka -DarchetypeArtifactId=streams-quickstart-java     -DarchetypeVersion=2.1.0     -DgroupId=kc-container     -DartifactId=kc-container-streams    -Dversion=0.1     -Dpackage=containerManager
 </code></pre>
 
-<p>We added a <code>.project</code> file to develop the code in Eclipse, imported the code into Eclipse and modify the <code>.classpath</code> too with the following lines:</p>
+<p>We added a <code>.project</code> file to develop the code in Eclipse, imported the code into Eclipse and modify the <code>.classpath</code> with the following lines:</p>
 <pre><code class="xml">    &lt;classpathentry kind=&quot;con&quot; path=&quot;org.eclipse.m2e.MAVEN2_CLASSPATH_CONTAINER&quot;&gt;
         &lt;attributes&gt;
             &lt;attribute name=&quot;maven.pomderived&quot; value=&quot;true&quot;/&gt;
@@ -436,31 +493,163 @@
     &lt;/classpathentry&gt;
 </code></pre>
 
-<h2 id="some-kafka-streams-apis">Some Kafka streams APIs</h2>
-<p>The stream configuration looks similar to consumer and producer configuration using the Kafka APIs. The new class is the KStream to manage a stream of structured events. It represents unbounded collection of immutable data elements or events.</p>
+<p>To access to serializer and testing framework we added the following dependencies in the pom.xml:</p>
+<pre><code class="xml">      &lt;dependency&gt;
+            &lt;groupId&gt;org.apache.kafka&lt;/groupId&gt;
+            &lt;artifactId&gt;kafka-clients&lt;/artifactId&gt;
+            &lt;version&gt;${kafka.version}&lt;/version&gt;
+        &lt;/dependency&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.apache.kafka&lt;/groupId&gt;
+            &lt;artifactId&gt;kafka-streams-test-utils&lt;/artifactId&gt;
+            &lt;version&gt;${kafka.version}&lt;/version&gt;
+            &lt;scope&gt;test&lt;/scope&gt;
+        &lt;/dependency&gt;
+</code></pre>
+
+<p>In fact at the end of our development the pom was enhanced to support, liberty, integration tests and javametrics.</p>
+<h2 id="some-useful-kafka-streams-apis">Some useful Kafka streams APIs</h2>
+<p>The stream configuration looks similar to the Kafka consumer and producer configuration. </p>
 <pre><code class="java">    props.put(StreamsConfig.APPLICATION_ID_CONFIG, &quot;container-streams&quot;);
     props.put(StreamsConfig.BOOTSTRAP_SERVERS_CONFIG, &quot;localhost:9092&quot;);    
     props.put(StreamsConfig.DEFAULT_KEY_SERDE_CLASS_CONFIG, Serdes.String().getClass());
     props.put(StreamsConfig.DEFAULT_VALUE_SERDE_CLASS_CONFIG, Serdes.String().getClass());
 </code></pre>
 
-<p>Here is an example of terminal stream to print what is coming to the topic:</p>
+<p>The StreamsConfig is a specific configuration for Streams app.  </p>
+<p>One of the interesting class is the <code>KStream</code> to manage a stream of structured events. Kstreams represents unbounded collection of immutable events.</p>
+<p>Two classes are supporting the order and container processing:</p>
+<ul>
+<li><a href="https://github.com/ibm-cloud-architecture/refarch-kc-container-ms/blob/master/kstreams/src/main/java/ibm/labs/kc/streams/containerManager/ContainerInventoryView.java">ContainerInventoryView</a></li>
+<li><a href="https://github.com/ibm-cloud-architecture/refarch-kc-container-ms/blob/master/kstreams/src/main/java/ibm/labs/kc/streams/containerManager/ContainerOrderAssissgnment.java">ContainerOrderAssignment</a></li>
+</ul>
+<p>We are using the Streams DSL APIs to do the processing. Here is an example of terminal stream to print what is coming to the <code>orders</code> topic:</p>
 <pre><code class="java">   final StreamsBuilder builder = new StreamsBuilder();
     builder.stream(&quot;orders&quot;)
-        .foreach((key,value) -&gt; System.out.println(&quot;received order &quot; + key 
-                    + &quot; &quot; + parser.fromJson((String)value, OrderEvent.class)));
+        .foreach((key,value) -&gt; {
+                    Order order = parser.fromJson((String)value, OrderEvent.class).getPayload();
+                    // TODO do something to the order
+                    System.out.println(&quot;received order &quot; + key + &quot; &quot; + value);
+                });
+
     final Topology topology = builder.build();
     final KafkaStreams streams = new KafkaStreams(topology, props);
     streams.start();
 </code></pre>
 
-<p>See detail of the Streams DSL API <a href="https://kafka.apache.org/21/documentation/streams/developer-guide/dsl-api.html">here</a>. </p>
-<h2 id="tdd">TDD</h2>
-<p>We want to document two major tests. One for building the internal view of the container inventory.</p>
-<p>The business logic we want to implement is to get an order with the source pickup city, the type of product, the quantity and the expected pickup date, manage the internal list of containers and search for a container located close to the pickup city from the order.
-The test is under kstreams/src/test/java/ut. </p>
-<h2 id="resiliency">Resiliency</h2>
-<h2 id="scaling">Scaling</h2>
+<p>We want now to implement the container inventory. We want to support the following events:</p>
+<ul>
+<li>ContainerAddedToInventory, ContainerRemovedFromInventory</li>
+<li>ContainerAtLocation</li>
+<li>ContainerOnMaintenance, ContainerOffMaintenance,</li>
+<li>ContainerAssignedToOrder, ContainerReleasedFromOrder</li>
+<li>ContainerGoodLoaded, ContainerGoodUnLoaded</li>
+<li>ContainerOnShip, ContainerOffShip</li>
+<li>ContainerOnTruck, ContainerOffTruck</li>
+</ul>
+<p>We want the container event to keep a timestamp, a version, a type, and a payload representing the data describing a Reefer container. The Key is the containerID. The java class for the container event is <a href="https://github.com/ibm-cloud-architecture/refarch-kc-container-ms/blob/master/kstreams/src/main/java/ibm/labs/kc/model/events/ContainerEvent.java">here</a>.</p>
+<p>Using a TDD approach we will start by the tests to implement the solution.</p>
+<p>For more information on the Streams DSL API <a href="https://kafka.apache.org/21/documentation/streams/developer-guide/dsl-api.html">keeep this page slose to you</a>. </p>
+<h2 id="test-driven-development">Test Driven Development</h2>
+<p>We want to document two major test suites. One for building the internal view of the container inventory, the other to support the container to order assignment.</p>
+<h3 id="container-inventory">Container inventory</h3>
+<blockquote>
+<p>When the service receives a ContainerAdded event it needs to add it to the table and be able to retreive it by ID</p>
+</blockquote>
+<ol>
+<li>To support the Get By ID we are adding a Service class with the operation exposed as RESTful resource using JAXRS annotations. We already described this approach in the <a href="https://github.com/ibm-cloud-architecture/refarch-kc-ms">fleetms project</a>.</li>
+</ol>
+<p>To test a stream application without Kafka backbone there is a test utility available <a href="https://kafka.apache.org/documentation/streams/developer-guide/testing.html#unit-testing-processors">here</a>. The settings are simple: get the properties, define the serialisation of the key and value of the event to get from kafka, define the stream process flow, named topology, send the input and get the output.</p>
+<p>The <a href="https://github.com/ibm-cloud-architecture/refarch-kc-container-ms/blob/master/kstreams/src/test/java/ut">test TestContainerInventory</a> is illustrating how to use the <a href="https://kafka.apache.org/21/javadoc/org/apache/kafka/streams/TopologyTestDriver.html">TopologyTestDriver</a>.</p>
+<pre><code class="java">    Properties props = ApplicationConfig.getStreamsProperties(&quot;test&quot;);
+    props.put(StreamsConfig.BOOTSTRAP_SERVERS_CONFIG, &quot;dummy:1234&quot;);
+    TopologyTestDriver testDriver = new TopologyTestDriver(
+                buildProcessFlow(), props);
+
+    ConsumerRecordFactory&lt;String, String&gt; factory = new ConsumerRecordFactory&lt;String, String&gt;(&quot;containers&quot;,
+                new StringSerializer(), new StringSerializer());
+    ConsumerRecord&lt;byte[],byte[]&gt; record = factory.create(&quot;containers&quot;,ce.getContainerID(), parser.toJson(ce));
+
+    testDriver.pipeInput(record);
+</code></pre>
+
+<p>We are using the String default serialization for the key and the ContainerEvent, and use Gson to serialize and deserialize the json.</p>
+<p>So the test is to prepare a ContainerEvent with type = "ContainerAdded" and then get the payload, persist it in the table and access to the table via the concept of <code>store</code> and validate the data.</p>
+<p>Below is the access to the store and compare the expected results</p>
+<pre><code class="java">    KeyValueStore&lt;String, String&gt; store = testDriver.getKeyValueStore(&quot;queryable-container-store&quot;);
+    String containerStrg = store.get(ce.getContainerID());
+    Assert.assertNotNull(containerStrg);
+    Assert.assertTrue(containerStrg.contains(ce.getContainerID()));
+    Assert.assertTrue(containerStrg.contains(&quot;atDock&quot;));
+</code></pre>
+
+<p>Now the tricky part is in the Stream process flow. The idea is to process the ContainerEvent as streams (of String) and extract the payload (a Container), then generate the Container in a new stream, group by the key and then save to a table. We separate the code in a function so e can move it into the real application after.</p>
+<pre><code class="java">    public  Topology buildProcessFlow() {
+        final StreamsBuilder builder = new StreamsBuilder();
+       // containerEvent is a string, map values help to change the type and data of the inpit values
+        builder.stream(CONTAINERS_TOPIC).mapValues((containerEvent) -&gt; {
+                 // the container payload is of interest to keep in table
+                 Container c = jsonParser.fromJson((String)containerEvent, ContainerEvent.class).getPayload();
+                 return jsonParser.toJson(c);
+             }).groupByKey()  // the keys are kept so we can group by key to prepare for the tabl
+                .reduce((container,container1) -&gt; {
+                    System.out.println(&quot;received container &quot; + container1 );
+                    return container1;
+                },
+                     Materialized.as(&quot;queryable-container-store&quot;));
+        return builder.build();
+    }
+</code></pre>
+
+<p>The trick is to use the <code>reduce()</code> function that get the container and save it to the store that we can specify.</p>
+<p>The unit test runs successfully with the command: <code>mvn -Dtest=TestContainerInventory test</code>.</p>
+<p>This logic can be integrated in a View class. So we can refactor the test and add new class (see ContainerInventoryView class) to move the logic into the applciation. From a design point of view this class is a DAO. Now that we are not using the Testing tool, we need the real streams.</p>
+<p>In class ContainerInventoryView:    </p>
+<pre><code class="java">   private KafkaStreams streams;
+   // ..
+    Properties props = ApplicationConfig.getStreamsProperties(&quot;container-streams&quot;);
+    props.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, &quot;earliest&quot;);
+    streams = new KafkaStreams(buildProcessFlow(), props);
+    try {
+        streams.cleanUp(); 
+        streams.start();
+    } catch (Throwable e) {
+        System.exit(1);
+    }
+</code></pre>
+
+<p>As illustrated above, the streams API is a continuous running Thread, so it needs to be started only one time. We will address scaling separatly.  So we isolate the DAO as a Singleton, and start it when the deployed application starts, via a ServletContextListener. </p>
+<pre><code class="java">public class EventLoop implements ServletContextListener{
+
+    @Override
+    public void contextInitialized(ServletContextEvent sce) {
+        // Initialize the Container consumer
+        ContainerInventoryView cView = (ContainerInventoryView)ContainerInventoryView.instance();
+        cView.start();
+    }
+</code></pre>
+
+<p>Now we can add the getById operation, package as a war, deploy it to Liberty. </p>
+<h3 id="container-to-order-assignment">Container to Order Assignment</h3>
+<p>The business logic we want to implement is to get an order with the source pickup city, the type of product, the quantity and the expected pickup date, manage the internal list of containers and search for a container located close to the pickup city from the order.</p>
+<p>The test to validate this logic is under <code>kstreams/src/test/java/ut/TestContainerAssignment</code>. </p>
+<p>The story will not be completed if we do not talk about how th application get the order. As presented in the design and <a href="https://github.com/ibm-cloud-architecture/refarch-kc-order-ms">order command microservice</a> implementation, when an order is created an event is generated to the <code>orders</code> topic. So we need to add another Streams processing and start the process flow in the context listener.</p>
+<p><img alt="" src="../images/container-to-order.png" /></p>
+<h3 id="run-tests">Run tests</h3>
+<p>Recall with maven we can run all the unit tests, one test and skip integration tests.</p>
+<pre><code class="shell"># Test a unique test
+$  mvn -Dtest=TestContainerInventory test
+# Skip all tests
+mvn install -DskipTests
+# Skip integration test
+mvn install -DskipITs
+# Run everything
+mvn install
+</code></pre>
+
+<p>To start the liberty server use the script: <code>./script/startLocalLiberty</code> or <code>mvn liberty:run-server</code></p>
+<h2 id="how-streams-flow-are-resilient">How streams flow are resilient?</h2>
+<h2 id="how-to-scale">How to scale?</h2>
                 
                   
                 
