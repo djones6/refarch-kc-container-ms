@@ -277,6 +277,13 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#start-with-ibm-cloud-microprofile-starter-kit" title="Start with IBM Cloud microprofile starter kit" class="md-nav__link">
+    Start with IBM Cloud microprofile starter kit
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#some-useful-kafka-streams-apis" title="Some useful Kafka streams APIs" class="md-nav__link">
     Some useful Kafka streams APIs
   </a>
@@ -394,6 +401,13 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#start-with-ibm-cloud-microprofile-starter-kit" title="Start with IBM Cloud microprofile starter kit" class="md-nav__link">
+    Start with IBM Cloud microprofile starter kit
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#some-useful-kafka-streams-apis" title="Some useful Kafka streams APIs" class="md-nav__link">
     Some useful Kafka streams APIs
   </a>
@@ -471,8 +485,9 @@
 <p>In this chapter we are presenting how to sue the Kafka Streams API combined with Kafkat event sourcing to implement the container inventory management. The component can be represented in the figure below:</p>
 <p><img alt="" src="../images/kstreams-container.png" /></p>
 <p>The container topics includes all the event about container life cycle. The application is java based and deployed in Liberty packaged into a docker image deployable on kubernetes. The service exposes some RESTful APIs to get a container by ID. No CUD operations as all is done via events. The Streams implementation keeps data in table.</p>
+<p>As a java based microservice we have two approaches to implement the service: springboot and microprofile. Knowing we will deploy on kubernetes cluster with Istio we will have a lot of the resiliency and scalability addressed for us. But Istio does not support implementing retries logic according to the business logic. Microprofile add a lot of nice capabilities like SSL, open API, JAXRS... Microprofile is supported by Open Liberty as well as many servers.</p>
 <p>The <a href="https://kafka.apache.org/documentation/streams/">Apache Kafka Streams API</a> is a client library for building applications and microservices, where the input and output data are stored in Kafka clusters. It simplifies the implementation of the stateless or stateful event processing to transform and enrich data. It supports time windowing processing.</p>
-<p>We encourage to do <a href="https://kafka.apache.org/21/documentation/streams/tutorial">this KStream tutorial</a>. </p>
+<p>We encourage to do <a href="https://kafka.apache.org/21/documentation/streams/tutorial">this Streams tutorial</a>. </p>
 <p>The features we want to illustrate in this implementation, using KStreams are:</p>
 <ul>
 <li>Listen to ContainerAddedToInventory event from the <code>containers</code> topic and maintains a stateful table of containers. </li>
@@ -481,7 +496,7 @@
 <li>Deploy to kubernetes or run with docker-compose</li>
 </ul>
 <h2 id="start-with-maven">Start with maven</h2>
-<p>Kafka stream delivers a Maven archetype to create a squeleton project. The following command can be used to create the base code.</p>
+<p>Kafka streams delivers a Maven archetype to create a squeleton project. The following command can be used to create the base code.</p>
 <pre><code class="sh">mvn archetype:generate -DarchetypeGroupId=org.apache.kafka -DarchetypeArtifactId=streams-quickstart-java     -DarchetypeVersion=2.1.0     -DgroupId=kc-container     -DartifactId=kc-container-streams    -Dversion=0.1     -Dpackage=containerManager
 </code></pre>
 
@@ -507,7 +522,36 @@
         &lt;/dependency&gt;
 </code></pre>
 
-<p>In fact at the end of our development the pom was enhanced to support, liberty, integration tests and javametrics.</p>
+<p>Using this approach as the service runs in OpenLiberty and integrate JAXRS, microprofile, Open API,... we have to add a lot of depencies into the pom.xml file. Another approach is to use IBM Cloud starter kit.</p>
+<h2 id="start-with-ibm-cloud-microprofile-starter-kit">Start with IBM Cloud microprofile starter kit</h2>
+<p>Use the <code>Create resource</code> option and select the "Java microservice with microprofile and Java EE" starter kit as shown below:</p>
+<p><img alt="" src="mp-starter.png" /></p>
+<p>Then enter an application name (e.g. MP-ContainerMS) with a resource group and may be some tags. </p>
+<p><img alt="" src="mp-app-details.png" /></p>
+<p>The next step is to select a kubernetes cluster instance:</p>
+<p><img alt="" src="mp-select-iks.png" /></p>
+<p>Configure the toolchain, and verify the application is created in the console:</p>
+<p><img alt="" src="mp-app-listed.png" /></p>
+<p>The application is accessible from github, a toolchain is ready to process the app and deploy it.</p>
+<p><img alt="" src="default-toolchain.png" /></p>
+<p>At the time of writting, and most likely in the future too, the steps and the documentations are not aligned. Code is release on a weekly basis and the documentation is often behind. We can download the source code from the github. The address was https://git.ng.bluemix.net/boyerje/MP-ContainerMS. We have to unprotect the master branch so we can push our update. </p>
+<p>We also have to modify the deployment configuration to change the target namespace. </p>
+<p>The generated code includes helm chart, Dockerfiles, and base JAXRS code. The code generated is very similar to the one created using the <code>ibmcloud dev</code> CLI. But we need to modify this generated project with some specific microprofile content.</p>
+<p>Eclipse microprofile is now on version 2.2, so we also use the following code generator from <a href="https://start.microprofile.io/">the Microprofile starter site</a> so we can get updated code with new capability like SSL, openAPI and JWT supports.</p>
+<p><img alt="" src="mp-eclipse-starter.png" /></p>
+<p>So now we need to integrate both code and then add Kafka streams. Here are some of the main updates we did:
+<em> Add in the cli-config.yml the registry address and cluster name
+</em> Change pom dependencies for microprofile 2.2, and change the image in Dockerfile to access websphere liberty 19.0.0.3 compatible with 2.2. (FROM websphere-liberty:19.0.0.3-microProfile2)
+<em> Use the health class from the microprofile 2.2 generated code, as it uses microprofile annotation. Add also the configuration injection with properties file. Add new package names.
+</em> Remove unnecessary files
+* Modify the Values.yaml to reflect the target registry and add secret reference:</p>
+<pre><code>  repository: us.icr.io/ibmcaseeda/mpcontainerms
+  tag: latest
+  pullPolicy: Always
+  pullSecret: browncompute-registry-secret
+</code></pre>
+
+<p>Some of those steps are pushed to the development kubernetes cluster using the command:</p>
 <h2 id="some-useful-kafka-streams-apis">Some useful Kafka streams APIs</h2>
 <p>The stream configuration looks similar to the Kafka consumer and producer configuration. </p>
 <pre><code class="java">    props.put(StreamsConfig.APPLICATION_ID_CONFIG, &quot;container-streams&quot;);
