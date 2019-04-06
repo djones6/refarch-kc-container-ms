@@ -307,8 +307,20 @@
 
 
   <li class="md-nav__item">
-    <a href="flask/" title="Python FLask and Kafka Implementation" class="md-nav__link">
-      Python FLask and Kafka Implementation
+    <a href="springboot/" title="Springboot - Kafka and PostgreSQL" class="md-nav__link">
+      Springboot - Kafka and PostgreSQL
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="flask/" title="Python Flask and Kafka Implementation" class="md-nav__link">
+      Python Flask and Kafka Implementation
     </a>
   </li>
 
@@ -387,7 +399,13 @@
                 
                 <h1 id="container-management-microservice">Container management microservice</h1>
 <p>This project is part of the container shipment implementation solution you can read detail <a href="https://ibm-cloud-architecture.github.io/refarch-kc/">here.</a>.</p>
-<p>The goal of this Container management service is to support the reefer containers inventory management and to process all the events related to the container entity. We want to support the following events:</p>
+<p>The goal of this Container management service is to support the reefer containers inventory management and to process all the events related to the container entity. We are proposing 3 types of implementations:</p>
+<ul>
+<li>Python with Flask and Confluent Kafka API for Python. See <a href="flask/">this description</a></li>
+<li>Microprofile 2.2 using Kafka Streams. See <a href="kstreams/">this description</a></li>
+<li>Springboot and spring kafka template and spring postgreSQL. <a href="springboot/">See this note</a></li>
+</ul>
+<p>We want to support the following events:</p>
 <ul>
 <li>ContainerAddedToInventory, ContainerRemovedFromInventory</li>
 <li>ContainerAtLocation</li>
