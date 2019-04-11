@@ -36,7 +36,7 @@
     
     
       
-        <title>Reefer Container Management Service</title>
+        <title>Springboot - Kafka and PostgreSQL Implementation - Reefer Container Management Service</title>
       
     
     
@@ -121,7 +121,7 @@
               Reefer Container Management Service
             </span>
             <span class="md-header-nav__topic">
-              Springboot - Kafka and PostgreSQL
+              Springboot - Kafka and PostgreSQL Implementation
             </span>
           
         </div>
@@ -241,6 +241,27 @@
       
       
 
+  
+
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2" checked>
+    
+    <label class="md-nav__link" for="nav-2">
+      Implementations
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-2">
+        Implementations
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
 
   <li class="md-nav__item">
     <a href="../kstreams/" title="Kafka Streams Implementation" class="md-nav__link">
@@ -248,10 +269,10 @@
     </a>
   </li>
 
-    
-      
-      
-      
+        
+          
+          
+          
 
   
 
@@ -264,11 +285,11 @@
     
     
       <label class="md-nav__link md-nav__link--active" for="__toc">
-        Springboot - Kafka and PostgreSQL
+        Springboot - Kafka and PostgreSQL Implementation
       </label>
     
-    <a href="./" title="Springboot - Kafka and PostgreSQL" class="md-nav__link md-nav__link--active">
-      Springboot - Kafka and PostgreSQL
+    <a href="./" title="Springboot - Kafka and PostgreSQL Implementation" class="md-nav__link md-nav__link--active">
+      Springboot - Kafka and PostgreSQL Implementation
     </a>
     
       
@@ -309,8 +330,8 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#some-springboot-knowledge" title="Some Springboot knowledge" class="md-nav__link">
-    Some Springboot knowledge
+  <a href="#some-spring-boot-basis" title="Some Spring boot basis" class="md-nav__link">
+    Some Spring boot basis
   </a>
   
 </li>
@@ -325,6 +346,27 @@
         <li class="md-nav__item">
   <a href="#listening-to-container-events" title="Listening to container events" class="md-nav__link">
     Listening to container events
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#manually-deploy-to-iks" title="Manually deploy to IKS" class="md-nav__link">
+    Manually deploy to IKS
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#security" title="Security" class="md-nav__link">
+    Security
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#issues" title="Issues" class="md-nav__link">
+    Issues
   </a>
   
 </li>
@@ -346,16 +388,21 @@
     
   </li>
 
-    
-      
-      
-      
+        
+          
+          
+          
 
 
   <li class="md-nav__item">
     <a href="../flask/" title="Python Flask and Kafka Implementation" class="md-nav__link">
       Python Flask and Kafka Implementation
     </a>
+  </li>
+
+        
+      </ul>
+    </nav>
   </li>
 
     
@@ -419,8 +466,8 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#some-springboot-knowledge" title="Some Springboot knowledge" class="md-nav__link">
-    Some Springboot knowledge
+  <a href="#some-spring-boot-basis" title="Some Spring boot basis" class="md-nav__link">
+    Some Spring boot basis
   </a>
   
 </li>
@@ -435,6 +482,27 @@
         <li class="md-nav__item">
   <a href="#listening-to-container-events" title="Listening to container events" class="md-nav__link">
     Listening to container events
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#manually-deploy-to-iks" title="Manually deploy to IKS" class="md-nav__link">
+    Manually deploy to IKS
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#security" title="Security" class="md-nav__link">
+    Security
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#issues" title="Issues" class="md-nav__link">
+    Issues
   </a>
   
 </li>
@@ -465,27 +533,31 @@
                   <a href="https://github.com/ibm-cloud-architecture/refarch-kc-container-ms/edit/master/docs/springboot/README.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
                 
                 
-                <h1 id="springboot-kafka-container-microservice">Springboot - kafka container microservice</h1>
+                <h1 id="springboot-kafka-container-microservice">Springboot - Kafka container microservice</h1>
+<p>This chapter presents how to develop the container manager using Spring boot, Kafka template and PostgreSQL, Hubernate JPA using Spring data. This is another way to implement the same specifications and helps us to assess the different technologies to develop event-driven cloud native microservice.</p>
+<p><img alt="" src="spr-components.png" /></p>
 <h2 id="start-from-spring-initializer">Start from Spring initializer</h2>
-<p>Using the <a href="https://start.spring.io/">Spring Code generator</a> we create the base project. </p>
+<p>Using the <a href="https://start.spring.io/">Spring Code generator</a> we created the base project. </p>
 <p><img alt="" src="spr-initializr.png" /></p>
-<p>The generated code is really minimum and the interesting part is the pom dependencies. We do not have code related to the selected dependant, no dockerfile and all the goodies to deploy to IBM Kubernetes Service are not there. In fact, if you have a cloud foundry organization defined the IBM cloud, you can use the IBM Cloud CLI for developer to add docker, helm and other things. </p>
-<p>It is possible, and more convenient to start from IBM Cloud starter kit and modify the generared <code>pom.xml</code>.</p>
+<p>The generated code is really minimum and the interesting part is the maven <code>pom.xml</code> dependencies. We do not have code related to the selected dependant, no dockerfile and all the goodies to deploy to Kubernetes cluster. </p>
+<p>It is more convenient to start from IBM Cloud starter kit and modify the generared <code>pom.xml</code> with the needed dependencies...</p>
 <h2 id="start-from-ibm-cloud-starter-kit">Start from IBM Cloud Starter Kit.</h2>
-<p>Once logged to IBM Cloud, create a resource and select Starter kit in the Catalog.</p>
+<p>Once logged to IBM Cloud, create a resource and select <code>Starter kit</code> in the Catalog, then the <code>Java microservice with Spring</code> kit. </p>
 <p><img alt="" src="spr-ic-start.png" /></p>
-<p>The application is created, you can download the code or create a toolchain so we can deploy to an existing IBM Kubernetes Service.</p>
+<p>The application is created, you can download the code or create a toolchain so we use a continuous integration and deployment to an existing IBM Kubernetes Service.</p>
 <p><img alt="" src="spr-ic-app.png" /></p>
-<p>So now the repository has Dockerfile, helm chart, CLI configuration... We can build and run with the following commands:</p>
+<p>So now the repository has Dockerfile, helm chart, CLI configuration, scripts and other manifests... We can build existing code and run it with the following commands:</p>
 <pre><code class="shell">$ mvn clean package
 $ java -jar target/SpringContainerMS-1.0-SNAPSHOT.jar application.SBApplication
 </code></pre>
 
-<p>Pointing to http://localhost:8080/ will bring the first page. It works! so let break it.</p>
-<p>We need to merge both code or modify the pom and run <code>mvn install</code>. Before that as we are using Eclipse last release we can install Spring IDE plugin. Before that ensure you get the last updates from eclipse, uisng the 'update Software' menu. If not the installation may fail. See <a href="https://www.eclipse.org/community/eclipse_newsletter/2018/february/springboot.php">this note</a> in case you want to know how to do that, but this is simple, open Marketplace and search for Spring IDE, download release 4.x:</p>
+<p>Pointing to http://localhost:8080/ will bring the first page. It works! So let break it.</p>
+<p>If you did not try it before, and if you are using <a href="https://www.eclipse.org/">Eclipse</a> last release, you can install Spring IDE plugin: open Marketplace and search for Spring IDE, download release 4.x:</p>
 <p><img alt="" src="eclipse-spr-ide.png" /></p>
+<p>To verify the installation, importing the project as a 'maven' project will let you see the different options like spring boot starters election...</p>
+<p>The tools is also available to our second IDE visual studio code. See <a href="https://spring.io/tools">this note</a> for Spring toools. </p>
 <h3 id="new-pom">New pom</h3>
-<p>The generated dependencies include Spring boot starter web code, hystrix for circuit breaker and retries, and testing. We need to add kafka and postgreSQL</p>
+<p>The generated dependencies include Spring boot starter web code, hystrix for circuit breaker and retries, and testing. We need to add kafka and postgreSQL and run <code>mvn install</code>.</p>
 <pre><code>&lt;dependency&gt;
     &lt;groupId&gt;org.springframework.kafka&lt;/groupId&gt;
     &lt;artifactId&gt;spring-kafka&lt;/artifactId&gt;
@@ -503,14 +575,16 @@ $ java -jar target/SpringContainerMS-1.0-SNAPSHOT.jar application.SBApplication
 &lt;/dependency&gt;
 </code></pre>
 
-<p>Then reun <code>mvn install</code>.</p>
-<h2 id="some-springboot-knowledge">Some Springboot knowledge</h2>
-<p>We encourage you to go over the different tutorials from spring.io. We followed these ones to be sure we got understanding of the basic components:</p>
+<h2 id="some-spring-boot-basis">Some Spring boot basis</h2>
+<p>We encourage you to go over the different tutorials from spring.io. We followed the following ones to be sure we have some good understanding of the basic components:</p>
 <ul>
 <li><a href="https://spring.io/guides/gs/spring-boot/">Springboot</a>. Helps to start quickly application. The first class as the main function and run the SpringApplcation. The <code>@SpringBootApplication</code> annotation adds configuration to get the spring bean definitions, and auto configure the bean jars needed. As we specified the <code>pring-boot-starter-web</code> artifact in the dependencoes the application is a web MVC and includes a Dispatcher servlet. </li>
+<li><a href="https://spring.io/guides/gs/accessing-data-jpa/">Data with JPA</a> addresses creating entity beans, repository as data access object and queries. </li>
+<li><a href="https://www.callicoder.com/spring-boot-jpa-hibernate-postgresql-restful-crud-api-example/">Spring Boot, PostgreSQL, JPA, Hibernate RESTful CRUD API Example from Callicoder</a></li>
+<li><a href="https://spring.io/projects/spring-kafka">Spring Kafka</a></li>
 </ul>
 <h2 id="add-the-get-all-containers">Add the get all containers</h2>
-<p>We want to add the get containers in the test and implement a simple container bean and operation. Spring takes into account the package names to manage its dependencies and settings. The test looks like:</p>
+<p>We want to add the get containers in the test and implement a simple container controller bean and CRUD operations. Spring takes into account the package names to manage its dependencies and settings. The test looks like:</p>
 <pre><code class="java"> String endpoint = &quot;http://localhost:&quot; + port + &quot;/containers&quot;;
 String response = server.getForObject(endpoint, String.class);
 assertTrue(&quot;Invalid response from server : &quot; + response, response.startsWith(&quot;[&quot;));
@@ -519,19 +593,147 @@ assertTrue(&quot;Invalid response from server : &quot; + response, response.star
 <p>And the resource class under the package <code>ibm.labs.kc.containermgr.rest.containers</code> with naming convention starting from where the <code>SBApplication</code> application is (<code>ibm.labs.kc.containermgr</code>). </p>
 <pre><code class="java">package ibm.labs.kc.containermgr.rest.containers;
 @RestController
-public class ContainerResource {
+public class ContainerController {
 
 
-    @RequestMapping(&quot;containers&quot;)
+    @GetMapping(&quot;containers&quot;)
+    public List&lt;ContainerEntity&gt; getAllContainers() {
+        return new ArrayList&lt;ContainerEntity&gt;;
+    }
 </code></pre>
 
+<p>The ContainerEntity is a class with JPA annotation to control the mapping to tables. So here is a simple extract:</p>
+<pre><code class="java">@Entity
+@Table(name = &quot;containers&quot;)
+public class ContainerEntity implements java.io.Serializable {
+
+    @Id
+    protected String id;
+    protected String type;
+    protected String status;
+    protected String brand;
+}
+</code></pre>
+
+<p>The next major step is to add a repository and configure the application to use Postgress dialect so JPA can generate compatible DDL. The repository is scrary easy, it just extends a base JpaRepository and specify the ID will be a String and the record a ContainerEntity.</p>
+<pre><code class="java">@Repository
+public interface ContainerRepository extends JpaRepository&lt;ContainerEntity,String&gt;{}
+</code></pre>
+
+<p>Spring makes it magic to add save, findById, findAll... operations. So now we can @Autowrite the repository and add the tests and the connection between the rest api and the repo. The test is in the Junit test class: <a href="src/test/java/ibm/labs/kc/containermgr/PostgreSqlTest.java">PostgreSqlTest</a>. </p>
+<pre><code class="java">@Test
+    public void testAccessToRemoteDBSpringDatasource() {
+        Optional&lt;ContainerEntity&gt; cOut = containerRepo.findById(&quot;c1&quot;);
+        if (!cOut.isPresent()) {
+            ContainerEntity c = new ContainerEntity(&quot;c1&quot;,&quot;Brand&quot;,&quot;Reefer&quot;,100,0,0);
+            c.setCreatedAt(new Date());
+            c.setUpdatedAt(c.getCreatedAt());
+            containerRepo.save(c);
+            // add asserts...
+        }
+    }
+</code></pre>
+
+<p>Finally the controller is integrating the repository:</p>
+<pre><code class="java">    @Autowired
+    private ContainerRepository containerRepository;
+
+    @GetMapping(&quot;/containers/{containerId}&quot;)
+    public ContainerEntity getContainerById(@PathVariable String containerId) {
+        return containerRepository.findById(containerId)
+                .orElseThrow(() -&gt; 
+         new ResourceNotFoundException(&quot;Container not found with id &quot; + containerId));
+    }
+
+</code></pre>
+
+<p>After the tests run successfule with a valid connection to IBM cloud, launching the spring boot app location and going to http://localhost:8080/containers/c1 will give you the data for the Container "c1".   </p>
 <h2 id="listening-to-container-events">Listening to container events</h2>
-<p>So the implementation is not focuing on <a href="https://spring.io/projects/spring-kafka">Spring Kafka</a> template to listen and send messages. It is based on the pure java kafka-clients jar. Here is the <a href="https://docs.spring.io/spring-kafka/docs/2.2.4.RELEASE/reference/">product documentation</a> and a quick summary, in next section on how we use it. But first, using our <a href="">docker compose</a> file we started our local kafka and zookeeper. </p>
-<p>As we want to receive container events we need to define a <a href="https://docs.spring.io/spring-kafka/docs/2.2.4.RELEASE/reference/#receiving-messages">a Spring Kafka container</a>.</p>
+<p>The use story is to get the container event from the kafka <code>containers</code> topics and add new container to the inventory, or update existing ones. So we need to add consumer and publisher using <a href="https://spring.io/projects/spring-kafka">Spring Kafka</a>. Spring Kafka template is based on the pure java kafka-clients jar but provide the same encapsulation as JMS template. Here is the <a href="https://docs.spring.io/spring-kafka/docs/2.2.4.RELEASE/reference/">product documentation</a>.  </p>
+<p>First we need to start a kafka consumer when the application starts. We want one unique instance, so a singleton. As presented in <a href="https://www.baeldung.com/running-setup-logic-on-startup-in-spring">this article</a>, we select to add a Component that is an application listener so when the spring context is running, we can start consuming message from Kafka.  </p>
+<pre><code class="java">@Component
+public class ContainerConsumer {
+    @EventListener
+    public void onApplicationEvent(ContextRefreshedEvent event) {
+        // prepare kafka consumer, add an event handler callback and start the consumer
+}
+</code></pre>
+
+<p>The code is in the class: <code>ibm.labs.kc.containermgr.kafka.ContainerConsumer.java</code>. Spring Kafka container](https://docs.spring.io/spring-kafka/docs/2.2.4.RELEASE/reference/#receiving-messages) is not bringing that much value on top of Kafka Java API, and we tend to prefer learning a unique API and keep programming with the Kafka Java API. </p>
+<p>We have added an end to end integration test to create container events and see the payload persisted in Postgresql.  When running the server locally, you may want to leverage our <a href="https://github.com/ibm-cloud-architecture/refarch-kc/blob/master/docker/backbone-compose.yml">docker compose</a> file to start a local kafka broker. </p>
+<h2 id="manually-deploy-to-iks">Manually deploy to IKS</h2>
+<p>The steps are the same as other project and we are providing the same type of tools:</p>
+<pre><code class="shell"># login to IBM Cloud
+$ ibmcloud login -a https://api.us-east.bluemix.net
+# connect to the IKS cluster
+$ ibmcloud ks region-set us-east   
+$ ibmcloud ks cluster-config fabio-wdc-07
+$ export KUBECONFIG= ~/.bluemix/plugins/container-service/clusters/fabio-wdc-07/kube-config-wdc07-fabio-wdc-07.yml
+# login to the private registry
+$ ibmcloud cr login
+# build the jar and docker image
+$ ./script/buildDocker.sh IBMCLOUD
+# Push the image
+$ docker push  us.icr.io/ibmcaseeda/kc-springcontainerms
+# Deploy the Helm release
+$ ./scripts/deployHelm
+</code></pre>
+
+<p>If for any reason you get a "image can't be pulled" error. Verify the image is in the registry with the command: <code>docker cr image-list</code>. Then if so, verify there is a secret defined to keep the security key to access the registry in the same namespace as you are deploying your app, and this secret is referenced in the yml file:</p>
+<pre><code>&quot;imagePullSecrets&quot;: [
+          {
+            &quot;name&quot;: &quot;browncompute-registry-secret&quot;
+          }
+        ],
+</code></pre>
+
+<p>If you follow those steps the application is deployed but is not working due to SSL certifications issues. So let deal with security now!.</p>
+<h2 id="security">Security</h2>
+<p>To communicate with IBM Cloud PostgresSQl service the client needs to use SSL and the certificates... 
+First to avoid sharing userid and password in github, we use environment variables for postgressql url, user and password. There is a <code>setenv.sh</code> in the <code>scripts</code> folder to use with your own settings. Also to run unit test in eclipse you need to set those environment variables in the run configuration as illustrated in the figure below:</p>
+<p><img alt="" src="eclipse-envvar.png" /></p>
+<p>Those variables are using the Spring boot <code>application.configuration</code> file.</p>
+<pre><code>spring.datasource.url=${POSTGRESQL_URL}
+</code></pre>
+
+<p>To create the SSL connection you will need to make the server certificate available to Java, the first step is to convert it to a form Java understands.
+To download a text version of the base64 certificate as defined in the connection credentials of the IBM Cloud postgressql service use the following command:</p>
+<pre><code class="shell">$ ibmcloud cdb deployment-cacert Green-DB-PostgreSQL
+# if you do not have the cloud database plugin does the following and rerun previous command:
+$ ibmcloud plugin install cloud-databases
+</code></pre>
+
+<p>Save the certificate to a file (e.g. postgressql.crt). Then transform it to a Java format and save it to a keystore used by Java</p>
+<pre><code class="shell"># transform
+$ openssl x509 -in postgressql.crt -out postgressql.crt.der -outform der
+# save in keystore
+$ keytool -keystore mykeystore -alias postgresql -import -file postgressql.crt.der
+</code></pre>
+
+<p>Then adding the following setting will let the Java program accesses the certificate from the keystore.</p>
+<pre><code>java -jar -Djavax.net.ssl.trustStore=mykeystore -Djavax.net.ssl.trustStorePassword=changeit ${root_folder}/target/SpringContainerMS-1.0-SNAPSHOT.jar application.SBApplication
+</code></pre>
+
+<p>Now to make all this available in docker container we propose to let the previous two commands run within the Dockerfile during the build process.</p>
+<h2 id="issues">Issues</h2>
+<p>The level of abstraction in Spring is nice when doing basic things but can become a nightmare when doing real bigger application including different libraries. Also migrating or using the last version 2.xx, bring changes to existing code and tests. Below is a list of iisues we spent time on:</p>
+<ul>
+<li>When JPA started, it creates / updates database schema, and for example enforced to have an Id as int while it was as string. As a bypass we create the table before in postsgresql using psql tool.</li>
+<li>When starting the spring data, JPA will try to connect to the PostgresSQL and execute a set of validation, one of them could generate the following exception: <code>Method org.postgresql.jdbc.PgConnection.createClob() is not yet implemented</code>. The explanation for the solution is <a href="https://vkuzel.com/spring-boot-jpa-hibernate-atomikos-postgresql-exception">here</a></li>
+<li>
+<p>Testing endpoint /health did not work on Spring 2.1.4. Thisi s due that there is the new Actuator capabilities (<code>spring-boot-starter-actuator</code>) that adds endpoints to manage a webapp in production. This is a nice feature. So remove any hold Health api class and modify the url to <code>/actuator/health</code>. Be sure to read <a href="https://docs.spring.io/spring-boot/docs/current/reference/html/production-ready-endpoints.html">this note</a> on actuator.</p>
+</li>
+<li>
+<p>Deployed in Kubernetes service, the pod has issue on postgress SSL handshake. (org.postgresql.util.PSQLException: SSL error: Received fatal alert: handshake_failure). This problem is linked to a SSL certificate not found. We need to be sure a Java Keystore is defined and includes the public certificate coming from the server. See <a href="#security">security section</a> above.</p>
+</li>
+</ul>
 <h2 id="references">References</h2>
 <ul>
 <li><a href="https://start.spring.io/">Spring Code generator</a></li>
-<li><a href="https://spring.io/projects/spring-kafka">Spring Kafka</a></li>
+<li><a href="https://spring.io/projects/spring-kafka">Spring Kafka</a> and the spring kafka <a href="https://docs.spring.io/spring-kafka/docs/2.2.4.RELEASE/reference">documentation</a></li>
+<li><a href="https://docs.spring.io/spring-data/jpa/docs/current/reference/html/">sptring Data and JPA</a></li>
+<li><a href="">SSL and postgresql</a></li>
+<li><a href="http://tleyden.github.io/blog/2017/06/14/running-postgresql-in-docker/">Runninf postgresql in docker</a></li>
 </ul>
                 
                   

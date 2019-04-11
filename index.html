@@ -278,6 +278,13 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#compendium" title="Compendium" class="md-nav__link">
+    Compendium
+  </a>
+  
+</li>
+      
       
       
       
@@ -294,34 +301,58 @@
       
 
 
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2">
+    
+    <label class="md-nav__link" for="nav-2">
+      Implementations
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-2">
+        Implementations
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
   <li class="md-nav__item">
     <a href="kstreams/" title="Kafka Streams Implementation" class="md-nav__link">
       Kafka Streams Implementation
     </a>
   </li>
 
-    
-      
-      
-      
+        
+          
+          
+          
 
 
   <li class="md-nav__item">
-    <a href="springboot/" title="Springboot - Kafka and PostgreSQL" class="md-nav__link">
-      Springboot - Kafka and PostgreSQL
+    <a href="springboot/" title="Springboot - Kafka and PostgreSQL Implementation" class="md-nav__link">
+      Springboot - Kafka and PostgreSQL Implementation
     </a>
   </li>
 
-    
-      
-      
-      
+        
+          
+          
+          
 
 
   <li class="md-nav__item">
     <a href="flask/" title="Python Flask and Kafka Implementation" class="md-nav__link">
       Python Flask and Kafka Implementation
     </a>
+  </li>
+
+        
+      </ul>
+    </nav>
   </li>
 
     
@@ -374,6 +405,13 @@
         <li class="md-nav__item">
   <a href="#assign-container-to-order" title="Assign container to order" class="md-nav__link">
     Assign container to order
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#compendium" title="Compendium" class="md-nav__link">
+    Compendium
   </a>
   
 </li>
@@ -439,6 +477,7 @@ root@2f049cb7b4f2:/ python ProduceContainerCreatedEvent.py
 <h2 id="assign-container-to-order">Assign container to order</h2>
 <p>The implementation will search the list of containers closed to the source location. We simplify the implementation by assuming mapping container (longitude, latitude) position to be in an area closed to the harbor close to the pickup location. We do not manage the time when the container will be there. We assume containers is at location at the time of the order is processed, is the same as the time of the pickup. We may fine tune that if we can make it simple.</p>
 <p>The output of this assignment processing is an event to the <code>orders</code> topic.</p>
+<h2 id="compendium">Compendium</h2>
                 
                   
                 
