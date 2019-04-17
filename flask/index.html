@@ -296,9 +296,45 @@
       
     
     
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        Python Flask and Kafka Implementation
+      </label>
+    
     <a href="./" title="Python Flask and Kafka Implementation" class="md-nav__link md-nav__link--active">
       Python Flask and Kafka Implementation
     </a>
+    
+      
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#container-actions" title="Container Actions" class="md-nav__link">
+    Container Actions
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#container-states" title="Container States" class="md-nav__link">
+    Container States
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
     
   </li>
 
@@ -337,6 +373,29 @@
     
   
   
+    <label class="md-nav__title" for="__toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#container-actions" title="Container Actions" class="md-nav__link">
+    Container Actions
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#container-states" title="Container States" class="md-nav__link">
+    Container States
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -351,6 +410,75 @@
                 
                 
                 <h1 id="python-flask-implementation-of-the-container-inventory-management">Python Flask implementation of the container inventory management</h1>
+<p>In this chapter we will implement a python based container inventory management service using kafka and flask. The component can be represented in the figure below:</p>
+<p><img alt="" src="../images/flask-container.png" /></p>
+<p>The container topics includes all events about container life cycle.  Each event published to the container topic will have a corresponding action that will update the container's status.  </p>
+<h2 id="container-actions">Container Actions</h2>
+<ul>
+<li>
+<p>ContainerAddedToInventory</p>
+</li>
+<li>
+<p>ContainerRemovedFromInventory</p>
+</li>
+<li>
+<p>ContainerAtLocation</p>
+</li>
+<li>
+<p>ContainerOnMaintenance</p>
+</li>
+<li>
+<p>ContainerOffMaintenance</p>
+</li>
+<li>
+<p>ContainerAssignedToOrder</p>
+</li>
+<li>
+<p>ContainerReleasedFromOrder</p>
+</li>
+<li>
+<p>ContainerGoodLoaded</p>
+</li>
+<li>
+<p>ContainerGoodUnLoaded</p>
+</li>
+<li>
+<p>ContainerOnShip</p>
+</li>
+<li>
+<p>ContainerOffShip</p>
+</li>
+<li>
+<p>ContainerOnTruck</p>
+</li>
+<li>
+<p>ContainerOffTruck</p>
+</li>
+</ul>
+<h2 id="container-states">Container States</h2>
+<ul>
+<li>
+<p>OnShip</p>
+</li>
+<li>
+<p>OffShip</p>
+</li>
+<li>
+<p>AtDock</p>
+</li>
+<li>
+<p>OnTruck</p>
+</li>
+<li>
+<p>OffTruck</p>
+</li>
+<li>
+<p>Loaded</p>
+</li>
+<li>
+<p>Empty</p>
+</li>
+</ul>
                 
                   
                 

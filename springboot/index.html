@@ -337,8 +337,15 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#add-the-get-all-containers" title="Add the get all containers" class="md-nav__link">
-    Add the get all containers
+  <a href="#add-the-get-containers-api" title="Add the get /containers  API" class="md-nav__link">
+    Add the get /containers  API
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#build-with-docker" title="Build with docker" class="md-nav__link">
+    Build with docker
   </a>
   
 </li>
@@ -473,8 +480,15 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#add-the-get-all-containers" title="Add the get all containers" class="md-nav__link">
-    Add the get all containers
+  <a href="#add-the-get-containers-api" title="Add the get /containers  API" class="md-nav__link">
+    Add the get /containers  API
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#build-with-docker" title="Build with docker" class="md-nav__link">
+    Build with docker
   </a>
   
 </li>
@@ -534,7 +548,7 @@
                 
                 
                 <h1 id="springboot-kafka-container-microservice">Springboot - Kafka container microservice</h1>
-<p>This chapter presents how to develop the container manager using Spring boot, Kafka template and PostgreSQL, Hubernate JPA using Spring data. This is another way to implement the same specifications and helps us to assess the different technologies to develop event-driven cloud native microservice.</p>
+<p>This chapter presents how to develop the Reefer container manager using Spring boot, Kafka template and PostgreSQL, Hibernate JPA using Spring data. This is another way to implement the same specifications and helps us to assess the different technologies to develop event-driven cloud native microservice. The user stories to support are described in <a href="..">this section</a>.</p>
 <p><img alt="" src="spr-components.png" /></p>
 <h2 id="start-from-spring-initializer">Start from Spring initializer</h2>
 <p>Using the <a href="https://start.spring.io/">Spring Code generator</a> we created the base project. </p>
@@ -583,8 +597,8 @@ $ java -jar target/SpringContainerMS-1.0-SNAPSHOT.jar application.SBApplication
 <li><a href="https://www.callicoder.com/spring-boot-jpa-hibernate-postgresql-restful-crud-api-example/">Spring Boot, PostgreSQL, JPA, Hibernate RESTful CRUD API Example from Callicoder</a></li>
 <li><a href="https://spring.io/projects/spring-kafka">Spring Kafka</a></li>
 </ul>
-<h2 id="add-the-get-all-containers">Add the get all containers</h2>
-<p>We want to add the get containers in the test and implement a simple container controller bean and CRUD operations. Spring takes into account the package names to manage its dependencies and settings. The test looks like:</p>
+<h2 id="add-the-get-containers-api">Add the get /containers  API</h2>
+<p>We want to start by the get reefer containers test and then implement a simple container controller bean with CRUD operations. Spring takes into account the package names to manage its dependencies and settings. The test looks like:</p>
 <pre><code class="java"> String endpoint = &quot;http://localhost:&quot; + port + &quot;/containers&quot;;
 String response = server.getForObject(endpoint, String.class);
 assertTrue(&quot;Invalid response from server : &quot; + response, response.startsWith(&quot;[&quot;));
@@ -602,7 +616,7 @@ public class ContainerController {
     }
 </code></pre>
 
-<p>The ContainerEntity is a class with JPA annotation to control the mapping to tables. So here is a simple extract:</p>
+<p>The ContainerEntity is a class with JPA annotations, used to control the mapping object to table. Below is a <a href="https://github.com/ibm-cloud-architecture/refarch-kc-container-ms/blob/14cc515787a7aeeebf38c703473ab32622c56b93/SpringContainerMS/src/main/java/ibm/labs/kc/containermgr/model/ContainerEntity.java#L21-L47">simple entity definition</a>:</p>
 <pre><code class="java">@Entity
 @Table(name = &quot;containers&quot;)
 public class ContainerEntity implements java.io.Serializable {
@@ -615,12 +629,12 @@ public class ContainerEntity implements java.io.Serializable {
 }
 </code></pre>
 
-<p>The next major step is to add a repository and configure the application to use Postgress dialect so JPA can generate compatible DDL. The repository is scrary easy, it just extends a base JpaRepository and specify the ID will be a String and the record a ContainerEntity.</p>
+<p>Once we have entity and how it is mapped to a table, the next major step is to add a repository class: <a href="https://github.com/ibm-cloud-architecture/refarch-kc-container-ms/blob/master/SpringContainerMS/src/main/java/ibm/labs/kc/containermgr/dao/ContainerRepository.java">ContainerRepository.java</a> and configure the application to use Postgress dialect so JPA can generate compatible DDLs. The repository is scrary easy, it just extends a base JpaRepository and specifies the primary key used as ID and the type of record as ContainerEntity.</p>
 <pre><code class="java">@Repository
 public interface ContainerRepository extends JpaRepository&lt;ContainerEntity,String&gt;{}
 </code></pre>
 
-<p>Spring makes it magic to add save, findById, findAll... operations. So now we can @Autowrite the repository and add the tests and the connection between the rest api and the repo. The test is in the Junit test class: <a href="src/test/java/ibm/labs/kc/containermgr/PostgreSqlTest.java">PostgreSqlTest</a>. </p>
+<p>Spring makes it magic to add save, findById, findAll... operations transparently. So now we can @Autowrite the repository and add the tests and the connection between the rest api and the repo. The test is in the Junit test class: <a href="src/test/java/ibm/labs/kc/containermgr/PostgreSqlTest.java">PostgreSqlTest</a>. In fact for test reason and being able to inject Mockup class in unit test, we inject via contructor.</p>
 <pre><code class="java">@Test
     public void testAccessToRemoteDBSpringDatasource() {
         Optional&lt;ContainerEntity&gt; cOut = containerRepo.findById(&quot;c1&quot;);
@@ -647,7 +661,14 @@ public interface ContainerRepository extends JpaRepository&lt;ContainerEntity,St
 
 </code></pre>
 
-<p>After the tests run successfule with a valid connection to IBM cloud, launching the spring boot app location and going to http://localhost:8080/containers/c1 will give you the data for the Container "c1".   </p>
+<p>The test fails as it is missing the configuration to the remote postsgresql service. As we do not want to hardcode the password and URL end point or share secret in public github we define the configuration using environment variables. See the <a href="https://github.com/ibm-cloud-architecture/refarch-kc-container-ms/blob/master/SpringContainerMS/src/main/resources/application.properties">application.properties</a> file. The Postgresql we are using is the IBM Cloud deployment. To export the different environment variables we have a <code>setenv.sh</code> script (which we have defined a template) with different argument (LOCAL, IBMCLOUD, ICP). </p>
+<pre><code class="shell">$ source ./scripts/setenv.sh IBMCLOUD
+$ mvn test
+</code></pre>
+
+<p>After the tests run successfully with a valid connection to IBM cloud, launching the spring boot app location and going to http://localhost:8080/containers/c1 will give you the data for the Container "c1".   </p>
+<h2 id="build-with-docker">Build with docker</h2>
+<p>To support flexible CI/CD deployment and run locally we propose to use Docker <a href="https://docs.docker.com/develop/develop-images/multistage-build/">multistage build</a>. </p>
 <h2 id="listening-to-container-events">Listening to container events</h2>
 <p>The use story is to get the container event from the kafka <code>containers</code> topics and add new container to the inventory, or update existing ones. So we need to add consumer and publisher using <a href="https://spring.io/projects/spring-kafka">Spring Kafka</a>. Spring Kafka template is based on the pure java kafka-clients jar but provide the same encapsulation as JMS template. Here is the <a href="https://docs.spring.io/spring-kafka/docs/2.2.4.RELEASE/reference/">product documentation</a>.  </p>
 <p>First we need to start a kafka consumer when the application starts. We want one unique instance, so a singleton. As presented in <a href="https://www.baeldung.com/running-setup-logic-on-startup-in-spring">this article</a>, we select to add a Component that is an application listener so when the spring context is running, we can start consuming message from Kafka.  </p>
@@ -690,13 +711,15 @@ $ ./scripts/deployHelm
 <p>If you follow those steps the application is deployed but is not working due to SSL certifications issues. So let deal with security now!.</p>
 <h2 id="security">Security</h2>
 <p>To communicate with IBM Cloud PostgresSQl service the client needs to use SSL and the certificates... 
-First to avoid sharing userid and password in github, we use environment variables for postgressql url, user and password. There is a <code>setenv.sh</code> in the <code>scripts</code> folder to use with your own settings. Also to run unit test in eclipse you need to set those environment variables in the run configuration as illustrated in the figure below:</p>
+First to avoid sharing userid and password in github, we use environment variables for postgressql url, user and password. There is a <code>setenv.tmpl.sh</code> in the <code>scripts</code> folder to use with your own settings. Rename it <code>setenv.sh</code>. This file is ignored by git.  Also to run unit test in eclipse you need to set those environment variables in the run configuration as illustrated in the figure below:</p>
 <p><img alt="" src="eclipse-envvar.png" /></p>
-<p>Those variables are using the Spring boot <code>application.configuration</code> file.</p>
+<p>Those variables are used the Spring boot <code>application.configuration</code> file, for example for the postgresql URL:</p>
 <pre><code>spring.datasource.url=${POSTGRESQL_URL}
 </code></pre>
 
-<p>To create the SSL connection you will need to make the server certificate available to Java, the first step is to convert it to a form Java understands.
+<p>When the Spring repository class establishes a TLS or SSL communication to the Postgresql service in IBM Cloud (or ICP), both client and server negotiate a stateful connection by using a handshaking procedure. During this procedure, the server usually sends back its identification in the form of a digital certificate.</p>
+<p>Java programs store certificates in a repository called Java KeyStore (JKS). </p>
+<p>To create the SSL connection you will need to make the server public certificate available to your Java client JVM. The certificate is persisted in a Trustore. So get the server public certificate: <code>postgresql.crt</code>, then convert it to a form Java understands.
 To download a text version of the base64 certificate as defined in the connection credentials of the IBM Cloud postgressql service use the following command:</p>
 <pre><code class="shell">$ ibmcloud cdb deployment-cacert Green-DB-PostgreSQL
 # if you do not have the cloud database plugin does the following and rerun previous command:
@@ -707,13 +730,14 @@ $ ibmcloud plugin install cloud-databases
 <pre><code class="shell"># transform
 $ openssl x509 -in postgressql.crt -out postgressql.crt.der -outform der
 # save in keystore
-$ keytool -keystore mykeystore -alias postgresql -import -file postgressql.crt.der
+$ keytool -keystore clienttruststore -alias postgresql -import -file postgressql.crt.der -storepass changeit 
 </code></pre>
 
 <p>Then adding the following setting will let the Java program accesses the certificate from the keystore.</p>
-<pre><code>java -jar -Djavax.net.ssl.trustStore=mykeystore -Djavax.net.ssl.trustStorePassword=changeit ${root_folder}/target/SpringContainerMS-1.0-SNAPSHOT.jar application.SBApplication
+<pre><code>java -jar -Djavax.net.ssl.trustStore=clienttruststore -Djavax.net.ssl.trustStorePassword=changeit ${root_folder}/target/SpringContainerMS-1.0-SNAPSHOT.jar application.SBApplication
 </code></pre>
 
+<p>We recommend reading <a href="https://jdbc.postgresql.org/documentation/91/ssl-client.html">this section</a> of Postgresql product documentation.</p>
 <p>Now to make all this available in docker container we propose to let the previous two commands run within the Dockerfile during the build process.</p>
 <h2 id="issues">Issues</h2>
 <p>The level of abstraction in Spring is nice when doing basic things but can become a nightmare when doing real bigger application including different libraries. Also migrating or using the last version 2.xx, bring changes to existing code and tests. Below is a list of iisues we spent time on:</p>
