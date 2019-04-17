@@ -737,7 +737,7 @@ $ keytool -keystore clienttruststore -alias postgresql -import -file postgressql
 <pre><code>java -jar -Djavax.net.ssl.trustStore=clienttruststore -Djavax.net.ssl.trustStorePassword=changeit ${root_folder}/target/SpringContainerMS-1.0-SNAPSHOT.jar application.SBApplication
 </code></pre>
 
-<p>We recommend reading <a href="https://jdbc.postgresql.org/documentation/91/ssl-client.html">this section</a> of Postgresql product documentation.</p>
+<p>We recommend reading <a href="https://jdbc.postgresql.org/documentation/91/ssl-client.html">this section</a> of Postgresql product documentation, and <a href="https://www.baeldung.com/java-ssl-handshake-failures">this article from Baeldung</a> on SSL handshake in Java.</p>
 <p>Now to make all this available in docker container we propose to let the previous two commands run within the Dockerfile during the build process.</p>
 <h2 id="issues">Issues</h2>
 <p>The level of abstraction in Spring is nice when doing basic things but can become a nightmare when doing real bigger application including different libraries. Also migrating or using the last version 2.xx, bring changes to existing code and tests. Below is a list of iisues we spent time on:</p>
@@ -748,7 +748,7 @@ $ keytool -keystore clienttruststore -alias postgresql -import -file postgressql
 <p>Testing endpoint /health did not work on Spring 2.1.4. Thisi s due that there is the new Actuator capabilities (<code>spring-boot-starter-actuator</code>) that adds endpoints to manage a webapp in production. This is a nice feature. So remove any hold Health api class and modify the url to <code>/actuator/health</code>. Be sure to read <a href="https://docs.spring.io/spring-boot/docs/current/reference/html/production-ready-endpoints.html">this note</a> on actuator.</p>
 </li>
 <li>
-<p>Deployed in Kubernetes service, the pod has issue on postgress SSL handshake. (org.postgresql.util.PSQLException: SSL error: Received fatal alert: handshake_failure). This problem is linked to a SSL certificate not found. We need to be sure a Java Keystore is defined and includes the public certificate coming from the server. See <a href="#security">security section</a> above.</p>
+<p>Deployed in Kubernetes service, the pod has issue on postgress SSL handshake. (org.postgresql.util.PSQLException: SSL error: Received fatal alert: handshake_failure). SSL handshakes are a mechanism by which a client and server establish the trust and logistics required to secure their connection over the network. This problem may be linked to a SSL certificate not found or wrong encryption protocol. We need to be sure a Java Keystore is defined and includes the public certificate coming from the server. See <a href="#security">security section</a> above.</p>
 </li>
 </ul>
 <h2 id="references">References</h2>
