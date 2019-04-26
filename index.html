@@ -467,6 +467,7 @@
 <p>The second diagram shows the same service implemented with Apache Kafka KStreams API in Java, deployed in Liberty server with JAXRS API:</p>
 <p><img alt="" src="images/kstreams-container.png" />  </p>
 <p>The implementation description is <a href="kstreams/">here.</a></p>
+<p>The last solution is done with Spring boot, postgresql as back end database and kafka. The description for this implementation is in <a href="springboot/">this chapter</a>.</p>
 <h2 id="container-inventory">Container inventory</h2>
 <p>We are providing a tool to publish container created events to the Kafka <code>container</code> topic. The python code is under the <code>tools</code> folder. It can be executed using our Python docker image with the command:</p>
 <pre><code class="shell">docker run -e KAFKA_BROKERS=$KAFKA_BROKERS -v $(pwd):/home --network=docker_default -ti ibmcase/python bash
@@ -478,6 +479,11 @@ root@2f049cb7b4f2:/ python ProduceContainerCreatedEvent.py
 <p>The implementation will search the list of containers closed to the source location. We simplify the implementation by assuming mapping container (longitude, latitude) position to be in an area closed to the harbor close to the pickup location. We do not manage the time when the container will be there. We assume containers is at location at the time of the order is processed, is the same as the time of the pickup. We may fine tune that if we can make it simple.</p>
 <p>The output of this assignment processing is an event to the <code>orders</code> topic.</p>
 <h2 id="compendium">Compendium</h2>
+<ul>
+<li><a href="http://postgresguide.com/sql/select.html">Postgresql tutorial</a></li>
+<li><a href="https://www.postgresql.org/docs/9.2/app-psql.html">psql commands</a></li>
+<li><a href="https://docs.spring.io/spring-kafka/reference/">Spring boot kafka documentation</a></li>
+</ul>
                 
                   
                 

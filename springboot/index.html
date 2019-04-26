@@ -357,6 +357,61 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#preparing-your-test-environment" title="Preparing your test environment" class="md-nav__link">
+    Preparing your test environment
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-integration-tests" title="The integration tests" class="md-nav__link">
+    The integration tests
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#console-6-create-order" title="Console 6: Create order" class="md-nav__link">
+    Console 6: Create order
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#console-5-consumer-orders" title="Console 5: consumer orders" class="md-nav__link">
+    Console 5: consumer orders
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#console-1-app" title="Console 1: app" class="md-nav__link">
+    Console 1: app
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#console-3-containers-consumer" title="Console 3: Containers consumer" class="md-nav__link">
+    Console 3: Containers consumer
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#console-2" title="Console 2" class="md-nav__link">
+    Console 2
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#build-with-docker" title="Build with docker" class="md-nav__link">
     Build with docker
   </a>
@@ -378,15 +433,15 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#manually-deploy-to-iks" title="Manually deploy to IKS" class="md-nav__link">
-    Manually deploy to IKS
+  <a href="#security" title="Security" class="md-nav__link">
+    Security
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#security" title="Security" class="md-nav__link">
-    Security
+  <a href="#manually-deploy-to-iks" title="Manually deploy to IKS" class="md-nav__link">
+    Manually deploy to IKS
   </a>
   
 </li>
@@ -520,6 +575,61 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#preparing-your-test-environment" title="Preparing your test environment" class="md-nav__link">
+    Preparing your test environment
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-integration-tests" title="The integration tests" class="md-nav__link">
+    The integration tests
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#console-6-create-order" title="Console 6: Create order" class="md-nav__link">
+    Console 6: Create order
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#console-5-consumer-orders" title="Console 5: consumer orders" class="md-nav__link">
+    Console 5: consumer orders
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#console-1-app" title="Console 1: app" class="md-nav__link">
+    Console 1: app
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#console-3-containers-consumer" title="Console 3: Containers consumer" class="md-nav__link">
+    Console 3: Containers consumer
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#console-2" title="Console 2" class="md-nav__link">
+    Console 2
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#build-with-docker" title="Build with docker" class="md-nav__link">
     Build with docker
   </a>
@@ -541,15 +651,15 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#manually-deploy-to-iks" title="Manually deploy to IKS" class="md-nav__link">
-    Manually deploy to IKS
+  <a href="#security" title="Security" class="md-nav__link">
+    Security
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#security" title="Security" class="md-nav__link">
-    Security
+  <a href="#manually-deploy-to-iks" title="Manually deploy to IKS" class="md-nav__link">
+    Manually deploy to IKS
   </a>
   
 </li>
@@ -654,17 +764,31 @@ $ java -jar target/SpringContainerMS-1.0-SNAPSHOT.jar application.SBApplication
 <li><a href="https://spring.io/projects/spring-kafka">Spring Kafka</a></li>
 </ul>
 <h2 id="add-the-get-containers-api">Add the get /containers  API</h2>
-<p>We want to start by the get reefer containers test and then implement a simple container controller bean with CRUD operations. Spring takes into account the package names to manage its dependencies and settings. The test looks like:</p>
-<pre><code class="java"> String endpoint = &quot;http://localhost:&quot; + port + &quot;/containers&quot;;
-String response = server.getForObject(endpoint, String.class);
-assertTrue(&quot;Invalid response from server : &quot; + response, response.startsWith(&quot;[&quot;));
+<p>We want to start by the get reefer containers test and then implement a simple container controller bean with the CRUD operations. Spring takes into account the package names to manage its dependencies and settings. The test looks like below:</p>
+<pre><code class="java">@Test
+public void testGetContainers() throws Exception {
+    String endpoint = &quot;http://localhost:&quot; + port + &quot;/containers&quot;;
+    String response = server.getForObject(endpoint, String.class);
+    assertTrue(&quot;Invalid response from server : &quot; + response, response.startsWith(&quot;[&quot;));
+}
 </code></pre>
 
-<p>And the resource class under the package <code>ibm.labs.kc.containermgr.rest.containers</code> with naming convention starting from where the <code>SBApplication</code> application is (<code>ibm.labs.kc.containermgr</code>). </p>
+<p>Spring Boot provides a @SpringBootTest annotation to build an application context used for the test. Below we specify to use Spring unit test runner, and to load the configuration from the main application class. The server used above is auto injected by the runner.</p>
+<pre><code class="java">@RunWith(SpringRunner.class)
+@SpringBootTest(classes=SBApplication.class,webEnvironment = WebEnvironment.RANDOM_PORT)
+public class ContainerAPITest {
+     @Autowired
+    private TestRestTemplate server;
+
+    @LocalServerPort
+    private int port;
+
+</code></pre>
+
+<p>The next step is to implement the controller class under the package <code>ibm.labs.kc.containermgr.rest.containers</code>. </p>
 <pre><code class="java">package ibm.labs.kc.containermgr.rest.containers;
 @RestController
 public class ContainerController {
-
 
     @GetMapping(&quot;containers&quot;)
     public List&lt;ContainerEntity&gt; getAllContainers() {
@@ -672,7 +796,7 @@ public class ContainerController {
     }
 </code></pre>
 
-<p>The ContainerEntity is a class with JPA annotations, used to control the mapping object to table. Below is a <a href="https://github.com/ibm-cloud-architecture/refarch-kc-container-ms/blob/14cc515787a7aeeebf38c703473ab32622c56b93/SpringContainerMS/src/main/java/ibm/labs/kc/containermgr/model/ContainerEntity.java#L21-L47">simple entity definition</a>:</p>
+<p>The ContainerEntity is a class with JPA annotations, used to control the object to table mapping. Below is a <a href="https://github.com/ibm-cloud-architecture/refarch-kc-container-ms/blob/14cc515787a7aeeebf38c703473ab32622c56b93/SpringContainerMS/src/main/java/ibm/labs/kc/containermgr/model/ContainerEntity.java#L21-L47">simple entity definition</a>:</p>
 <pre><code class="java">@Entity
 @Table(name = &quot;containers&quot;)
 public class ContainerEntity implements java.io.Serializable {
@@ -685,7 +809,7 @@ public class ContainerEntity implements java.io.Serializable {
 }
 </code></pre>
 
-<p>Once we have entity and how it is mapped to a table, the next major step is to add a repository class: <a href="https://github.com/ibm-cloud-architecture/refarch-kc-container-ms/blob/master/SpringContainerMS/src/main/java/ibm/labs/kc/containermgr/dao/ContainerRepository.java">ContainerRepository.java</a> and configure the application to use Postgress dialect so JPA can generate compatible DDLs. The repository is scrary easy, it just extends a base JpaRepository and specifies the primary key used as ID and the type of record as ContainerEntity.</p>
+<p>Once we have defined the entity attributes and how it is mapped to the table column, the next major step is to add a repository class: <a href="https://github.com/ibm-cloud-architecture/refarch-kc-container-ms/blob/master/SpringContainerMS/src/main/java/ibm/labs/kc/containermgr/dao/ContainerRepository.java">ContainerRepository.java</a> and configure the application to use Postgress dialect so JPA can generate compatible DDLs. The repository is scrary easy, it just extends a base JpaRepository and specifies the primary key used as ID and the type of record as ContainerEntity.</p>
 <pre><code class="java">@Repository
 public interface ContainerRepository extends JpaRepository&lt;ContainerEntity,String&gt;{}
 </code></pre>
@@ -717,12 +841,147 @@ public interface ContainerRepository extends JpaRepository&lt;ContainerEntity,St
 
 </code></pre>
 
-<p>The test fails as it is missing the configuration to the remote postsgresql service. As we do not want to hardcode the password and URL end point or share secret in public github we define the configuration using environment variables. See the <a href="https://github.com/ibm-cloud-architecture/refarch-kc-container-ms/blob/master/SpringContainerMS/src/main/resources/application.properties">application.properties</a> file. The Postgresql we are using is the IBM Cloud deployment. To export the different environment variables we have a <code>setenv.sh</code> script (which we have defined a template) with different argument (LOCAL, IBMCLOUD, ICP). </p>
-<pre><code class="shell">$ source ./scripts/setenv.sh IBMCLOUD
+<p>The test fails as it is missing the configuration to the postsgresql service. As we do not want to hardcode the password and URL end point or share secret in public github we define the configuration using environment variables. See the <a href="https://github.com/ibm-cloud-architecture/refarch-kc-container-ms/blob/master/SpringContainerMS/src/main/resources/application.properties">application.properties</a> file. We have two choices for the Postgresql service: one using IBM Cloud and one running local docker image. </p>
+<p>To export the different environment variables we have a <code>setenv.sh</code> script (which we have defined a template for) with different arguments to control Kafka and Postgresql parameters (LOCAL, IBMCLOUD, ICP). </p>
+<p>To execute against the remote postgresql use:</p>
+<pre><code class="shell"># Under the SpringContainerMS folder
+$ source ../scripts/setenv.sh IBMCLOUD
+$ mvn test
+</code></pre>
+
+<p>To run locally start the backend services (see ) and use:</p>
+<pre><code class="shell">$ source ../scripts/setenv.sh LOCAL
 $ mvn test
 </code></pre>
 
 <p>After the tests run successfully with a valid connection to IBM cloud, launching the spring boot app location and going to http://localhost:8080/containers/c1 will give you the data for the Container "c1".   </p>
+<h2 id="preparing-your-test-environment">Preparing your test environment</h2>
+<p>We propose to use the local deployment to do unit tests and integration tests. The integration test for this application is quite complex and we propose to use a diagram to illustrate the components involved and how to start them.</p>
+<p>First be sure your back end services run: It will start zookeeper, kafka and postgresql. You need the <a href="https://ibm-cloud-architecture.github.io/refarch-kc/">refarch-kc main project for that</a> which normally can be in one folder above this current project. To start the backend:</p>
+<pre><code class="shell">$ cd refarch-kc/docker
+$ docker-compose -f backbone-compose.yml up`
+
+Starting docker_zookeeper1_1  ... done
+Creating docker_postgres-db_1 ... done
+Starting docker_kafka1_1      ... done
+</code></pre>
+
+<blockquote>
+<p>if you need to restart from empty topics, delete the kafka1 and zookeeper1 folders under <code>refarch-kc/docker</code></p>
+</blockquote>
+<h4 id="the-integration-tests">The integration tests</h4>
+<p><img alt="" src="itg-tests.png" /></p>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Description</th>
+<th>Run</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Springboot app which includes kafka consumers and producers, REST API and postgresql DAO</td>
+<td>./scripts/run.sh</td>
+</tr>
+<tr>
+<td>2</td>
+<td><strong>psql</strong> to access postgresql DB</td>
+<td>../scripts/start_spql</td>
+</tr>
+<tr>
+<td>3</td>
+<td>containers consumer. To trace the <em>containers</em> topics. This code is in refarch-kc project in <code>itg-tests/ContainersPython</code> folder.</td>
+<td>Use a Terminal console: refarch-kc/itg-tests/ContainersPython/ runContainerConsumer.sh LOCAL c01</td>
+</tr>
+<tr>
+<td>4</td>
+<td>container events producer. To generate events. This code is in refarch-kc project in <code>itg-tests/ContainersPython</code> folder.</td>
+<td>Use a Terminal console: refarch-kc/itg-tests/ContainersPython/ addContainer.sh LOCAL c01</td>
+</tr>
+<tr>
+<td>5</td>
+<td>orders consumer. To trace the <em>orders</em> topics. This code is in refarch-kc project in <code>itg-tests/OrdersPython</code> folder.</td>
+<td>Use a Terminal console:refarch-kc/itg-tests/OrdersPython/ runOrderConsumer.sh LOCAL order01</td>
+</tr>
+<tr>
+<td>6</td>
+<td>orders events producer. To generate order events. This code is in refarch-kc project in <code>itg-tests/OrdersPython</code> folder.</td>
+<td>Use a Terminal console: refarch-kc/itg-tests/OrdersPython/ addOrder.sh LOCAL order01</td>
+</tr>
+</tbody>
+</table>
+<p>Here is an example of traces after sending 2 container creation events in terminal console (#3):</p>
+<pre><code>@@@ pollNextOrder containers partition: [0] at offset 4 with key b'itg-C02':
+    value: {&quot;containerID&quot;: &quot;itg-C02&quot;, &quot;timestamp&quot;: 1556250004, &quot;type&quot;: &quot;ContainerAdded&quot;, &quot;payload&quot;: {&quot;containerID&quot;: &quot;itg-C02&quot;, &quot;type&quot;: &quot;Reefer&quot;, &quot;status&quot;: &quot;Empty&quot;, &quot;latitude&quot;: 37.8, &quot;longitude&quot;: -122.25, &quot;capacity&quot;: 110, &quot;brand&quot;: &quot;itg-brand&quot;}}
+@@@ pollNextOrder containers partition: [0] at offset 5 with key b'itg-c03':
+    value: {&quot;containerID&quot;: &quot;itg-c03&quot;, &quot;timestamp&quot;: 1556250673, &quot;type&quot;: &quot;ContainerAdded&quot;, &quot;payload&quot;: {&quot;containerID&quot;: &quot;itg-c03&quot;, &quot;type&quot;: &quot;Reefer&quot;, &quot;status&quot;: &quot;Empty&quot;, &quot;latitude&quot;: 37.8, &quot;longitude&quot;: -122.25, &quot;capacity&quot;: 110, &quot;brand&quot;: &quot;itg-brand&quot;}}
+</code></pre>
+
+<p>Which can be verified in the (#1) trace:</p>
+<pre><code>2019-04-25 16:52:11.245  INFO 17734 --- [ingConsumer-C-1] c.l.k.c.kafka.ContainerConsumer          : Received container event: {&quot;containerID&quot;: &quot;itg-C02&quot;, &quot;timestamp&quot;: 1556250004, &quot;type&quot;: &quot;ContainerAdded&quot;, &quot;payload&quot;: {&quot;containerID&quot;: &quot;itg-C02&quot;, &quot;type&quot;: &quot;Reefer&quot;, &quot;status&quot;: &quot;Empty&quot;, &quot;latitude&quot;: 37.8, &quot;longitude&quot;: -122.25, &quot;capacity&quot;: 110, &quot;brand&quot;: &quot;itg-brand&quot;}}
+</code></pre>
+
+<p>And in console for container producer (#4)</p>
+<pre><code>Create container
+{'containerID': 'itg-C02', 'timestamp': 1556250004, 'type': 'ContainerAdded', 'payload': {'containerID': 'itg-C02', 'type': 'Reefer', 'status': 'Empty', 'latitude': 37.8, 'longitude': -122.25, 'capacity': 110, 'brand': 'itg-brand'}}
+Message delivered to containers [0]
+
+</code></pre>
+
+<p>Finally in the psql console:</p>
+<pre><code>postgres=# SELECT * FROM containers;
+   id    |   brand   | capacity |       created_at        | current_city | latitude | longitude | status |  type  |       updated_at        
+---------+-----------+----------+-------------------------+--------------+----------+-----------+--------+--------+-------------------------
+
+ itg-C02 | itg-brand |      110 | 2019-04-25 16:28:26.885 | Oakland      |     37.8 |   -122.25 |      1 | Reefer | 2019-04-25 20:40:04.579
+ itg-c03 | itg-brand |      110 | 2019-04-25 20:51:13.424 | Oakland      |     37.8 |   -122.25 |      1 | Reefer | 2019-04-25 20:51:13.424
+</code></pre>
+
+<blockquote>
+<p>The capacity is at maximum and the status = 1 is for empty container.</p>
+</blockquote>
+<p>When an order is created in console #6, a matching container is found and 2 events are created to present the container id and order id in both topics: containers and orders:</p>
+<h4 id="console-6-create-order">Console 6: Create order</h4>
+<pre><code class="shell">$ ./addOrder.sh LOCAL order02
+
+Create order
+{'orderID': 'order04', 'timestamp': 1556252841, 'type': 'OrderCreated', 'payload': {'orderID': 'order04', 'productID': 'FreshFoodItg', 'customerID': 'Customer007', 'quantity': 180, 'pickupAddress': {'street': 'astreet', 'city': 'Oakland', 'country': 'USA', 'state': 'CA', 'zipcode': '95000'}, 'destinationAddress': {'street': 'bstreet', 'city': 'Beijing', 'country': 'China', 'state': 'NE', 'zipcode': '09000'}, 'pickupDate': '2019-05-25', 'expectedDeliveryDate': '2019-06-25'}}
+Message delivered to orders [0]
+</code></pre>
+
+<h4 id="console-5-consumer-orders">Console 5: consumer orders</h4>
+<pre><code>    value: {&quot;orderID&quot;: &quot;order04&quot;, &quot;timestamp&quot;: 1556252841, &quot;type&quot;: &quot;OrderCreated&quot;, &quot;payload&quot;: {&quot;orderID&quot;: &quot;order04&quot;, &quot;productID&quot;: &quot;FreshFoodItg&quot;, &quot;customerID&quot;: &quot;Customer007&quot;, &quot;quantity&quot;: 180, &quot;pickupAddress&quot;: {&quot;street&quot;: &quot;astreet&quot;, &quot;city&quot;: &quot;Oakland&quot;, &quot;country&quot;: &quot;USA&quot;, &quot;state&quot;: &quot;CA&quot;, &quot;zipcode&quot;: &quot;95000&quot;}, &quot;destinationAddress&quot;: {&quot;street&quot;: &quot;bstreet&quot;, &quot;city&quot;: &quot;Beijing&quot;, &quot;country&quot;: &quot;China&quot;, &quot;state&quot;: &quot;NE&quot;, &quot;zipcode&quot;: &quot;09000&quot;}, &quot;pickupDate&quot;: &quot;2019-05-25&quot;, &quot;expectedDeliveryDate&quot;: &quot;2019-06-25&quot;}}
+@@@ pollNextOrder orders partition: [0] at offset 5 with key b'order04':
+    value: {&quot;orderID&quot;:&quot;order04&quot;,&quot;payload&quot;:{&quot;containerID&quot;:&quot;itg-c03&quot;,&quot;orderID&quot;:&quot;order04&quot;},&quot;timestamp&quot;:1556252842194,&quot;type&quot;:&quot;ContainerAllocated&quot;}
+</code></pre>
+
+<h4 id="console-1-app">Console 1: app</h4>
+<pre><code>2019-04-25 21:27:21.765  INFO 21610 --- [ingConsumer-C-1] c.l.kc.containermgr.kafka.OrderConsumer  : Received order event:{&quot;orderID&quot;: &quot;order04&quot;, &quot;timestamp&quot;: 1556252841, &quot;type&quot;: &quot;OrderCreated&quot;, &quot;payload&quot;: {&quot;orderID&quot;: &quot;order04&quot;, &quot;productID&quot;: &quot;FreshFoodItg&quot;, &quot;customerID&quot;: &quot;Customer007&quot;, &quot;quantity&quot;: 180, &quot;pickupAddress&quot;: {&quot;street&quot;: &quot;astreet&quot;, &quot;city&quot;: &quot;Oakland&quot;, &quot;country&quot;: &quot;USA&quot;, &quot;state&quot;: &quot;CA&quot;, &quot;zipcode&quot;: &quot;95000&quot;}, &quot;destinationAddress&quot;: {&quot;street&quot;: &quot;bstreet&quot;, &quot;city&quot;: &quot;Beijing&quot;, &quot;country&quot;: &quot;China&quot;, &quot;state&quot;: &quot;NE&quot;, &quot;zipcode&quot;: &quot;09000&quot;}, &quot;pickupDate&quot;: &quot;2019-05-25&quot;, &quot;expectedDeliveryDate&quot;: &quot;2019-06-25&quot;}}
+
+
+
+2019-04-25 21:27:22.199  INFO 21610 --- [ingConsumer-C-1] c.l.k.c.kafka.OrderProducerImpl          : Emit order event:{&quot;orderID&quot;:&quot;order04&quot;,&quot;payload&quot;:{&quot;containerID&quot;:&quot;itg-c03&quot;,&quot;orderID&quot;:&quot;order04&quot;},&quot;timestamp&quot;:1556252842194,&quot;type&quot;:&quot;ContainerAllocated&quot;}
+
+2019-04-25 21:27:22.273  INFO 21610 --- [ingConsumer-C-1] c.l.k.c.kafka.ContainerProducerImpl      : Emit container event:{&quot;containerID&quot;:&quot;itg-c03&quot;,&quot;payload&quot;:{&quot;containerID&quot;:&quot;itg-c03&quot;,&quot;orderID&quot;:&quot;order04&quot;},&quot;timestamp&quot;:1556252842272,&quot;type&quot;:&quot;ContainerAssignedToOrder&quot;}
+
+</code></pre>
+
+<h4 id="console-3-containers-consumer">Console 3: Containers consumer</h4>
+<pre><code>@@@ pollNextOrder containers partition: [0] at offset 6 with key b'itg-c03':
+    value: {&quot;containerID&quot;:&quot;itg-c03&quot;,&quot;payload&quot;:{&quot;containerID&quot;:&quot;itg-c03&quot;,&quot;orderID&quot;:&quot;order04&quot;},&quot;timestamp&quot;:1556252842272,&quot;type&quot;:&quot;ContainerAssignedToOrder&quot;}
+</code></pre>
+
+<h4 id="console-2">Console 2</h4>
+<p>The postgresql containers table is also modified as capacity of the container is reduced by the order quantity and the status set to loaded (value 0):</p>
+<pre><code>postgres=# SELECT * FROM containers;
+   id    |   brand   | capacity |       created_at        | current_city | latitude | longitude | status |  type  |       updated_at        
+---------+-----------+----------+-------------------------+--------------+----------+-----------+--------+--------+-------------------------
+ itg-C02 | itg-brand |        0 | 2019-04-25 16:28:26.885 | Oakland      |     37.8 |   -122.25 |      0 | Reefer | 2019-04-25 21:24:57.821
+ itg-c03 | itg-brand |        0 | 2019-04-25 20:51:13.424 | Oakland      |     37.8 |   -122.25 |      0 | Reefer | 2019-04-25 21:27:22.159
+</code></pre>
+
 <h2 id="build-with-docker">Build with docker</h2>
 <p>To support flexible CI/CD deployment and run locally we propose to use Docker <a href="https://docs.docker.com/develop/develop-images/multistage-build/">multi-stage build</a>. </p>
 <p>As part of the CI/CD design, there is an important subject to address is how to support integration tests. Unit tests focus on validating the business logic, while integration tests validate the end to end integration of the microservices with its dependants services and products. We separated the unit tests and integration tests in their own Java packages. Later it will be more appropriate to have a separate code repository for integration tests. </p>
@@ -742,7 +1001,38 @@ public class ContainerConsumer {
 <p>The code is in the class: <code>ibm.labs.kc.containermgr.kafka.ContainerConsumer.java</code>. Spring Kafka container](https://docs.spring.io/spring-kafka/docs/2.2.4.RELEASE/reference/#receiving-messages) is not bringing that much value on top of Kafka Java API, and we prefer learning a unique API and keep programming with the Kafka Java API. </p>
 <p>We have added an end to end integration test to create container events and see the payload persisted in Postgresql.  When running the server locally, you may want to leverage our <a href="https://github.com/ibm-cloud-architecture/refarch-kc/blob/master/docker/backbone-compose.yml">docker compose</a> file to start a local kafka broker. </p>
 <h2 id="listening-to-order-event">Listening to Order Event</h2>
-<p>The approach is the same as above and the supporting class is: </p>
+<p>The approach is the same as above and the supporting class is: <a href="https://github.com/ibm-cloud-architecture/refarch-kc-container-ms/blob/master/SpringContainerMS/src/main/java/ibm/labs/kc/containermgr/kafka/OrderConsumer.java">ibm.labs.kc.containermgr.kafka.OrderConsumer</a>.</p>
+<p>The difference is in the search for container for the order: </p>
+<h2 id="security">Security</h2>
+<p>To communicate with IBM Cloud PostgresSQl service the client needs to use SSL certificates... 
+First to avoid sharing userid and password in github, we use environment variables for postgressql url, user and password. There is a <code>setenv.tmpl.sh</code> in the <code>scripts</code> folder to use with your own settings. Rename it <code>setenv.sh</code>. This file is ignored by git. The values are coming from the IBM Cloud postgresql service. Also to run unit test in eclipse you need to set those environment variables in the run configuration as illustrated in the figure below:</p>
+<p><img alt="" src="eclipse-envvar.png" /></p>
+<p>Those variables are used the Spring boot <code>application.configuration</code> file, for example for the postgresql URL:</p>
+<pre><code>spring.datasource.url=${POSTGRESQL_URL}
+</code></pre>
+
+<p>When the Spring repository class establishes a TLS or SSL communication to the Postgresql service in IBM Cloud (or ICP), both client and server negotiate a stateful connection by using a handshaking procedure. During this procedure, the server usually sends back its identification in the form of a digital certificate.</p>
+<p>Java programs store certificates in a repository called Java KeyStore (JKS). </p>
+<p>To create the SSL connection you will need to make the server public certificate available to your Java client JVM. The certificate is persisted in a Trustore. So get the server public certificate: <code>postgresql.crt</code>, then convert it to a form Java understands.
+To download a text version of the base64 certificate as defined in the connection credentials of the IBM Cloud postgressql service use the following command:</p>
+<pre><code class="shell">$ ibmcloud cdb deployment-cacert Green-DB-PostgreSQL
+# if you do not have the cloud database plugin does the following and rerun previous command:
+$ ibmcloud plugin install cloud-databases
+</code></pre>
+
+<p>Save the certificate to a file (e.g. postgressql.crt). Then transform it to a Java format and save it to a keystore used by Java</p>
+<pre><code class="shell"># transform
+$ openssl x509 -in postgressql.crt -out postgressql.crt.der -outform der
+# save in keystore
+$ keytool -keystore clienttruststore -alias postgresql -import -file postgressql.crt.der -storepass changeit 
+</code></pre>
+
+<p>Then adding the following setting will let the Java program accesses the certificates from the keystore.</p>
+<pre><code>java -jar -Djavax.net.ssl.trustStore=clienttruststore -Djavax.net.ssl.trustStorePassword=changeit ./target/SpringContainerMS-1.0-SNAPSHOT.jar application.SBApplication
+</code></pre>
+
+<p>We recommend reading <a href="https://jdbc.postgresql.org/documentation/91/ssl-client.html">this section</a> of Postgresql product documentation, and <a href="https://www.baeldung.com/java-ssl-handshake-failures">this article from Baeldung</a> on SSL handshake in Java.</p>
+<p>Now to make all this available in docker container we propose to let the previous two commands run within the Dockerfile during the build process.</p>
 <h2 id="manually-deploy-to-iks">Manually deploy to IKS</h2>
 <p>The steps are the same as other project and we are providing the same type of tools:</p>
 <pre><code class="shell"># login to IBM Cloud
@@ -769,37 +1059,6 @@ $ ./scripts/deployHelm
         ],
 </code></pre>
 
-<p>If you follow those steps the application is deployed but is not working due to SSL certifications issues. So let deal with security now!.</p>
-<h2 id="security">Security</h2>
-<p>To communicate with IBM Cloud PostgresSQl service the client needs to use SSL certificates... 
-First to avoid sharing userid and password in github, we use environment variables for postgressql url, user and password. There is a <code>setenv.tmpl.sh</code> in the <code>scripts</code> folder to use with your own settings. Rename it <code>setenv.sh</code>. This file is ignored by git. The values are coming from the IBM Cloud postgresql service. Also to run unit test in eclipse you need to set those environment variables in the run configuration as illustrated in the figure below:</p>
-<p><img alt="" src="eclipse-envvar.png" /></p>
-<p>Those variables are used the Spring boot <code>application.configuration</code> file, for example for the postgresql URL:</p>
-<pre><code>spring.datasource.url=${POSTGRESQL_URL}
-</code></pre>
-
-<p>When the Spring repository class establishes a TLS or SSL communication to the Postgresql service in IBM Cloud (or ICP), both client and server negotiate a stateful connection by using a handshaking procedure. During this procedure, the server usually sends back its identification in the form of a digital certificate.</p>
-<p>Java programs store certificates in a repository called Java KeyStore (JKS). </p>
-<p>To create the SSL connection you will need to make the server public certificate available to your Java client JVM. The certificate is persisted in a Trustore. So get the server public certificate: <code>postgresql.crt</code>, then convert it to a form Java understands.
-To download a text version of the base64 certificate as defined in the connection credentials of the IBM Cloud postgressql service use the following command:</p>
-<pre><code class="shell">$ ibmcloud cdb deployment-cacert Green-DB-PostgreSQL
-# if you do not have the cloud database plugin does the following and rerun previous command:
-$ ibmcloud plugin install cloud-databases
-</code></pre>
-
-<p>Save the certificate to a file (e.g. postgressql.crt). Then transform it to a Java format and save it to a keystore used by Java</p>
-<pre><code class="shell"># transform
-$ openssl x509 -in postgressql.crt -out postgressql.crt.der -outform der
-# save in keystore
-$ keytool -keystore clienttruststore -alias postgresql -import -file postgressql.crt.der -storepass changeit 
-</code></pre>
-
-<p>Then adding the following setting will let the Java program accesses the certificate from the keystore.</p>
-<pre><code>java -jar -Djavax.net.ssl.trustStore=clienttruststore -Djavax.net.ssl.trustStorePassword=changeit ${root_folder}/target/SpringContainerMS-1.0-SNAPSHOT.jar application.SBApplication
-</code></pre>
-
-<p>We recommend reading <a href="https://jdbc.postgresql.org/documentation/91/ssl-client.html">this section</a> of Postgresql product documentation, and <a href="https://www.baeldung.com/java-ssl-handshake-failures">this article from Baeldung</a> on SSL handshake in Java.</p>
-<p>Now to make all this available in docker container we propose to let the previous two commands run within the Dockerfile during the build process.</p>
 <h2 id="issues">Issues</h2>
 <p>The level of abstraction in Spring is nice when doing basic things but can become a nightmare when doing real bigger application including different libraries. Also migrating or using the last version 2.xx, bring changes to existing code and tests. Below is a list of iisues we spent time on:</p>
 <ul>
