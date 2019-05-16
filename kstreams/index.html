@@ -346,6 +346,13 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#docker-compose-configuration" title="docker compose configuration" class="md-nav__link">
+    docker compose configuration
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#how-streams-flows-are-resilient" title="How streams flows are resilient?" class="md-nav__link">
     How streams flows are resilient?
   </a>
@@ -483,6 +490,13 @@
         
       </ul>
     </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#docker-compose-configuration" title="docker compose configuration" class="md-nav__link">
+    docker compose configuration
+  </a>
   
 </li>
       
@@ -730,6 +744,19 @@ mvn install
 </code></pre>
 
 <p>To start the liberty server use the script: <code>./script/startLocalLiberty</code> or <code>mvn liberty:run-server</code></p>
+<h2 id="docker-compose-configuration">docker compose configuration</h2>
+<p>Replace existing springcontainerms declaration to the following</p>
+<pre><code class="yaml">    containerkstreams:
+        image: ibmcase/kc-containerkstreams:latest
+        hostname: containerkstreams
+        ports:
+            - &quot;12080:9080&quot;
+        environment:
+            KAFKA_ENV: ${KAFKA_ENV}
+            KAFKA_BROKERS: ${KAFKA_BROKERS}
+            KAFKA_APIKEY: ${KAFKA_APIKEY}
+</code></pre>
+
 <h2 id="how-streams-flows-are-resilient">How streams flows are resilient?</h2>
 <h2 id="how-to-scale">How to scale?</h2>
                 
