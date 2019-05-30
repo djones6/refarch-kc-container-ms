@@ -379,8 +379,8 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#new-pom" title="New pom" class="md-nav__link">
-    New pom
+  <a href="#update-pomxml" title="Update pom.xml" class="md-nav__link">
+    Update pom.xml
   </a>
   
 </li>
@@ -405,8 +405,8 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#preparing-your-test-environment" title="Preparing your test environment" class="md-nav__link">
-    Preparing your test environment
+  <a href="#preparing-your-local-test-environment" title="Preparing your local test environment" class="md-nav__link">
+    Preparing your local test environment
   </a>
   
     <nav class="md-nav">
@@ -585,8 +585,8 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#new-pom" title="New pom" class="md-nav__link">
-    New pom
+  <a href="#update-pomxml" title="Update pom.xml" class="md-nav__link">
+    Update pom.xml
   </a>
   
 </li>
@@ -611,8 +611,8 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#preparing-your-test-environment" title="Preparing your test environment" class="md-nav__link">
-    Preparing your test environment
+  <a href="#preparing-your-local-test-environment" title="Preparing your local test environment" class="md-nav__link">
+    Preparing your local test environment
   </a>
   
     <nav class="md-nav">
@@ -772,7 +772,7 @@ $ java -jar target/SpringContainerMS-1.0-SNAPSHOT.jar application.SBApplication
 <p><img alt="" src="eclipse-spr-ide.png" /></p>
 <p>To verify the installation, importing our project as a 'maven' project will let you see the different options like spring boot starters election, etc...</p>
 <p>The tool is also available for IDE visual studio code. See <a href="https://spring.io/tools">this note</a> for Spring toools. </p>
-<h3 id="new-pom">New pom</h3>
+<h3 id="update-pomxml">Update pom.xml</h3>
 <p>The generated dependencies include Spring boot starter web code, hystrix for circuit breaker and retries, and testing. We need to add kafka and postgreSQL dependencies and re-run <code>mvn install</code>.</p>
 <pre><code>&lt;dependency&gt;
     &lt;groupId&gt;org.springframework.kafka&lt;/groupId&gt;
@@ -878,20 +878,20 @@ public interface ContainerRepository extends JpaRepository&lt;ContainerEntity,St
 </code></pre>
 
 <p>The test fails as it is missing the configuration to the postsgresql service. As we do not want to hardcode the password and URL end point or share secret in public github we define the configuration using environment variables. See the <a href="https://github.com/ibm-cloud-architecture/refarch-kc-container-ms/blob/master/SpringContainerMS/src/main/resources/application.properties">application.properties</a> file. We have two choices for the Postgresql service: one using IBM Cloud and one running local docker image. </p>
-<p>To export the different environment variables we have a <code>setenv.sh</code> script (which we have defined a template for) with different arguments to control Kafka and Postgresql parameters (LOCAL, IBMCLOUD, ICP). </p>
-<p>To execute against the remote postgresql use:</p>
+<p>To export the different environment variables we have a <code>setenv.sh</code> script (which we have defined a template for named setenv.sh.tmp in the main repository <code>refarch-kc</code>) with one argument used to control the different environment varaibles for Kafka and Postgresql. The script argument should be one of LOCAL (default if no argument is given), IBMCLOUD, or ICP. </p>
+<p>To execute against the remote postgresql and Kafka use:</p>
 <pre><code class="shell"># Under the SpringContainerMS folder
 $ source ../scripts/setenv.sh IBMCLOUD
 $ mvn test
 </code></pre>
 
-<p>To run locally start the backend services (In the refarch-kc project, docker folder and the docker compose file:backbone-compose.yml) and use:</p>
+<p>To execute against a local kafka - postesgresql docker images, first you need to start the backend services: In the <code>refarch-kc</code> project, under the <code>docker</code> folder use the docker compose file:backbone-compose.yml (See <a href="https://ibm-cloud-architecture.github.io/refarch-kc/deployments/local/#start-kafka-zookeeper-and-postgresql">this note for detail</a>):</p>
 <pre><code class="shell">$ source ../scripts/setenv.sh LOCAL
 $ mvn test
 </code></pre>
 
 <p>After the tests run successfully with a valid connection to IBM cloud, launching the spring boot app location and going to http://localhost:8080/containers/c1 will give you the data for the Container "c1".   </p>
-<h2 id="preparing-your-test-environment">Preparing your test environment</h2>
+<h2 id="preparing-your-local-test-environment">Preparing your local test environment</h2>
 <p>We propose to use the local deployment to do unit tests and integration tests. The integration test for this application is quite complex and we propose to use a diagram to illustrate the components involved and how to start them.</p>
 <p>First be sure your back end services run: It will start zookeeper, kafka and postgresql. You need the <a href="https://ibm-cloud-architecture.github.io/refarch-kc/">refarch-kc main project for that</a> which normally can be in one folder above this current project. To start the backend:</p>
 <pre><code class="shell">$ cd refarch-kc/docker
@@ -903,7 +903,7 @@ Starting docker_kafka1_1      ... done
 </code></pre>
 
 <blockquote>
-<p>if you need to restart from empty topics, delete the kafka1 and zookeeper1 folders under <code>refarch-kc/docker</code></p>
+<p>if you need to restart from empty topics, delete the kafka1 and zookeeper1 folders under <code>refarch-kc/docker</code> and restart the backend services.</p>
 </blockquote>
 <h4 id="the-integration-tests">The integration tests</h4>
 <p><img alt="" src="itg-tests.png" /></p>
