@@ -121,7 +121,7 @@
               Reefer Container Management Service
             </span>
             <span class="md-header-nav__topic">
-              Analysis and design considerations
+              Introduction
             </span>
           
         </div>
@@ -240,11 +240,11 @@
     
     
       <label class="md-nav__link md-nav__link--active" for="__toc">
-        Analysis and design considerations
+        Introduction
       </label>
     
-    <a href="." title="Analysis and design considerations" class="md-nav__link md-nav__link--active">
-      Analysis and design considerations
+    <a href="." title="Introduction" class="md-nav__link md-nav__link--active">
+      Introduction
     </a>
     
       
@@ -256,6 +256,13 @@
   
     <label class="md-nav__title" for="__toc">Table of contents</label>
     <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#tltr" title="TL;TR" class="md-nav__link">
+    TL;TR
+  </a>
+  
+</li>
       
         <li class="md-nav__item">
   <a href="#analysis" title="Analysis" class="md-nav__link">
@@ -308,15 +315,27 @@
       
 
 
+  <li class="md-nav__item">
+    <a href="ES2DDD2MS/" title="Analysis and design considerations" class="md-nav__link">
+      Analysis and design considerations
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
   <li class="md-nav__item md-nav__item--nested">
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2">
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3">
     
-    <label class="md-nav__link" for="nav-2">
+    <label class="md-nav__link" for="nav-3">
       Different implementations
     </label>
     <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
-      <label class="md-nav__title" for="nav-2">
+      <label class="md-nav__title" for="nav-3">
         Different implementations
       </label>
       <ul class="md-nav__list" data-md-scrollfix>
@@ -370,13 +389,13 @@
 
   <li class="md-nav__item md-nav__item--nested">
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3">
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4">
     
-    <label class="md-nav__link" for="nav-3">
+    <label class="md-nav__link" for="nav-4">
       Build and run
     </label>
     <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
-      <label class="md-nav__title" for="nav-3">
+      <label class="md-nav__title" for="nav-4">
         Build and run
       </label>
       <ul class="md-nav__list" data-md-scrollfix>
@@ -388,8 +407,8 @@
 
 
   <li class="md-nav__item">
-    <a href="springboot/" title="Locally" class="md-nav__link">
-      Locally
+    <a href="springboot/" title="Run spring boot app locally" class="md-nav__link">
+      Run spring boot app locally
     </a>
   </li>
 
@@ -430,6 +449,13 @@
   
     <label class="md-nav__title" for="__toc">Table of contents</label>
     <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#tltr" title="TL;TR" class="md-nav__link">
+    TL;TR
+  </a>
+  
+</li>
       
         <li class="md-nav__item">
   <a href="#analysis" title="Analysis" class="md-nav__link">
@@ -487,41 +513,26 @@
                 
                 <h1 id="container-management-microservice">Container management microservice</h1>
 <p>This project is part of the container shipment implementation solution, and address the Reefer container management microservice implmentaiton. You can read more about the end to end solution <a href="https://ibm-cloud-architecture.github.io/refarch-kc/">in this chapter.</a></p>
+<h2 id="tltr">TL;TR</h2>
 <p>The goal of this Container management service is to support the reefer containers inventory management and to process all the events related to the container entity. We are proposing three different implementations:</p>
 <ul>
-<li>Python with Flask and Confluent Kafka API for Python. See <a href="flask/">this description.</a></li>
-<li>Microprofile 2.2 using Kafka Streams. See <a href="kstreams/">this description.</a></li>
 <li>Springboot and spring kafka template and spring postgreSQL. <a href="springboot/">See this note.</a></li>
+<li>Python with Flask and Confluent Kafka API for Python. See <a href="flask/">this description.</a> - NOT DONE YET</li>
+<li>Microprofile 2.2 using Kafka Streams. See <a href="kstreams/">this description.</a> - NOT DONE YET</li>
 </ul>
+<p>We are demonstrating in this project how to transform an event storming analysis to an event-driven microservice implementation and how to address <a href="https://www.ibm.com/cloud/garage/practices/run/reversibility-in-the-cloud">'reversibility'</a> between the different platform. The service is packaged via dockerfile, and helm release is defined to deploy to kubernetes.</p>
 <h2 id="analysis">Analysis</h2>
-<p>Applying a domain-driven design and event storming we identified the following events:</p>
-<p><img alt="" src="container-events.png" /></p>
-<ul>
-<li>ContainerAddedToInventory, ContainerRemovedFromInventory</li>
-<li>ContainerAtLocation</li>
-<li>ContainerOnMaintenance, ContainerOffMaintenance, </li>
-<li>ContainerAssignedToOrder, ContainerReleasedFromOrder</li>
-<li>ContainerGoodLoaded, ContainerGoodUnLoaded</li>
-<li>ContainerOnShip, ContainerOffShip</li>
-<li>ContainerOnTruck, ContainerOffTruck</li>
-</ul>
-<p>The derived boundary context looks like in the following figure:</p>
-<p><img alt="" src="container-boundary.png" /></p>
-<p>The features to support in each possible implementation are:</p>
-<ul>
-<li>A REST API end point calleable from other services to get inventory content, a container by identifier, and to create a new container.</li>
-<li>A Kafka consumer to get <code>orderCreated</code> event published in the <code>orders</code> topic: the code will look at the pickup location and search in the container inventory the containers close to this location. </li>
-<li>A kafka consumer to get any container events from the <code>containers</code> topic.</li>
-</ul>
-<p>Finally, an important element of this project is the integration of Kafka topic as datasource to develop a machine learning model for the container predictive maintenance scoring. See details in <a href="./metrics">this note</a>.</p>
+<p>We have a dedicated article on how to transform event storming analysis to microservice, <a href="ES2DDD2MS">here</a>. </p>
 <h2 id="component-view">Component view</h2>
-<p>As the service needs to offer some basic APIs and be able to consume and produce events the code will have at least three main components: a kafka consumer, a producer,and a HTTP server exposing REST APIs. The following diagram illustrates a python flask implementation packaged in docker container:</p>
-<p><img alt="" src="images/flask-container.png" />  </p>
-<p>and the implementation considerations and best practices are described <a href="flask/">here.</a></p>
-<p>The second diagram shows the same service implemented with Apache Kafka KStreams API in Java, deployed in Liberty server with JAXRS API:</p>
-<p><img alt="" src="images/kstreams-container.png" />  </p>
-<p>The implementation description is <a href="kstreams/">here.</a></p>
-<p>The last solution is done using Spring boot, postgresql as back end database and Kafka. The implementation description is in <a href="springboot/">this chapter</a>.</p>
+<p>As the service needs to offer some basic APIs while consuming and producing events, the code has at least three main components: a kafka consumer, a kafka producer, and a HTTP server exposing the REST APIs. The following diagram illustrates the componentes involved in this container manager microservice:</p>
+<p><img alt="" src="comp-view.png" /></p>
+<ul>
+<li>A first component is responsible to define and expose APIs via RESTful protocol. It uses the services to delegate business logic implementation.</li>
+<li>The service component(s) addresses the business logic implementation and references data access object, and event producer.</li>
+<li>The event handler is a kafka consumer which runs continuously to get container events from the <code>container</code> topic. It invokes the service component.</li>
+<li>The event producer, produces events of interest to the business function</li>
+<li>The DAO implement the persistence for the data received as part of the event payload, or API.</li>
+</ul>
 <h2 id="container-inventory">Container inventory</h2>
 <p>We are providing a tool to publish <code>container created</code> events to the Kafka <code>containers</code> topic. The python code is under the <code>tools</code> folder. It can be executed using our Python docker image with the command:</p>
 <pre><code class="shell">docker run -e KAFKA_BROKERS=$KAFKA_BROKERS -v $(pwd):/home --network=docker_default -ti ibmcase/python bash
@@ -559,13 +570,13 @@ root@2f049cb7b4f2:/ python ProduceContainerCreatedEvent.py
       <nav class="md-footer-nav__inner md-grid">
         
         
-          <a href="kstreams/" title="Kafka Streams Implementation" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+          <a href="ES2DDD2MS/" title="Analysis and design considerations" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
             <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
               <span class="md-flex__ellipsis">
                 <span class="md-footer-nav__direction">
                   Next
                 </span>
-                Kafka Streams Implementation
+                Analysis and design considerations
               </span>
             </div>
             <div class="md-flex__cell md-flex__cell--shrink">
