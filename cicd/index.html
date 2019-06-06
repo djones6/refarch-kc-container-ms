@@ -36,7 +36,7 @@
     
     
       
-        <title>Analysis and design considerations - Reefer Container Management Service</title>
+        <title>Continuous delivery - Reefer Container Management Service</title>
       
     
     
@@ -96,7 +96,7 @@
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
     <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
     
-      <a href="#from-event-storming-to-ddd-to-microservice" tabindex="1" class="md-skip">
+      <a href="#continuous-delivery" tabindex="1" class="md-skip">
         Skip to content
       </a>
     
@@ -121,7 +121,7 @@
               Reefer Container Management Service
             </span>
             <span class="md-header-nav__topic">
-              Analysis and design considerations
+              Continuous delivery
             </span>
           
         </div>
@@ -241,49 +241,11 @@
       
       
 
-  
 
-
-  <li class="md-nav__item md-nav__item--active">
-    
-    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
-    
-      
-    
-    
-      <label class="md-nav__link md-nav__link--active" for="__toc">
-        Analysis and design considerations
-      </label>
-    
-    <a href="./" title="Analysis and design considerations" class="md-nav__link md-nav__link--active">
+  <li class="md-nav__item">
+    <a href="../ES2DDD2MS/" title="Analysis and design considerations" class="md-nav__link">
       Analysis and design considerations
     </a>
-    
-      
-<nav class="md-nav md-nav--secondary">
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">Table of contents</label>
-    <ul class="md-nav__list" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#analysis" title="Analysis" class="md-nav__link">
-    Analysis
-  </a>
-  
-</li>
-      
-      
-      
-      
-      
-    </ul>
-  
-</nav>
-    
   </li>
 
     
@@ -351,10 +313,12 @@
       
       
 
+  
 
-  <li class="md-nav__item md-nav__item--nested">
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4">
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4" checked>
     
     <label class="md-nav__link" for="nav-4">
       Deployments
@@ -394,11 +358,20 @@
           
           
 
+  
 
-  <li class="md-nav__item">
-    <a href="../cicd/" title="Continuous delivery" class="md-nav__link">
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+      
+    
+    
+    <a href="./" title="Continuous delivery" class="md-nav__link md-nav__link--active">
       Continuous delivery
     </a>
+    
   </li>
 
         
@@ -448,22 +421,6 @@
     
   
   
-    <label class="md-nav__title" for="__toc">Table of contents</label>
-    <ul class="md-nav__list" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#analysis" title="Analysis" class="md-nav__link">
-    Analysis
-  </a>
-  
-</li>
-      
-      
-      
-      
-      
-    </ul>
-  
 </nav>
                   </div>
                 </div>
@@ -474,46 +431,10 @@
             <article class="md-content__inner md-typeset">
               
                 
-                  <a href="https://github.com/ibm-cloud-architecture/refarch-kc-container-ms/edit/master/docs/ES2DDD2MS.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
+                  <a href="https://github.com/ibm-cloud-architecture/refarch-kc-container-ms/edit/master/docs/cicd.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
                 
                 
-                <h1 id="from-event-storming-to-ddd-to-microservice">From Event Storming to DDD to Microservice</h1>
-<h2 id="analysis">Analysis</h2>
-<p>Combining a domain-driven design and event storming we identified the following events:</p>
-<p><img alt="" src="../container-events.png" /></p>
-<ul>
-<li>ContainerAddedToInventory, ContainerRemovedFromInventory</li>
-<li>ContainerAtLocation</li>
-<li>ContainerOnMaintenance, ContainerOffMaintenance, </li>
-<li>ContainerAssignedToOrder, ContainerReleasedFromOrder</li>
-<li>ContainerGoodLoaded, ContainerGoodUnLoaded</li>
-<li>ContainerOnShip, ContainerOffShip</li>
-<li>ContainerOnTruck, ContainerOffTruck</li>
-</ul>
-<p>Which leads to the following commands, actors and events:</p>
-<p><img alt="" src="../container-cmd-events.png" /></p>
-<ul>
-<li>Add Reefer container to inventory</li>
-<li>Assign container to order</li>
-<li>Release container from order</li>
-<li>Remove Reefer container to inventory</li>
-<li>Set container in maintenance</li>
-<li>Set container off maintenance</li>
-</ul>
-<p>The main entity is the Container, with a unique ID, the containerID. We assume this ID is created by another application as a physical representation of this identifier need to physically exists on the container itself. </p>
-<p>The bounded context for the application is the container shipment context. With sub decomposition including the container and the order contexts:</p>
-<p><img alt="" src="../bounded-ctx.png" /></p>
-<p>A detail view of container bounded context may look like in the following figure:</p>
-<p><img alt="" src="../container-boundary.png" /></p>
-<p>This is a first version of this bounded context, and it will evolve over time. We map this bounded context to the java package <code>ibm.labs.kc.containermgr</code>.  The source tree would be further divided according to architectural responsibilities.</p>
-<p>Commands are map to exposed APIs. </p>
-<p>The features to support in each possible implementation are:</p>
-<ul>
-<li>A REST API end point calleable from other services to get inventory content, a container by identifier, and to create a new container.</li>
-<li>A Kafka consumer to get <code>orderCreated</code> event published in the <code>orders</code> topic: the code will look at the pickup location and search in the container inventory the containers close to this location. </li>
-<li>A kafka consumer to get any container events from the <code>containers</code> topic.</li>
-</ul>
-<p>Finally, an important element of this project is the integration of Kafka topic as datasource to develop a machine learning model for the container predictive maintenance scoring. See details in <a href="./metrics">this note</a>.</p>
+                <h1 id="continuous-delivery">Continuous delivery</h1>
                 
                   
                 
@@ -534,7 +455,7 @@
     <div class="md-footer-nav">
       <nav class="md-footer-nav__inner md-grid">
         
-          <a href=".." title="Introduction" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+          <a href="../springboot/" title="Run spring boot app locally" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
             <div class="md-flex__cell md-flex__cell--shrink">
               <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
             </div>
@@ -543,19 +464,19 @@
                 <span class="md-footer-nav__direction">
                   Previous
                 </span>
-                Introduction
+                Run spring boot app locally
               </span>
             </div>
           </a>
         
         
-          <a href="../kstreams/" title="Kafka Streams Implementation" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+          <a href="../tests/" title="Run integration tests" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
             <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
               <span class="md-flex__ellipsis">
                 <span class="md-footer-nav__direction">
                   Next
                 </span>
-                Kafka Streams Implementation
+                Run integration tests
               </span>
             </div>
             <div class="md-flex__cell md-flex__cell--shrink">

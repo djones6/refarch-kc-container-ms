@@ -36,7 +36,7 @@
     
     
       
-        <title>Analysis and design considerations - Reefer Container Management Service</title>
+        <title>Pre-requisite - Reefer Container Management Service</title>
       
     
     
@@ -96,7 +96,7 @@
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
     <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
     
-      <a href="#from-event-storming-to-ddd-to-microservice" tabindex="1" class="md-skip">
+      <a href="#environment-pre-requisites" tabindex="1" class="md-skip">
         Skip to content
       </a>
     
@@ -121,7 +121,7 @@
               Reefer Container Management Service
             </span>
             <span class="md-header-nav__topic">
-              Analysis and design considerations
+              Pre-requisite
             </span>
           
         </div>
@@ -241,49 +241,11 @@
       
       
 
-  
 
-
-  <li class="md-nav__item md-nav__item--active">
-    
-    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
-    
-      
-    
-    
-      <label class="md-nav__link md-nav__link--active" for="__toc">
-        Analysis and design considerations
-      </label>
-    
-    <a href="./" title="Analysis and design considerations" class="md-nav__link md-nav__link--active">
+  <li class="md-nav__item">
+    <a href="../ES2DDD2MS/" title="Analysis and design considerations" class="md-nav__link">
       Analysis and design considerations
     </a>
-    
-      
-<nav class="md-nav md-nav--secondary">
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">Table of contents</label>
-    <ul class="md-nav__list" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#analysis" title="Analysis" class="md-nav__link">
-    Analysis
-  </a>
-  
-</li>
-      
-      
-      
-      
-      
-    </ul>
-  
-</nav>
-    
   </li>
 
     
@@ -351,10 +313,12 @@
       
       
 
+  
 
-  <li class="md-nav__item md-nav__item--nested">
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4">
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4" checked>
     
     <label class="md-nav__link" for="nav-4">
       Deployments
@@ -370,11 +334,110 @@
           
           
 
+  
 
-  <li class="md-nav__item">
-    <a href="../deployment/" title="Pre-requisite" class="md-nav__link">
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+      
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        Pre-requisite
+      </label>
+    
+    <a href="./" title="Pre-requisite" class="md-nav__link md-nav__link--active">
       Pre-requisite
     </a>
+    
+      
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#local-deployment" title="Local deployment" class="md-nav__link">
+    Local deployment
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#prepare-minikube-or-docker-edge-kubernetes" title="Prepare minikube or docker edge / kubernetes" class="md-nav__link">
+    Prepare minikube or docker edge / kubernetes
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#or-use-docker-compose" title="Or use docker compose" class="md-nav__link">
+    Or use docker compose
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#public-cloud-deployment" title="Public cloud deployment" class="md-nav__link">
+    Public cloud deployment
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#prepare-an-ibm-kubernetes-service-cluster" title="Prepare an IBM Kubernetes service cluster" class="md-nav__link">
+    Prepare an IBM Kubernetes service cluster
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#prepare-event-stream-service-on-ibm-cloud" title="Prepare Event Stream service on IBM Cloud" class="md-nav__link">
+    Prepare Event Stream service on IBM Cloud
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#prepare-postgresql-service-on-ibm-cloud" title="Prepare Postgresql service  on IBM Cloud" class="md-nav__link">
+    Prepare Postgresql service  on IBM Cloud
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#private-cloud" title="Private Cloud" class="md-nav__link">
+    Private Cloud
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+    
   </li>
 
         
@@ -452,8 +515,69 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#analysis" title="Analysis" class="md-nav__link">
-    Analysis
+  <a href="#local-deployment" title="Local deployment" class="md-nav__link">
+    Local deployment
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#prepare-minikube-or-docker-edge-kubernetes" title="Prepare minikube or docker edge / kubernetes" class="md-nav__link">
+    Prepare minikube or docker edge / kubernetes
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#or-use-docker-compose" title="Or use docker compose" class="md-nav__link">
+    Or use docker compose
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#public-cloud-deployment" title="Public cloud deployment" class="md-nav__link">
+    Public cloud deployment
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#prepare-an-ibm-kubernetes-service-cluster" title="Prepare an IBM Kubernetes service cluster" class="md-nav__link">
+    Prepare an IBM Kubernetes service cluster
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#prepare-event-stream-service-on-ibm-cloud" title="Prepare Event Stream service on IBM Cloud" class="md-nav__link">
+    Prepare Event Stream service on IBM Cloud
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#prepare-postgresql-service-on-ibm-cloud" title="Prepare Postgresql service  on IBM Cloud" class="md-nav__link">
+    Prepare Postgresql service  on IBM Cloud
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#private-cloud" title="Private Cloud" class="md-nav__link">
+    Private Cloud
   </a>
   
 </li>
@@ -474,46 +598,29 @@
             <article class="md-content__inner md-typeset">
               
                 
-                  <a href="https://github.com/ibm-cloud-architecture/refarch-kc-container-ms/edit/master/docs/ES2DDD2MS.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
+                  <a href="https://github.com/ibm-cloud-architecture/refarch-kc-container-ms/edit/master/docs/deployment.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
                 
                 
-                <h1 id="from-event-storming-to-ddd-to-microservice">From Event Storming to DDD to Microservice</h1>
-<h2 id="analysis">Analysis</h2>
-<p>Combining a domain-driven design and event storming we identified the following events:</p>
-<p><img alt="" src="../container-events.png" /></p>
-<ul>
-<li>ContainerAddedToInventory, ContainerRemovedFromInventory</li>
-<li>ContainerAtLocation</li>
-<li>ContainerOnMaintenance, ContainerOffMaintenance, </li>
-<li>ContainerAssignedToOrder, ContainerReleasedFromOrder</li>
-<li>ContainerGoodLoaded, ContainerGoodUnLoaded</li>
-<li>ContainerOnShip, ContainerOffShip</li>
-<li>ContainerOnTruck, ContainerOffTruck</li>
-</ul>
-<p>Which leads to the following commands, actors and events:</p>
-<p><img alt="" src="../container-cmd-events.png" /></p>
-<ul>
-<li>Add Reefer container to inventory</li>
-<li>Assign container to order</li>
-<li>Release container from order</li>
-<li>Remove Reefer container to inventory</li>
-<li>Set container in maintenance</li>
-<li>Set container off maintenance</li>
-</ul>
-<p>The main entity is the Container, with a unique ID, the containerID. We assume this ID is created by another application as a physical representation of this identifier need to physically exists on the container itself. </p>
-<p>The bounded context for the application is the container shipment context. With sub decomposition including the container and the order contexts:</p>
-<p><img alt="" src="../bounded-ctx.png" /></p>
-<p>A detail view of container bounded context may look like in the following figure:</p>
-<p><img alt="" src="../container-boundary.png" /></p>
-<p>This is a first version of this bounded context, and it will evolve over time. We map this bounded context to the java package <code>ibm.labs.kc.containermgr</code>.  The source tree would be further divided according to architectural responsibilities.</p>
-<p>Commands are map to exposed APIs. </p>
-<p>The features to support in each possible implementation are:</p>
-<ul>
-<li>A REST API end point calleable from other services to get inventory content, a container by identifier, and to create a new container.</li>
-<li>A Kafka consumer to get <code>orderCreated</code> event published in the <code>orders</code> topic: the code will look at the pickup location and search in the container inventory the containers close to this location. </li>
-<li>A kafka consumer to get any container events from the <code>containers</code> topic.</li>
-</ul>
-<p>Finally, an important element of this project is the integration of Kafka topic as datasource to develop a machine learning model for the container predictive maintenance scoring. See details in <a href="./metrics">this note</a>.</p>
+                <h1 id="environment-pre-requisites">Environment pre-requisites</h1>
+<h2 id="local-deployment">Local deployment</h2>
+<h3 id="prepare-minikube-or-docker-edge-kubernetes">Prepare minikube or docker edge / kubernetes</h3>
+<p><TBD></p>
+<h3 id="or-use-docker-compose">Or use docker compose</h3>
+<p>See how to use docker-compose to run backend service and the solution in <a href="https://ibm-cloud-architecture.github.io/refarch-kc/deployments/local/">this article.</a></p>
+<h2 id="public-cloud-deployment">Public cloud deployment</h2>
+<h3 id="prepare-an-ibm-kubernetes-service-cluster">Prepare an IBM Kubernetes service cluster</h3>
+<p>See <a href="https://ibm-cloud-architecture.github.io/refarch-kc/deployments/iks/#kubernetes-cluster-service">this note</a>. </p>
+<p>Define a docker image private registry using <a href="https://ibm-cloud-architecture.github.io/refarch-kc/deployments/iks/#define-an-image-private-repository">this note.</a></p>
+<p>Define a namespace to deploy your solution. We used <code>browncompute</code> but can be anything.</p>
+<h3 id="prepare-event-stream-service-on-ibm-cloud">Prepare Event Stream service on IBM Cloud</h3>
+<p>See <a href="https://ibm-cloud-architecture.github.io/refarch-kc/deployments/iks/#event-streams-service-on-ibm-cloud">this note</a>.</p>
+<p>Get API Key and brokers URL. Then defines secrets for the api key as described <a href="https://ibm-cloud-architecture.github.io/refarch-kc/deployments/iks/#event-stream-api-key">here.</a></p>
+<p>Add the private token to access the image registry, see <a href="https://ibm-cloud-architecture.github.io/refarch-kc/deployments/iks/#private-registry-token">this note.</a></p>
+<h3 id="prepare-postgresql-service-on-ibm-cloud">Prepare Postgresql service  on IBM Cloud</h3>
+<p>Follow <a href="https://cloud.ibm.com/catalog/services/databases-for-postgresql">product documentation.</a></p>
+<p>Then add secrets for postgresql by following the commands described <a href="https://ibm-cloud-architecture.github.io/refarch-kc/deployments/iks/#postgresql-url-user-pwd-and-ca-certificate-as-secrets">here.</a></p>
+<h2 id="private-cloud">Private Cloud</h2>
+<p>See <a href="https://ibm-cloud-architecture.github.io/refarch-kc/deployments/icp/">this note.</a></p>
                 
                   
                 
@@ -534,7 +641,7 @@
     <div class="md-footer-nav">
       <nav class="md-footer-nav__inner md-grid">
         
-          <a href=".." title="Introduction" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+          <a href="../flask/" title="Python Flask and Kafka Implementation" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
             <div class="md-flex__cell md-flex__cell--shrink">
               <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
             </div>
@@ -543,19 +650,19 @@
                 <span class="md-footer-nav__direction">
                   Previous
                 </span>
-                Introduction
+                Python Flask and Kafka Implementation
               </span>
             </div>
           </a>
         
         
-          <a href="../kstreams/" title="Kafka Streams Implementation" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+          <a href="../springboot/" title="Run spring boot app locally" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
             <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
               <span class="md-flex__ellipsis">
                 <span class="md-footer-nav__direction">
                   Next
                 </span>
-                Kafka Streams Implementation
+                Run spring boot app locally
               </span>
             </div>
             <div class="md-flex__cell md-flex__cell--shrink">
