@@ -36,7 +36,7 @@
     
     
       
-        <title>Pre-requisite - Reefer Container Management Service</title>
+        <title>Pre-requisites - Reefer Container Management Service</title>
       
     
     
@@ -121,7 +121,7 @@
               Reefer Container Management Service
             </span>
             <span class="md-header-nav__topic">
-              Pre-requisite
+              Pre-requisites
             </span>
           
         </div>
@@ -345,11 +345,11 @@
     
     
       <label class="md-nav__link md-nav__link--active" for="__toc">
-        Pre-requisite
+        Pre-requisites
       </label>
     
-    <a href="./" title="Pre-requisite" class="md-nav__link md-nav__link--active">
-      Pre-requisite
+    <a href="./" title="Pre-requisites" class="md-nav__link md-nav__link--active">
+      Pre-requisites
     </a>
     
       
@@ -476,7 +476,19 @@
 
 
   <li class="md-nav__item">
-    <a href="../tests/" title="Run integration tests" class="md-nav__link">
+    <a href="../springboot/#security" title="Security" class="md-nav__link">
+      Security
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../springboot/#the-integration-tests" title="Run integration tests" class="md-nav__link">
       Run integration tests
     </a>
   </li>
@@ -604,23 +616,28 @@
                 <h1 id="environment-pre-requisites">Environment pre-requisites</h1>
 <h2 id="local-deployment">Local deployment</h2>
 <h3 id="prepare-minikube-or-docker-edge-kubernetes">Prepare minikube or docker edge / kubernetes</h3>
-<p><TBD></p>
+<ul>
+<li>To Be Done</li>
+</ul>
 <h3 id="or-use-docker-compose">Or use docker compose</h3>
 <p>See how to use docker-compose to run backend service and the solution in <a href="https://ibm-cloud-architecture.github.io/refarch-kc/deployments/local/">this article.</a></p>
 <h2 id="public-cloud-deployment">Public cloud deployment</h2>
 <h3 id="prepare-an-ibm-kubernetes-service-cluster">Prepare an IBM Kubernetes service cluster</h3>
-<p>See <a href="https://ibm-cloud-architecture.github.io/refarch-kc/deployments/iks/#kubernetes-cluster-service">this note</a>. </p>
+<p>See <a href="https://ibm-cloud-architecture.github.io/refarch-kc/deployments/iks/#kubernetes-cluster-service">this note on how to deploy a IKS cluster</a>. </p>
 <p>Define a docker image private registry using <a href="https://ibm-cloud-architecture.github.io/refarch-kc/deployments/iks/#define-an-image-private-repository">this note.</a></p>
-<p>Define a namespace to deploy your solution. We used <code>browncompute</code> but can be anything.</p>
+<p>Define a namespace to deploy your solution. We used <code>browncompute</code> as namespace but can be anything.</p>
+<pre><code>kubectl create namespace browncompute
+</code></pre>
+
 <h3 id="prepare-event-stream-service-on-ibm-cloud">Prepare Event Stream service on IBM Cloud</h3>
-<p>See <a href="https://ibm-cloud-architecture.github.io/refarch-kc/deployments/iks/#event-streams-service-on-ibm-cloud">this note</a>.</p>
-<p>Get API Key and brokers URL. Then defines secrets for the api key as described <a href="https://ibm-cloud-architecture.github.io/refarch-kc/deployments/iks/#event-stream-api-key">here.</a></p>
-<p>Add the private token to access the image registry, see <a href="https://ibm-cloud-architecture.github.io/refarch-kc/deployments/iks/#private-registry-token">this note.</a></p>
+<p>See <a href="https://ibm-cloud-architecture.github.io/refarch-kc/deployments/iks/#event-streams-service-on-ibm-cloud">this note to deploy IBM kafka based product as a service on IBM Cloud</a>.</p>
+<p>Get API Key and brokers URL. Then defines secrets for the api key as described <a href="https://ibm-cloud-architecture.github.io/refarch-kc/deployments/iks/#event-stream-api-key">in this note.</a></p>
+<p>Add the private token to access the docker image registry, see <a href="https://ibm-cloud-architecture.github.io/refarch-kc/deployments/iks/#private-registry-token">details in this note.</a></p>
 <h3 id="prepare-postgresql-service-on-ibm-cloud">Prepare Postgresql service  on IBM Cloud</h3>
 <p>Follow <a href="https://cloud.ibm.com/catalog/services/databases-for-postgresql">product documentation.</a></p>
-<p>Then add secrets for postgresql by following the commands described <a href="https://ibm-cloud-architecture.github.io/refarch-kc/deployments/iks/#postgresql-url-user-pwd-and-ca-certificate-as-secrets">here.</a></p>
+<p>Then add secrets for postgresql by following the procedure described <a href="https://ibm-cloud-architecture.github.io/refarch-kc/deployments/iks/#postgresql-url-user-pwd-and-ca-certificate-as-secrets">in this note.</a></p>
 <h2 id="private-cloud">Private Cloud</h2>
-<p>See <a href="https://ibm-cloud-architecture.github.io/refarch-kc/deployments/icp/">this note.</a></p>
+<p>For <a href="https://ibm-cloud-architecture.github.io/refarch-kc/deployments/icp/"> IBM Cloud Private deployments go to this article.</a></p>
                 
                   
                 

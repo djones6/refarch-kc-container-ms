@@ -407,8 +407,8 @@
 
 
   <li class="md-nav__item">
-    <a href="deployment/" title="Pre-requisite" class="md-nav__link">
-      Pre-requisite
+    <a href="deployment/" title="Pre-requisites" class="md-nav__link">
+      Pre-requisites
     </a>
   </li>
 
@@ -448,7 +448,19 @@
 
 
   <li class="md-nav__item">
-    <a href="tests/" title="Run integration tests" class="md-nav__link">
+    <a href="springboot/#security" title="Security" class="md-nav__link">
+      Security
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="springboot/#the-integration-tests" title="Run integration tests" class="md-nav__link">
       Run integration tests
     </a>
   </li>
@@ -570,15 +582,40 @@
 <li>The DAO implement the persistence for the data received as part of the event payload, or API.</li>
 </ul>
 <h2 id="container-inventory">Container inventory</h2>
-<p>We are providing a tool to publish <code>container created</code> events to the Kafka <code>containers</code> topic. The python code is under the <code>tools</code> folder. It can be executed using our Python docker image with the command:</p>
-<pre><code class="shell">docker run -e KAFKA_BROKERS=$KAFKA_BROKERS -v $(pwd):/home --network=docker_default -ti ibmcase/python bash
+<p>We are providing a tool to publish <code>container created</code> events to the Kafka <code>containers</code> topic. The python code is in the root project <code>refarch-kc</code> under the <a href="https://github.com/ibm-cloud-architecture/refarch-kc/tree/master/itg-tests/ContainersPython"><code>itg-tests/ContainersPython</code> folder</a>. The <code>addContainer.sh</code> uses our Python docker image to create a container and send it to kafka.</p>
+<p>When Kafka runs on IBM Cloud use:</p>
+<pre><code>./addContainer.sh IBMCLOUD
+</code></pre>
+
+<p>If you want to run using a kafka running on your computer:</p>
+<pre><code>./addContainer.sh
+</code></pre>
+
+<p>And for ICP</p>
+<pre><code>./addContainer.sh ICP
+</code></pre>
+
+<p>The trace from the python execution looks like:</p>
+<pre><code>Create container
+{'containerID': 'itg-C02', 'timestamp': 1559868907, 'type': 'ContainerAdded', 'payload': {'containerID': 'itg-C02', 'type': 'Reefer', 'status': 'Empty', 'latitude': 37.8, 'longitude': -122.25, 'capacity': 110, 'brand': 'itg-brand'}}
+Message delivered to containers [0]
+</code></pre>
+
+<p>While on the running Java microservice, you will could see the service consumed the message:</p>
+<pre><code>INFO 47 --- [ingConsumer-C-1] c.l.k.c.kafka.ContainerConsumer          : Received container event: {&quot;containerID&quot;: &quot;itg-C02&quot;, &quot;timestamp&quot;: 1559868907, &quot;type&quot;: &quot;ContainerAdded&quot;, &quot;payload&quot;: {&quot;containerID&quot;: &quot;itg-C02&quot;, &quot;type&quot;: &quot;Reefer&quot;, &quot;status&quot;: &quot;Empty&quot;, &quot;latitude&quot;: 37.8, &quot;longitude&quot;: -122.25, &quot;capacity&quot;: 110, &quot;brand&quot;: &quot;itg-brand&quot;}}
+</code></pre>
+
+<p>It is also possible to start the python environment with Docker, and then inside the container bash session use python as you will do in your own computer. </p>
+<pre><code class="shell">source ../../scripts/setenv.sh
+docker run -e KAFKA_BROKERS=$KAFKA_BROKERS -v $(pwd):/home --network=docker_default -ti ibmcase/python bash
 root@2f049cb7b4f2:/ cd home
 root@2f049cb7b4f2:/ python ProduceContainerCreatedEvent.py 
 </code></pre>
 
 <h2 id="assign-container-to-order">Assign container to order</h2>
-<p>The implementation will search the list of containers closed to the source location. We simplify the implementation by assuming mapping container (longitude, latitude) position to be in an area closed to the harbor close to the pickup location. We do not manage the time when the container will be there. We assume containers is at location at the time of the order is processed, is the same as the time of the pickup. We may fine tune that if we can make it simple.</p>
+<p>The implementation will search the list of containers closed to the source location. We simplify the implementation by assuming mapping container (longitude, latitude) position to be in an area close to the harbor in the same region as the pickup location. We do not manage the time when the container will be there. We assume containers are at the location at the time of the order is processed, is close enought to the time of the pickup. In a future iteration, we may fine tune that if we can make it simple.</p>
 <p>The output of this assignment processing is an event to the <code>orders</code> topic.</p>
+<p>See <a href="./springboot/#add-the-get-containers-api">implementation details in this note</a>.</p>
 <h2 id="compendium">Compendium</h2>
 <ul>
 <li><a href="http://postgresguide.com/sql/select.html">Postgresql tutorial</a></li>

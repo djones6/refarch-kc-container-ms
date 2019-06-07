@@ -336,8 +336,8 @@
 
 
   <li class="md-nav__item">
-    <a href="../deployment/" title="Pre-requisite" class="md-nav__link">
-      Pre-requisite
+    <a href="../deployment/" title="Pre-requisites" class="md-nav__link">
+      Pre-requisites
     </a>
   </li>
 
@@ -516,11 +516,24 @@
     Manually deploy to IKS
   </a>
   
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#perform-integration-tests-from-local-to-remote-ibm-cloud-deployment" title="Perform integration tests from local to remote IBM Cloud deployment" class="md-nav__link">
+    Perform integration tests from local to remote IBM Cloud deployment
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
-  <a href="#issues" title="Issues" class="md-nav__link">
-    Issues
+  <a href="#encountered-issues-with-some-solution" title="Encountered issues with some solution" class="md-nav__link">
+    Encountered issues with some solution
   </a>
   
 </li>
@@ -566,7 +579,19 @@
 
 
   <li class="md-nav__item">
-    <a href="../tests/" title="Run integration tests" class="md-nav__link">
+    <a href="#security" title="Security" class="md-nav__link">
+      Security
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="#the-integration-tests" title="Run integration tests" class="md-nav__link">
       Run integration tests
     </a>
   </li>
@@ -746,11 +771,24 @@
     Manually deploy to IKS
   </a>
   
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#perform-integration-tests-from-local-to-remote-ibm-cloud-deployment" title="Perform integration tests from local to remote IBM Cloud deployment" class="md-nav__link">
+    Perform integration tests from local to remote IBM Cloud deployment
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
-  <a href="#issues" title="Issues" class="md-nav__link">
-    Issues
+  <a href="#encountered-issues-with-some-solution" title="Encountered issues with some solution" class="md-nav__link">
+    Encountered issues with some solution
   </a>
   
 </li>
@@ -1119,23 +1157,58 @@ $ keytool -keystore clienttruststore -alias postgresql -import -file postgressql
 <p>Now to make all this available in docker container we propose to let the previous two commands run within the Dockerfile during the build process.</p>
 <h2 id="manually-deploy-to-iks">Manually deploy to IKS</h2>
 <p>The steps are the same as other project and we are providing the same type of tools:</p>
-<pre><code class="shell"># login to IBM Cloud
-$ ibmcloud login -a https://api.us-east.bluemix.net
-# connect to the IKS cluster
-$ ibmcloud ks region-set us-east   
-$ ibmcloud ks cluster-config fabio-wdc-07
-$ export KUBECONFIG= ~/.bluemix/plugins/container-service/clusters/fabio-wdc-07/kube-config-wdc07-fabio-wdc-07.yml
-# login to the private registry
-$ ibmcloud cr login
-# build the jar and docker image
-$ ./script/buildDocker.sh IBMCLOUD
-# Push the image
-$ docker push  us.icr.io/ibmcaseeda/kc-springcontainerms
-# Deploy the Helm release
-$ ./scripts/deployHelm
+<ul>
+<li>login to IBM Cloud - Adapt to your region.</li>
+</ul>
+<pre><code class="shell">ibmcloud login -a https://api.us-east.bluemix.net
 </code></pre>
 
-<p>If for any reason you get a "image can't be pulled" error. Verify the image is in the registry with the command: <code>docker cr image-list</code>. Then if so, verify there is a secret defined to keep the security key to access the registry in the same namespace as you are deploying your app, and this secret is referenced in the yml file:</p>
+<ul>
+<li>connect to the IKS cluster</li>
+</ul>
+<pre><code>ibmcloud ks region-set us-east   
+ibmcloud ks cluster-config fabio-wdc-07
+</code></pre>
+
+<ul>
+<li>Define the Kube config variable so all the kubectl and helm commands will contact the good cluster.</li>
+</ul>
+<pre><code>export KUBECONFIG= ~/.bluemix/plugins/container-service/clusters/fabio-wdc-07/kube-config-wdc07-fabio-wdc-07.yml
+</code></pre>
+
+<ul>
+<li>login to the private registry</li>
+</ul>
+<pre><code>ibmcloud cr login
+</code></pre>
+
+<ul>
+<li>build the application jar and docker image using our script</li>
+</ul>
+<pre><code>./script/buildDocker.sh IBMCLOUD
+</code></pre>
+
+<ul>
+<li>Push the docker image to the private registry</li>
+</ul>
+<pre><code>docker push  us.icr.io/ibmcaseeda/kc-springcontainerms
+</code></pre>
+
+<ul>
+<li>Deploy the Helm release</li>
+</ul>
+<pre><code>./scripts/deployHelm
+</code></pre>
+
+<p>which is equivalent to the command:</p>
+<pre><code> helm install $chart/ --name $kname --namespace $ns
+</code></pre>
+
+<p>If for any reason you get a "image can't be pulled" error. Verify the image is in the private registry with the command: </p>
+<pre><code>docker cr image-list
+</code></pre>
+
+<p>Then if the image exists, verify there is a secret defined to keep the security key to access the registry in the same namespace as you are deploying your app, and this secret is referenced in the yaml file:</p>
 <pre><code>&quot;imagePullSecrets&quot;: [
           {
             &quot;name&quot;: &quot;browncompute-registry-secret&quot;
@@ -1143,7 +1216,35 @@ $ ./scripts/deployHelm
         ],
 </code></pre>
 
-<h2 id="issues">Issues</h2>
+<h3 id="perform-integration-tests-from-local-to-remote-ibm-cloud-deployment">Perform integration tests from local to remote IBM Cloud deployment</h3>
+<p>As presented in the <a href="#the-integration-tests">section above</a>, we have a set of tools that can create container, orders and verify the code is running well in its complete deployed environment. The same scripts can be run with the IBMCLOUD argument. </p>
+<p>So below is the list of command to perform on you laptop while the Spring boot app is deployed on IKS, using Event Streams and Postgresql on IBM Cloud:</p>
+<ul>
+<li>Start a container consumer to trace the execution: in the folder <code>refarch-kc/itg-tests/ContainersPython</code>. It listens to get a container with id: "ic-c01"</li>
+</ul>
+<pre><code>./runContainerConsumer.sh IBMCLOUD ic-c01
+</code></pre>
+
+<ul>
+<li>Run a producer of container events to add a new container into the inventory: in the same folder <code>refarch-kc/itg-tests/ContainersPython</code></li>
+</ul>
+<pre><code>./addContainer.sh IBMCLOUD ic-c01
+</code></pre>
+
+<ul>
+<li>Start an order consumer, to trace the traffic: in the folder <code>refarch-kc/itg-tests/OrdersPython</code></li>
+</ul>
+<pre><code>./runOrderConsumer.sh IBMCLOUD order01 
+</code></pre>
+
+<ul>
+<li>Create an order from the same folder:  <code>refarch-kc/itg-tests/OrdersPython</code></li>
+</ul>
+<pre><code>addOrder.sh LOCAL order01
+</code></pre>
+
+<p>Going to the web URL of the container service you should see the container added. </p>
+<h2 id="encountered-issues-with-some-solution">Encountered issues with some solution</h2>
 <p>The level of abstraction in Spring is nice when doing basic things but can become a nightmare when doing real bigger application including different libraries. Also migrating or using the last version 2.xx, bring changes to existing code and tests. Below is a list of iisues we spent time on:</p>
 <ul>
 <li>When JPA started, it creates / updates database schema, and for example enforced to have an Id as int while it was as string. As a bypass we create the table before in postsgresql using psql tool.</li>
@@ -1153,6 +1254,9 @@ $ ./scripts/deployHelm
 </li>
 <li>
 <p>Deployed in Kubernetes service, the pod has issue on postgress SSL handshake. (org.postgresql.util.PSQLException: SSL error: Received fatal alert: handshake_failure). SSL handshakes are a mechanism by which a client and server establish the trust and logistics required to secure their connection over the network. This problem may be linked to a SSL certificate not found or wrong encryption protocol. We need to be sure a Java Keystore is defined and includes the public certificate coming from the server. See <a href="#security">security section</a> above.</p>
+</li>
+<li>
+<p>When deploying to IKS, we did see an exception about <code>container topics not visible</code>. This problem is coming from the fact that we are using Event Stream simplest deployment, which is multi tenants. And even if our code reach the brokers, our api key was wrong so we could get to another instance which did not have our topics. Be sure the api key is well defined in the kubernetes secret. (see <a href="https://ibm-cloud-architecture.github.io/refarch-kc/deployments/iks/#event-stream-api-key">this note to know how to do it</a>)</p>
 </li>
 </ul>
 <h2 id="references">References</h2>
@@ -1183,7 +1287,7 @@ $ ./scripts/deployHelm
     <div class="md-footer-nav">
       <nav class="md-footer-nav__inner md-grid">
         
-          <a href="../deployment/" title="Pre-requisite" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+          <a href="../deployment/" title="Pre-requisites" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
             <div class="md-flex__cell md-flex__cell--shrink">
               <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
             </div>
@@ -1192,7 +1296,7 @@ $ ./scripts/deployHelm
                 <span class="md-footer-nav__direction">
                   Previous
                 </span>
-                Pre-requisite
+                Pre-requisites
               </span>
             </div>
           </a>
