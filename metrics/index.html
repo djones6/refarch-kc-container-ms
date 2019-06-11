@@ -426,6 +426,13 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#introduction" title="Introduction" class="md-nav__link">
+    Introduction
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#predictive-maintenance-problem-statement" title="Predictive maintenance problem statement" class="md-nav__link">
     Predictive maintenance problem statement
   </a>
@@ -434,8 +441,8 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#reefer-problem-types" title="Reefer problem types:" class="md-nav__link">
-    Reefer problem types:
+  <a href="#reefer-problem-types" title="Reefer problem types" class="md-nav__link">
+    Reefer problem types
   </a>
   
 </li>
@@ -552,6 +559,13 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#introduction" title="Introduction" class="md-nav__link">
+    Introduction
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#predictive-maintenance-problem-statement" title="Predictive maintenance problem statement" class="md-nav__link">
     Predictive maintenance problem statement
   </a>
@@ -560,8 +574,8 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#reefer-problem-types" title="Reefer problem types:" class="md-nav__link">
-    Reefer problem types:
+  <a href="#reefer-problem-types" title="Reefer problem types" class="md-nav__link">
+    Reefer problem types
   </a>
   
 </li>
@@ -666,6 +680,9 @@
                 
                 
                 <h1 id="reefer-container-metric-as-iot">Reefer Container Metric as IoT</h1>
+<p>In this section, we discuss possible machine learning models we can train with the help of historical data to predict whether maintenance is required for the reefer container at a certain point in time.</p>
+<p>You will learn how to simulate date for reefer, develop the predictive maintenance model, and integrate the model into an application.</p>
+<h2 id="introduction">Introduction</h2>
 <p>A reefer container is a refrigerated shipping container used to store or transport frozen or cold goods perishable items or goods that require temperature control. </p>
 <p><img alt="Reefer" src="../images/reefer.png" /></p>
 <p>Reefers make an excellent, portable solution to short or long term storage and can be used to ship or truck goods over long distances as they can be plugged into the power station on ships or have it clipped on generators attached.</p>
@@ -673,7 +690,6 @@
 <p>Throughout this chain the risk of failure is ever-present, meaning there is always a possibility of cargo exceeding permissible or safe temperature levels, even if only briefly. For example, a truck might be stopped without power in desert heat, allowing temperatures in the reefer to rise. Then power is restored and the temperature in the container comes back down, but the product is damaged.</p>
 <p>When cargo with such as any of those items listed above are exposed to temperatures outside of prescribed limits it can be damaged. In some cases this is evident, such as with bananas, but in other situations, like the transport of vaccines, it may not be apparent that damage has occurred and the vaccine becomes ineffective. For some products, going over temperature, even only briefly, can reduce shelf life dramatically, incurring substantial costs when it cannot be sold. </p>
 <p>Organizations contracting to ship perishable products often specify the permissible temperature range. However, even if it is possible to show that product was exposed to conditions outside of those contracted, proving where it happened, and thus responsibility, can be much harder.</p>
-<p>In this section, we discuss possible machine learning models we can train with the help of historical data to predict whether maintainence is required for the reefer container at a certain point in time.</p>
 <h2 id="predictive-maintenance-problem-statement">Predictive maintenance problem statement</h2>
 <p>The success of predictive maintenance models depend on three main components: </p>
 <ul>
@@ -695,8 +711,8 @@
 <li>What are the business impact to do not predict the failure? and predicting false negative failure?</li>
 <li>What is the expected accuracy?  </li>
 </ul>
-<h3 id="reefer-problem-types">Reefer problem types:</h3>
-<p>There are multiple different potential issues that could happen to a refrigerator container. We are choosing to model the "Sensor Malfunctions" issue: Sensors in the refrigeration unit need to be calibrated and be continuously operational. An example of failure may come from the air sensor making inaccurate readings of temperatures, which lead to sploiled content. A potential reason may come from a faulty calibration, which can go unnoticed for a good time period. It may be diffiult to know if there is an issue. </p>
+<h3 id="reefer-problem-types">Reefer problem types</h3>
+<p>There are multiple different potential issues that could happen to a refrigerator container. We are choosing to model the "Sensor Malfunctions" issue: Sensors in the refrigeration unit need to be calibrated and be continuously operational. An example of failure may come from the air sensor making inaccurate readings of temperatures, which leads to sploiled content. A potential reason may come from a faulty calibration, which can go unnoticed for a good time period. It may be difficult to know if there is an issue or not. </p>
 <p>The other common potential issues are:</p>
 <ul>
 <li>Fluid leaks, like engine oil, coolant liquid. The preassure sensors added to the circuit may help identify preassure lost over time.</li>
