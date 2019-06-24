@@ -644,31 +644,29 @@
 <li>Deploy to kubernetes or run with docker-compose</li>
 </ul>
 <h2 id="start-with-maven">Start with maven</h2>
-<p>Kafka streams delivers a Maven archetype to create a squeleton project. The following command can be used to create the base code.</p>
-<pre><code class="sh">mvn archetype:generate -DarchetypeGroupId=org.apache.kafka -DarchetypeArtifactId=streams-quickstart-java     -DarchetypeVersion=2.1.0     -DgroupId=kc-container     -DartifactId=kc-container-streams    -Dversion=0.1     -Dpackage=containerManager
-</code></pre>
-
-<p>We added a <code>.project</code> file to develop the code in Eclipse, imported the code into Eclipse and modify the <code>.classpath</code> with the following lines:</p>
-<pre><code class="xml">    &lt;classpathentry kind=&quot;con&quot; path=&quot;org.eclipse.m2e.MAVEN2_CLASSPATH_CONTAINER&quot;&gt;
-        &lt;attributes&gt;
-            &lt;attribute name=&quot;maven.pomderived&quot; value=&quot;true&quot;/&gt;
-        &lt;/attributes&gt;
-    &lt;/classpathentry&gt;
-</code></pre>
-
+<p>Kafka streams delivers a Maven archetype to create a squeleton project. The following command can be used to create the base code.
+<div class="codehilite"><pre><span></span>mvn archetype:generate -DarchetypeGroupId<span class="o">=</span>org.apache.kafka -DarchetypeArtifactId<span class="o">=</span>streams-quickstart-java     -DarchetypeVersion<span class="o">=</span><span class="m">2</span>.1.0     -DgroupId<span class="o">=</span>kc-container     -DartifactId<span class="o">=</span>kc-container-streams    -Dversion<span class="o">=</span><span class="m">0</span>.1     -Dpackage<span class="o">=</span>containerManager
+</pre></div></p>
+<p>We added a <code>.project</code> file to develop the code in Eclipse, imported the code into Eclipse and modify the <code>.classpath</code> with the following lines:
+<div class="codehilite"><pre><span></span>    <span class="nt">&lt;classpathentry</span> <span class="na">kind=</span><span class="s">&quot;con&quot;</span> <span class="na">path=</span><span class="s">&quot;org.eclipse.m2e.MAVEN2_CLASSPATH_CONTAINER&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;attributes&gt;</span>
+            <span class="nt">&lt;attribute</span> <span class="na">name=</span><span class="s">&quot;maven.pomderived&quot;</span> <span class="na">value=</span><span class="s">&quot;true&quot;</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;/attributes&gt;</span>
+    <span class="nt">&lt;/classpathentry&gt;</span>
+</pre></div></p>
 <p>To access to serializer and testing framework we added the following dependencies in the pom.xml:</p>
-<pre><code class="xml">      &lt;dependency&gt;
-            &lt;groupId&gt;org.apache.kafka&lt;/groupId&gt;
-            &lt;artifactId&gt;kafka-clients&lt;/artifactId&gt;
-            &lt;version&gt;${kafka.version}&lt;/version&gt;
-        &lt;/dependency&gt;
-        &lt;dependency&gt;
-            &lt;groupId&gt;org.apache.kafka&lt;/groupId&gt;
-            &lt;artifactId&gt;kafka-streams-test-utils&lt;/artifactId&gt;
-            &lt;version&gt;${kafka.version}&lt;/version&gt;
-            &lt;scope&gt;test&lt;/scope&gt;
-        &lt;/dependency&gt;
-</code></pre>
+<div class="codehilite"><pre><span></span>      <span class="nt">&lt;dependency&gt;</span>
+            <span class="nt">&lt;groupId&gt;</span>org.apache.kafka<span class="nt">&lt;/groupId&gt;</span>
+            <span class="nt">&lt;artifactId&gt;</span>kafka-clients<span class="nt">&lt;/artifactId&gt;</span>
+            <span class="nt">&lt;version&gt;</span>${kafka.version}<span class="nt">&lt;/version&gt;</span>
+        <span class="nt">&lt;/dependency&gt;</span>
+        <span class="nt">&lt;dependency&gt;</span>
+            <span class="nt">&lt;groupId&gt;</span>org.apache.kafka<span class="nt">&lt;/groupId&gt;</span>
+            <span class="nt">&lt;artifactId&gt;</span>kafka-streams-test-utils<span class="nt">&lt;/artifactId&gt;</span>
+            <span class="nt">&lt;version&gt;</span>${kafka.version}<span class="nt">&lt;/version&gt;</span>
+            <span class="nt">&lt;scope&gt;</span>test<span class="nt">&lt;/scope&gt;</span>
+        <span class="nt">&lt;/dependency&gt;</span>
+</pre></div>
 
 <p>Using this approach as the service runs in OpenLiberty and integrate JAXRS, microprofile, Open API,... we have to add a lot of depencies into the pom.xml file. Another approach is to use IBM Cloud starter kit.</p>
 <h2 id="start-with-ibm-cloud-microprofile-starter-kit">Start with IBM Cloud microprofile starter kit</h2>
@@ -692,43 +690,40 @@
 </em> Change pom dependencies for microprofile 2.2, and change the image in Dockerfile to access websphere liberty 19.0.0.3 compatible with 2.2. (FROM websphere-liberty:19.0.0.3-microProfile2)
 <em> Use the health class from the microprofile 2.2 generated code, as it uses microprofile annotation. Add also the configuration injection with properties file. Add new package names.
 </em> Remove unnecessary files
-* Modify the Values.yaml to reflect the target registry and add secret reference:</p>
-<pre><code>  repository: us.icr.io/ibmcaseeda/mpcontainerms
+* Modify the Values.yaml to reflect the target registry and add secret reference:
+<div class="codehilite"><pre><span></span>  repository: us.icr.io/ibmcaseeda/mpcontainerms
   tag: latest
   pullPolicy: Always
   pullSecret: browncompute-registry-secret
-</code></pre>
-
+</pre></div></p>
 <p>Some of those steps are pushed to the development kubernetes cluster using the command:</p>
 <h2 id="some-useful-kafka-streams-apis">Some useful Kafka streams APIs</h2>
 <p>The stream configuration looks similar to the Kafka consumer and producer configuration. </p>
-<pre><code class="java">    props.put(StreamsConfig.APPLICATION_ID_CONFIG, &quot;container-streams&quot;);
-    props.put(StreamsConfig.BOOTSTRAP_SERVERS_CONFIG, &quot;localhost:9092&quot;);    
-    props.put(StreamsConfig.DEFAULT_KEY_SERDE_CLASS_CONFIG, Serdes.String().getClass());
-    props.put(StreamsConfig.DEFAULT_VALUE_SERDE_CLASS_CONFIG, Serdes.String().getClass());
-</code></pre>
-
-<p>The StreamsConfig is a specific configuration for Streams app.  </p>
+<p><div class="codehilite"><pre><span></span>    <span class="n">props</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">StreamsConfig</span><span class="o">.</span><span class="na">APPLICATION_ID_CONFIG</span><span class="o">,</span> <span class="s">&quot;container-streams&quot;</span><span class="o">);</span>
+    <span class="n">props</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">StreamsConfig</span><span class="o">.</span><span class="na">BOOTSTRAP_SERVERS_CONFIG</span><span class="o">,</span> <span class="s">&quot;localhost:9092&quot;</span><span class="o">);</span>    
+    <span class="n">props</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">StreamsConfig</span><span class="o">.</span><span class="na">DEFAULT_KEY_SERDE_CLASS_CONFIG</span><span class="o">,</span> <span class="n">Serdes</span><span class="o">.</span><span class="na">String</span><span class="o">().</span><span class="na">getClass</span><span class="o">());</span>
+    <span class="n">props</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">StreamsConfig</span><span class="o">.</span><span class="na">DEFAULT_VALUE_SERDE_CLASS_CONFIG</span><span class="o">,</span> <span class="n">Serdes</span><span class="o">.</span><span class="na">String</span><span class="o">().</span><span class="na">getClass</span><span class="o">());</span>
+</pre></div>
+The StreamsConfig is a specific configuration for Streams app.  </p>
 <p>One of the interesting class is the <code>KStream</code> to manage a stream of structured events. Kstreams represents unbounded collection of immutable events.</p>
 <p>Two classes are supporting the order and container processing:</p>
 <ul>
 <li><a href="https://github.com/ibm-cloud-architecture/refarch-kc-container-ms/blob/master/kstreams/src/main/java/ibm/labs/kc/streams/containerManager/ContainerInventoryView.java">ContainerInventoryView</a></li>
 <li><a href="https://github.com/ibm-cloud-architecture/refarch-kc-container-ms/blob/master/kstreams/src/main/java/ibm/labs/kc/streams/containerManager/ContainerOrderAssissgnment.java">ContainerOrderAssignment</a></li>
 </ul>
-<p>We are using the Streams DSL APIs to do the processing. Here is an example of terminal stream to print what is coming to the <code>orders</code> topic:</p>
-<pre><code class="java">   final StreamsBuilder builder = new StreamsBuilder();
-    builder.stream(&quot;orders&quot;)
-        .foreach((key,value) -&gt; {
-                    Order order = parser.fromJson((String)value, OrderEvent.class).getPayload();
-                    // TODO do something to the order
-                    System.out.println(&quot;received order &quot; + key + &quot; &quot; + value);
-                });
+<p>We are using the Streams DSL APIs to do the processing. Here is an example of terminal stream to print what is coming to the <code>orders</code> topic:
+<div class="codehilite"><pre><span></span>   <span class="kd">final</span> <span class="n">StreamsBuilder</span> <span class="n">builder</span> <span class="o">=</span> <span class="k">new</span> <span class="n">StreamsBuilder</span><span class="o">();</span>
+    <span class="n">builder</span><span class="o">.</span><span class="na">stream</span><span class="o">(</span><span class="s">&quot;orders&quot;</span><span class="o">)</span>
+        <span class="o">.</span><span class="na">foreach</span><span class="o">((</span><span class="n">key</span><span class="o">,</span><span class="n">value</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="o">{</span>
+                    <span class="n">Order</span> <span class="n">order</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="na">fromJson</span><span class="o">((</span><span class="n">String</span><span class="o">)</span><span class="n">value</span><span class="o">,</span> <span class="n">OrderEvent</span><span class="o">.</span><span class="na">class</span><span class="o">).</span><span class="na">getPayload</span><span class="o">();</span>
+                    <span class="c1">// TODO do something to the order</span>
+                    <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;received order &quot;</span> <span class="o">+</span> <span class="n">key</span> <span class="o">+</span> <span class="s">&quot; &quot;</span> <span class="o">+</span> <span class="n">value</span><span class="o">);</span>
+                <span class="o">});</span>
 
-    final Topology topology = builder.build();
-    final KafkaStreams streams = new KafkaStreams(topology, props);
-    streams.start();
-</code></pre>
-
+    <span class="kd">final</span> <span class="n">Topology</span> <span class="n">topology</span> <span class="o">=</span> <span class="n">builder</span><span class="o">.</span><span class="na">build</span><span class="o">();</span>
+    <span class="kd">final</span> <span class="n">KafkaStreams</span> <span class="n">streams</span> <span class="o">=</span> <span class="k">new</span> <span class="n">KafkaStreams</span><span class="o">(</span><span class="n">topology</span><span class="o">,</span> <span class="n">props</span><span class="o">);</span>
+    <span class="n">streams</span><span class="o">.</span><span class="na">start</span><span class="o">();</span>
+</pre></div></p>
 <p>We want now to implement the container inventory. We want to support the following events:</p>
 <ul>
 <li>ContainerAddedToInventory, ContainerRemovedFromInventory</li>
@@ -753,73 +748,72 @@
 </ol>
 <p>To test a stream application without Kafka backbone there is a test utility available <a href="https://kafka.apache.org/documentation/streams/developer-guide/testing.html#unit-testing-processors">here</a>. The settings are simple: get the properties, define the serialisation of the key and value of the event to get from kafka, define the stream process flow, named topology, send the input and get the output.</p>
 <p>The <a href="https://github.com/ibm-cloud-architecture/refarch-kc-container-ms/blob/master/kstreams/src/test/java/ut">test TestContainerInventory</a> is illustrating how to use the <a href="https://kafka.apache.org/21/javadoc/org/apache/kafka/streams/TopologyTestDriver.html">TopologyTestDriver</a>.</p>
-<pre><code class="java">    Properties props = ApplicationConfig.getStreamsProperties(&quot;test&quot;);
-    props.put(StreamsConfig.BOOTSTRAP_SERVERS_CONFIG, &quot;dummy:1234&quot;);
-    TopologyTestDriver testDriver = new TopologyTestDriver(
-                buildProcessFlow(), props);
+<div class="codehilite"><pre><span></span>    <span class="n">Properties</span> <span class="n">props</span> <span class="o">=</span> <span class="n">ApplicationConfig</span><span class="o">.</span><span class="na">getStreamsProperties</span><span class="o">(</span><span class="s">&quot;test&quot;</span><span class="o">);</span>
+    <span class="n">props</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">StreamsConfig</span><span class="o">.</span><span class="na">BOOTSTRAP_SERVERS_CONFIG</span><span class="o">,</span> <span class="s">&quot;dummy:1234&quot;</span><span class="o">);</span>
+    <span class="n">TopologyTestDriver</span> <span class="n">testDriver</span> <span class="o">=</span> <span class="k">new</span> <span class="n">TopologyTestDriver</span><span class="o">(</span>
+                <span class="n">buildProcessFlow</span><span class="o">(),</span> <span class="n">props</span><span class="o">);</span>
 
-    ConsumerRecordFactory&lt;String, String&gt; factory = new ConsumerRecordFactory&lt;String, String&gt;(&quot;containers&quot;,
-                new StringSerializer(), new StringSerializer());
-    ConsumerRecord&lt;byte[],byte[]&gt; record = factory.create(&quot;containers&quot;,ce.getContainerID(), parser.toJson(ce));
+    <span class="n">ConsumerRecordFactory</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">factory</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ConsumerRecordFactory</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;(</span><span class="s">&quot;containers&quot;</span><span class="o">,</span>
+                <span class="k">new</span> <span class="n">StringSerializer</span><span class="o">(),</span> <span class="k">new</span> <span class="n">StringSerializer</span><span class="o">());</span>
+    <span class="n">ConsumerRecord</span><span class="o">&lt;</span><span class="kt">byte</span><span class="o">[],</span><span class="kt">byte</span><span class="o">[]&gt;</span> <span class="n">record</span> <span class="o">=</span> <span class="n">factory</span><span class="o">.</span><span class="na">create</span><span class="o">(</span><span class="s">&quot;containers&quot;</span><span class="o">,</span><span class="n">ce</span><span class="o">.</span><span class="na">getContainerID</span><span class="o">(),</span> <span class="n">parser</span><span class="o">.</span><span class="na">toJson</span><span class="o">(</span><span class="n">ce</span><span class="o">));</span>
 
-    testDriver.pipeInput(record);
-</code></pre>
+    <span class="n">testDriver</span><span class="o">.</span><span class="na">pipeInput</span><span class="o">(</span><span class="n">record</span><span class="o">);</span>
+</pre></div>
 
 <p>We are using the String default serialization for the key and the ContainerEvent, and use Gson to serialize and deserialize the json.</p>
 <p>So the test is to prepare a ContainerEvent with type = "ContainerAdded" and then get the payload, persist it in the table and access to the table via the concept of <code>store</code> and validate the data.</p>
 <p>Below is the access to the store and compare the expected results</p>
-<pre><code class="java">    KeyValueStore&lt;String, String&gt; store = testDriver.getKeyValueStore(&quot;queryable-container-store&quot;);
-    String containerStrg = store.get(ce.getContainerID());
-    Assert.assertNotNull(containerStrg);
-    Assert.assertTrue(containerStrg.contains(ce.getContainerID()));
-    Assert.assertTrue(containerStrg.contains(&quot;atDock&quot;));
-</code></pre>
+<div class="codehilite"><pre><span></span>    <span class="n">KeyValueStore</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">store</span> <span class="o">=</span> <span class="n">testDriver</span><span class="o">.</span><span class="na">getKeyValueStore</span><span class="o">(</span><span class="s">&quot;queryable-container-store&quot;</span><span class="o">);</span>
+    <span class="n">String</span> <span class="n">containerStrg</span> <span class="o">=</span> <span class="n">store</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">ce</span><span class="o">.</span><span class="na">getContainerID</span><span class="o">());</span>
+    <span class="n">Assert</span><span class="o">.</span><span class="na">assertNotNull</span><span class="o">(</span><span class="n">containerStrg</span><span class="o">);</span>
+    <span class="n">Assert</span><span class="o">.</span><span class="na">assertTrue</span><span class="o">(</span><span class="n">containerStrg</span><span class="o">.</span><span class="na">contains</span><span class="o">(</span><span class="n">ce</span><span class="o">.</span><span class="na">getContainerID</span><span class="o">()));</span>
+    <span class="n">Assert</span><span class="o">.</span><span class="na">assertTrue</span><span class="o">(</span><span class="n">containerStrg</span><span class="o">.</span><span class="na">contains</span><span class="o">(</span><span class="s">&quot;atDock&quot;</span><span class="o">));</span>
+</pre></div>
 
 <p>Now the tricky part is in the Stream process flow. The idea is to process the ContainerEvent as streams (of String) and extract the payload (a Container), then generate the Container in a new stream, group by the key and then save to a table. We separate the code in a function so e can move it into the real application after.</p>
-<pre><code class="java">    public  Topology buildProcessFlow() {
-        final StreamsBuilder builder = new StreamsBuilder();
-       // containerEvent is a string, map values help to change the type and data of the inpit values
-        builder.stream(CONTAINERS_TOPIC).mapValues((containerEvent) -&gt; {
-                 // the container payload is of interest to keep in table
-                 Container c = jsonParser.fromJson((String)containerEvent, ContainerEvent.class).getPayload();
-                 return jsonParser.toJson(c);
-             }).groupByKey()  // the keys are kept so we can group by key to prepare for the tabl
-                .reduce((container,container1) -&gt; {
-                    System.out.println(&quot;received container &quot; + container1 );
-                    return container1;
-                },
-                     Materialized.as(&quot;queryable-container-store&quot;));
-        return builder.build();
-    }
-</code></pre>
+<div class="codehilite"><pre><span></span>    <span class="kd">public</span>  <span class="n">Topology</span> <span class="nf">buildProcessFlow</span><span class="o">()</span> <span class="o">{</span>
+        <span class="kd">final</span> <span class="n">StreamsBuilder</span> <span class="n">builder</span> <span class="o">=</span> <span class="k">new</span> <span class="n">StreamsBuilder</span><span class="o">();</span>
+       <span class="c1">// containerEvent is a string, map values help to change the type and data of the inpit values</span>
+        <span class="n">builder</span><span class="o">.</span><span class="na">stream</span><span class="o">(</span><span class="n">CONTAINERS_TOPIC</span><span class="o">).</span><span class="na">mapValues</span><span class="o">((</span><span class="n">containerEvent</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="o">{</span>
+                 <span class="c1">// the container payload is of interest to keep in table</span>
+                 <span class="n">Container</span> <span class="n">c</span> <span class="o">=</span> <span class="n">jsonParser</span><span class="o">.</span><span class="na">fromJson</span><span class="o">((</span><span class="n">String</span><span class="o">)</span><span class="n">containerEvent</span><span class="o">,</span> <span class="n">ContainerEvent</span><span class="o">.</span><span class="na">class</span><span class="o">).</span><span class="na">getPayload</span><span class="o">();</span>
+                 <span class="k">return</span> <span class="n">jsonParser</span><span class="o">.</span><span class="na">toJson</span><span class="o">(</span><span class="n">c</span><span class="o">);</span>
+             <span class="o">}).</span><span class="na">groupByKey</span><span class="o">()</span>  <span class="c1">// the keys are kept so we can group by key to prepare for the tabl</span>
+                <span class="o">.</span><span class="na">reduce</span><span class="o">((</span><span class="n">container</span><span class="o">,</span><span class="n">container1</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="o">{</span>
+                    <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;received container &quot;</span> <span class="o">+</span> <span class="n">container1</span> <span class="o">);</span>
+                    <span class="k">return</span> <span class="n">container1</span><span class="o">;</span>
+                <span class="o">},</span>
+                     <span class="n">Materialized</span><span class="o">.</span><span class="na">as</span><span class="o">(</span><span class="s">&quot;queryable-container-store&quot;</span><span class="o">));</span>
+        <span class="k">return</span> <span class="n">builder</span><span class="o">.</span><span class="na">build</span><span class="o">();</span>
+    <span class="o">}</span>
+</pre></div>
 
 <p>The trick is to use the <code>reduce()</code> function that get the container and save it to the store that we can specify.</p>
 <p>The unit test runs successfully with the command: <code>mvn -Dtest=TestContainerInventory test</code>.</p>
 <p>This logic can be integrated in a View class. So we can refactor the test and add new class (see ContainerInventoryView class) to move the logic into the applciation. From a design point of view this class is a DAO. Now that we are not using the Testing tool, we need the real streams.</p>
-<p>In class ContainerInventoryView:    </p>
-<pre><code class="java">   private KafkaStreams streams;
-   // ..
-    Properties props = ApplicationConfig.getStreamsProperties(&quot;container-streams&quot;);
-    props.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, &quot;earliest&quot;);
-    streams = new KafkaStreams(buildProcessFlow(), props);
-    try {
-        streams.cleanUp(); 
-        streams.start();
-    } catch (Throwable e) {
-        System.exit(1);
-    }
-</code></pre>
-
+<p>In class ContainerInventoryView:  <br />
+<div class="codehilite"><pre><span></span>   <span class="kd">private</span> <span class="n">KafkaStreams</span> <span class="n">streams</span><span class="o">;</span>
+   <span class="c1">// ..</span>
+    <span class="n">Properties</span> <span class="n">props</span> <span class="o">=</span> <span class="n">ApplicationConfig</span><span class="o">.</span><span class="na">getStreamsProperties</span><span class="o">(</span><span class="s">&quot;container-streams&quot;</span><span class="o">);</span>
+    <span class="n">props</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">ConsumerConfig</span><span class="o">.</span><span class="na">AUTO_OFFSET_RESET_CONFIG</span><span class="o">,</span> <span class="s">&quot;earliest&quot;</span><span class="o">);</span>
+    <span class="n">streams</span> <span class="o">=</span> <span class="k">new</span> <span class="n">KafkaStreams</span><span class="o">(</span><span class="n">buildProcessFlow</span><span class="o">(),</span> <span class="n">props</span><span class="o">);</span>
+    <span class="k">try</span> <span class="o">{</span>
+        <span class="n">streams</span><span class="o">.</span><span class="na">cleanUp</span><span class="o">();</span> 
+        <span class="n">streams</span><span class="o">.</span><span class="na">start</span><span class="o">();</span>
+    <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">Throwable</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">exit</span><span class="o">(</span><span class="mi">1</span><span class="o">);</span>
+    <span class="o">}</span>
+</pre></div></p>
 <p>As illustrated above, the streams API is a continuous running Thread, so it needs to be started only one time. We will address scaling separatly.  So we isolate the DAO as a Singleton, and start it when the deployed application starts, via a ServletContextListener. </p>
-<pre><code class="java">public class EventLoop implements ServletContextListener{
+<div class="codehilite"><pre><span></span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">EventLoop</span> <span class="kd">implements</span> <span class="n">ServletContextListener</span><span class="o">{</span>
 
-    @Override
-    public void contextInitialized(ServletContextEvent sce) {
-        // Initialize the Container consumer
-        ContainerInventoryView cView = (ContainerInventoryView)ContainerInventoryView.instance();
-        cView.start();
-    }
-</code></pre>
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">contextInitialized</span><span class="o">(</span><span class="n">ServletContextEvent</span> <span class="n">sce</span><span class="o">)</span> <span class="o">{</span>
+        <span class="c1">// Initialize the Container consumer</span>
+        <span class="n">ContainerInventoryView</span> <span class="n">cView</span> <span class="o">=</span> <span class="o">(</span><span class="n">ContainerInventoryView</span><span class="o">)</span><span class="n">ContainerInventoryView</span><span class="o">.</span><span class="na">instance</span><span class="o">();</span>
+        <span class="n">cView</span><span class="o">.</span><span class="na">start</span><span class="o">();</span>
+    <span class="o">}</span>
+</pre></div>
 
 <p>Now we can add the getById operation, package as a war, deploy it to Liberty. </p>
 <h3 id="container-to-order-assignment">Container to Order Assignment</h3>
@@ -829,29 +823,29 @@
 <p><img alt="" src="../images/container-to-order.png" /></p>
 <h3 id="run-tests">Run tests</h3>
 <p>Recall with maven we can run all the unit tests, one test and skip integration tests.</p>
-<pre><code class="shell"># Test a unique test
-$  mvn -Dtest=TestContainerInventory test
-# Skip all tests
+<div class="codehilite"><pre><span></span><span class="c1"># Test a unique test</span>
+$  mvn -Dtest<span class="o">=</span>TestContainerInventory <span class="nb">test</span>
+<span class="c1"># Skip all tests</span>
 mvn install -DskipTests
-# Skip integration test
+<span class="c1"># Skip integration test</span>
 mvn install -DskipITs
-# Run everything
+<span class="c1"># Run everything</span>
 mvn install
-</code></pre>
+</pre></div>
 
 <p>To start the liberty server use the script: <code>./script/startLocalLiberty</code> or <code>mvn liberty:run-server</code></p>
 <h2 id="docker-compose-configuration">docker compose configuration</h2>
 <p>Replace existing springcontainerms declaration to the following</p>
-<pre><code class="yaml">    containerkstreams:
-        image: ibmcase/kc-containerkstreams:latest
-        hostname: containerkstreams
-        ports:
-            - &quot;12080:9080&quot;
-        environment:
-            KAFKA_ENV: ${KAFKA_ENV}
-            KAFKA_BROKERS: ${KAFKA_BROKERS}
-            KAFKA_APIKEY: ${KAFKA_APIKEY}
-</code></pre>
+<div class="codehilite"><pre><span></span>    <span class="nt">containerkstreams</span><span class="p">:</span>
+        <span class="nt">image</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">ibmcase/kc-containerkstreams:latest</span>
+        <span class="nt">hostname</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">containerkstreams</span>
+        <span class="nt">ports</span><span class="p">:</span>
+            <span class="p p-Indicator">-</span> <span class="s">&quot;12080:9080&quot;</span>
+        <span class="nt">environment</span><span class="p">:</span>
+            <span class="nt">KAFKA_ENV</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">${KAFKA_ENV}</span>
+            <span class="nt">KAFKA_BROKERS</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">${KAFKA_BROKERS}</span>
+            <span class="nt">KAFKA_APIKEY</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">${KAFKA_APIKEY}</span>
+</pre></div>
 
 <h2 id="how-streams-flows-are-resilient">How streams flows are resilient?</h2>
 <h2 id="how-to-scale">How to scale?</h2>
