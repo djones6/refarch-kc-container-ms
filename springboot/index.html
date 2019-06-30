@@ -579,7 +579,7 @@
 
 
   <li class="md-nav__item">
-    <a href="#security" title="Security" class="md-nav__link">
+    <a href="https://ibm-cloud-architecture.github.io/refarch-kc-container-ms/springboot/#security" title="Security" class="md-nav__link">
       Security
     </a>
   </li>
@@ -591,7 +591,7 @@
 
 
   <li class="md-nav__item">
-    <a href="#the-integration-tests" title="Run integration tests" class="md-nav__link">
+    <a href="https://ibm-cloud-architecture.github.io/refarch-kc-container-ms/springboot/#the-integration-tests" title="Run integration tests" class="md-nav__link">
       Run integration tests
     </a>
   </li>
@@ -933,7 +933,7 @@ Spring Boot provides a @SpringBootTest annotation to build an application contex
 <span class="kd">public</span> <span class="kd">interface</span> <span class="nc">ContainerRepository</span> <span class="kd">extends</span> <span class="n">JpaRepository</span><span class="o">&lt;</span><span class="n">ContainerEntity</span><span class="o">,</span><span class="n">String</span><span class="o">&gt;{}</span>
 </pre></div>
 
-<p>Spring makes it magic to add save, findById, findAll... operations transparently. So now we can @Autowrite this repository into the controller class and add the integration tests. The test is in the Junit test class: <a href="src/test/java/it/container/PostgreSqlTest.java">PostgreSqlTest</a>. In fact, for test reason we want to inject Mockup class in unit test via the controller contructor.</p>
+<p>Spring makes it magic to add save, findById, findAll... operations transparently. So now we can @Autowrite this repository into the controller class and add the integration tests. The test is in the Junit test class: <a href="https://github.com/ibm-cloud-architecture/refarch-kc-container-ms/blob/master/SpringContainerMS/src/test/java/it/container/PostgreSqlTest.java">PostgreSqlTest</a>. In fact, for test reason we want to inject Mockup class in unit test via the controller contructor.</p>
 <div class="codehilite"><pre><span></span><span class="nd">@Test</span>
     <span class="kd">public</span> <span class="kt">void</span> <span class="nf">testAccessToRemoteDBSpringDatasource</span><span class="o">()</span> <span class="o">{</span>
         <span class="n">Optional</span><span class="o">&lt;</span><span class="n">ContainerEntity</span><span class="o">&gt;</span> <span class="n">cOut</span> <span class="o">=</span> <span class="n">containerRepo</span><span class="o">.</span><span class="na">findById</span><span class="o">(</span><span class="s">&quot;c1&quot;</span><span class="o">);</span>

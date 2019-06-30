@@ -429,7 +429,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../springboot/#security" title="Security" class="md-nav__link">
+    <a href="https://ibm-cloud-architecture.github.io/refarch-kc-container-ms/springboot/#security" title="Security" class="md-nav__link">
       Security
     </a>
   </li>
@@ -441,7 +441,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../springboot/#the-integration-tests" title="Run integration tests" class="md-nav__link">
+    <a href="https://ibm-cloud-architecture.github.io/refarch-kc-container-ms/springboot/#the-integration-tests" title="Run integration tests" class="md-nav__link">
       Run integration tests
     </a>
   </li>
@@ -520,56 +520,65 @@
                 
                 
                 <h1 id="continuous-delivery">Continuous delivery</h1>
-<p>For the SpringContainerMS service, we are using the one of the existing toolchains on IBM Cloud.</p>
+<p>For the SpringContainerMS service, we are using one of the existing toolchains of IBM Cloud.</p>
 <h2 id="creating-a-toolchain">Creating a Toolchain</h2>
 <ol>
-<li>To create one, go to search bar, type toolchains and it will take to below screen.</li>
-</ol>
+<li>
+<p>To create  one toolchain, go to search bar, type toolchains and it will take you to the screen below:</p>
 <p><img alt="Existing Toolchians" src="../images/Existing_Toolchains.png" /></p>
-<ol>
-<li>Choose <code>Develop a Kubernetes app with Helm</code> and it will take you to the creation page.</li>
-</ol>
+</li>
+<li>
+<p>Choose <code>Develop a Kubernetes app with Helm</code> template and it will take you to the creation page.</p>
 <p><img alt="Toolchain creation" src="../images/create_toolchain.png" /></p>
 <ul>
 <li>Enter the Toolchain Name.</li>
 <li>Choose a Region.</li>
-<li>
-<p>Select a Resource group.</p>
+<li>Select a Resource group.</li>
+</ul>
 </li>
 <li>
 <p>Scroll down and you will see some more details. Fill them out as well.</p>
-</li>
-</ul>
 <p><img alt="Toolchain details" src="../images/Toolchain_details.png" /></p>
 <ul>
 <li>Mention the server.</li>
 <li>You can clone or use an existing repository.</li>
 <li>Provide the repo URL.</li>
-<li>
-<p>Give the repo a name.</p>
+<li>Give the repo a name.</li>
+</ul>
 </li>
 <li>
 <p>Now go to the <code>Delivery Pipeline</code> Section.</p>
-</li>
+<p><img alt="Toolchain delivery pipeline details" src="../images/Toolchain_deliverypipeline_details.png" /></p>
+<ul>
+<li>Provide an app name.</li>
+<li>Create IBM Cloud API key.</li>
+<li>Choose a container registry region and namespace.</li>
+<li>Select a cluster region, resource group, cluster name and cluster namespace.</li>
 </ul>
-<p><img alt="Toolchain delivery pipeline details" src="../images/Toolchain_deliverypipeline_details.png" />
-- Provide app a name.
-- Create IBM Cloud API key.
-- Choose a container registry region and namespace.
-- Select a cluster region, resource group, cluster name and cluster namespace.</p>
-<ol>
-<li>Now go ahead and click <code>create</code>.</li>
+</li>
+<li>
+<p>Now go ahead and click <code>create</code>.</p>
+</li>
 </ol>
 <h2 id="tool-integration">Tool Integration</h2>
-<p>You can add additional tools as follows. For this application, we are adding the github integration.</p>
-<p><img alt="Tool Integration" src="../images/Add_tool_integration.png" /></p>
+<p>You can add additional tools to your pipeline as follows. For this application, we are adding the github integration.</p>
+<div class="codehilite"><pre><span></span><span class="o">!</span><span class="p">[</span><span class="n">Tool</span> <span class="n">Integration</span><span class="p">](.</span><span class="o">/</span><span class="n">images</span><span class="o">/</span><span class="n">Add_tool_integration</span><span class="p">.</span><span class="n">png</span><span class="p">)</span>
+</pre></div>
+
+
 <p>And then add the details of your repository.</p>
-<p><img alt="Tool integartion details" src="../images/integration_configuration.png" /></p>
+<div class="codehilite"><pre><span></span>![Tool integartion details](./images/integration_configuration.png)
+</pre></div>
+
+
 <p>Based on your requirements you can also add other tools.</p>
-<p>Since we don't need Git provided by the default Toolchian, we deleted it.</p>
+<p>Since we don't need Git provided by the default Toolchain, we deleted it.</p>
 <h2 id="toolchain">Toolchain</h2>
 <p>Once configured, our toolchain looks like below.</p>
-<p><img alt="Toolchain" src="../images/containerms_toolchain.png" /></p>
+<div class="codehilite"><pre><span></span>![Toolchain](./images/containerms_toolchain.png)
+</pre></div>
+
+
 <ol>
 <li>
 <p>Clicking on <code>Issues</code> takes you to the Github Issues page.</p>
@@ -579,13 +588,16 @@
 </li>
 <li>
 <p><code>Delivery Pipeline</code> is the most important piece where we defined our Build, Validate and Prod stages as follows.</p>
-</li>
-</ol>
 <p><img alt="Delivery Pipeline" src="../images/containerms_delivery_pipeline.png" /></p>
 <p>If you click on the settings of each stage, you will have an option called <code>Configure Stage</code>. Using this, you can modify the input, jobs and environment variables based on your requirements.</p>
-<p>Also, in the validate phase, vulnerability advisor is one of the security features provided by IBM Cloud. It scans the security status of the docker images that are pushed to the registry namespace. When the image is added to the namespace, it will be scanned automatically by the vulnerability advisor to detect the security issues and potential vulnerabilities.</p>
+<p>Also, in the <code>validate</code> phase, vulnerability advisor is one of the security features provided by IBM Cloud. It scans the security status of the docker images that are pushed to the registry namespace. When the image is added to the namespace, it will be scanned automatically by the vulnerability advisor to detect the security issues and potential vulnerabilities.</p>
 <p>It will generate a report suggesting the fixes. You can also add exemptions based on your requirements. Fixing the issues that are reported can help you to secure your IBM Cloud infrastructure.</p>
+</li>
+</ol>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
 <p>One more thing to know is whenever there is any change committed to your github repo, the toolchain will trigger the delivery pipeline automatically and the app with the latest changes will be deployed to your environment.</p>
+</div>
                 
                   
                 

@@ -293,6 +293,13 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#machine-learning-to-predict-container-maintenance" title="Machine learning to predict container maintenance" class="md-nav__link">
+    Machine learning to predict container maintenance
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#compendium" title="Compendium" class="md-nav__link">
     Compendium
   </a>
@@ -448,7 +455,7 @@
 
 
   <li class="md-nav__item">
-    <a href="springboot/#security" title="Security" class="md-nav__link">
+    <a href="https://ibm-cloud-architecture.github.io/refarch-kc-container-ms/springboot/#security" title="Security" class="md-nav__link">
       Security
     </a>
   </li>
@@ -460,7 +467,7 @@
 
 
   <li class="md-nav__item">
-    <a href="springboot/#the-integration-tests" title="Run integration tests" class="md-nav__link">
+    <a href="https://ibm-cloud-architecture.github.io/refarch-kc-container-ms/springboot/#the-integration-tests" title="Run integration tests" class="md-nav__link">
       Run integration tests
     </a>
   </li>
@@ -529,6 +536,13 @@
         <li class="md-nav__item">
   <a href="#assign-container-to-order" title="Assign container to order" class="md-nav__link">
     Assign container to order
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#machine-learning-to-predict-container-maintenance" title="Machine learning to predict container maintenance" class="md-nav__link">
+    Machine learning to predict container maintenance
   </a>
   
 </li>
@@ -616,6 +630,8 @@ root@2f049cb7b4f2:/ python ProduceContainerCreatedEvent.py
 <p>The implementation will search the list of containers closed to the source location. We simplify the implementation by assuming mapping container (longitude, latitude) position to be in an area close to the harbor in the same region as the pickup location. We do not manage the time when the container will be there. We assume containers are at the location at the time of the order is processed, is close enought to the time of the pickup. In a future iteration, we may fine tune that if we can make it simple.</p>
 <p>The output of this assignment processing is an event to the <code>orders</code> topic.</p>
 <p>See <a href="./springboot/#add-the-get-containers-api">implementation details in this note</a>.</p>
+<h2 id="machine-learning-to-predict-container-maintenance">Machine learning to predict container maintenance</h2>
+<p>Finally, an important element of this project is the integration of Kafka topic as datasource to develop a machine learning model for the container predictive maintenance scoring. See details in <a href="./metrics">this note</a>.</p>
 <h2 id="compendium">Compendium</h2>
 <ul>
 <li><a href="http://postgresguide.com/sql/select.html">Postgresql tutorial</a></li>
