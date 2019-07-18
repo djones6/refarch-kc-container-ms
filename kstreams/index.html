@@ -736,7 +736,7 @@ The StreamsConfig is a specific configuration for Streams app.  </p>
 </ul>
 <p>We want the container event to keep a timestamp, a version, a type, and a payload representing the data describing a Reefer container. The Key is the containerID. The java class for the container event is <a href="https://github.com/ibm-cloud-architecture/refarch-kc-container-ms/blob/master/kstreams/src/main/java/ibm/labs/kc/model/events/ContainerEvent.java">here</a>.</p>
 <p>Using a TDD approach we will start by the tests to implement the solution.</p>
-<p>For more information on the Streams DSL API <a href="https://kafka.apache.org/21/documentation/streams/developer-guide/dsl-api.html">keeep this page slose to you</a>. </p>
+<p>For more information on the Streams DSL API, <a href="https://kafka.apache.org/21/documentation/streams/developer-guide/dsl-api.html">keep this page close to you</a>. </p>
 <h2 id="test-driven-development">Test Driven Development</h2>
 <p>We want to document two major test suites. One for building the internal view of the container inventory, the other to support the container to order assignment.</p>
 <h3 id="container-inventory">Container inventory</h3>
@@ -848,6 +848,7 @@ mvn install
 </pre></div>
 
 <h2 id="how-streams-flows-are-resilient">How streams flows are resilient?</h2>
+<p>Specifying the replicas factor at the topic level, with a cluster of kafka brokers, combine with transactional event produce, ensure to do not lose messages. The producer client code has the list of all the brokers to contact in case of failure and will try to connect to any broker in the list. </p>
 <h2 id="how-to-scale">How to scale?</h2>
                 
                   
