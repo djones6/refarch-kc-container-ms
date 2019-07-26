@@ -1179,7 +1179,7 @@ Message delivered to orders <span class="o">[</span><span class="m">0</span><spa
 
 <h2 id="listening-to-container-events">Listening to container events</h2>
 <p>The use story is to get the container event from the kafka <code>containers</code> topics and add new Reefer container data to the inventory, or update existing container. So we need to add consumer and publisher using <a href="https://spring.io/projects/spring-kafka">Spring Kafka</a>. Spring Kafka template is based on the pure java kafka-clients jar but provides the same encapsulation as Spring JMS template. Here is the <a href="https://docs.spring.io/spring-kafka/docs/2.2.4.RELEASE/reference/">product documentation</a>.  </p>
-<p>First we need to start a kafka consumer when the application starts. We want one unique instance, so a singleton. As presented in <a href="https://www.baeldung.com/running-setup-logic-on-startup-in-spring">this article</a>, we select to add a Component that is an application listener (Annotation @EventListener) so when the spring context is running, we can start consuming message from Kafka.  </p>
+<p>First we need to start a kafka consumer when the application starts. We want one unique instance, so a singleton. As presented in <a href="https://www.baeldung.com/running-setup-logic-on-startup-in-spring">this article</a>, we select to add a Component that is an application listener (Annotation @EventListener) so when the spring context is running, we can start consuming messages from Kafka.  </p>
 <div class="codehilite"><pre><span></span><span class="nd">@Component</span>
 <span class="kd">public</span> <span class="kd">class</span> <span class="nc">ContainerConsumer</span> <span class="o">{</span>
     <span class="nd">@EventListener</span>
@@ -1192,7 +1192,6 @@ Message delivered to orders <span class="o">[</span><span class="m">0</span><spa
 <p>We have added an end to end integration test to create container events and see the payload persisted in Postgresql.  When running the server locally, you may want to leverage our <a href="https://github.com/ibm-cloud-architecture/refarch-kc/blob/master/docker/backbone-compose.yml">docker compose</a> file to start a local kafka broker. </p>
 <h2 id="listening-to-order-event">Listening to Order Event</h2>
 <p>The approach is the same as above and the supporting class is: <a href="https://github.com/ibm-cloud-architecture/refarch-kc-container-ms/blob/master/SpringContainerMS/src/main/java/ibm/labs/kc/containermgr/kafka/OrderConsumer.java">ibm.labs.kc.containermgr.kafka.OrderConsumer</a>.</p>
-<p>The difference is in the search for container for the order: </p>
 <h2 id="security">Security</h2>
 <p>To communicate with IBM Cloud PostgresSQl service the client needs to use SSL certificates... 
 First to avoid sharing userid and password in github, we use environment variables for postgressql url, user and password. There is a <code>setenv.tmpl.sh</code> in the <code>scripts</code> folder to use with your own settings. Rename it <code>setenv.sh</code>. This file is ignored by git. The values are coming from the IBM Cloud postgresql service. Also to run unit test in eclipse you need to set those environment variables in the run configuration as illustrated in the figure below:</p>
@@ -1302,7 +1301,7 @@ ibmcloud ks cluster-config fabio-wdc-07
 <ul>
 <li>Create an order from the same folder:  <code>refarch-kc/itg-tests/OrdersPython</code></li>
 </ul>
-<div class="codehilite"><pre><span></span>addOrder.sh LOCAL order01
+<div class="codehilite"><pre><span></span>addOrder.sh IBMCLOUD order01
 </pre></div>
 
 <p>Going to the web URL of the container service you should see the container added. </p>
@@ -1310,9 +1309,10 @@ ibmcloud ks cluster-config fabio-wdc-07
 <p>The level of abstraction in Spring is nice when doing basic things but can become a nightmare when doing real bigger application including different libraries. Also migrating or using the last version 2.xx, bring changes to existing code and tests. Below is a list of iisues we spent time on:</p>
 <ul>
 <li>When JPA started, it creates / updates database schema, and for example enforced to have an Id as int while it was as string. As a bypass we create the table before in postsgresql using psql tool.</li>
-<li>When starting the spring data, JPA will try to connect to the PostgresSQL and execute a set of validation, one of them could generate the following exception: <code>Method org.postgresql.jdbc.PgConnection.createClob() is not yet implemented</code>. The explanation for the solution is <a href="https://vkuzel.com/spring-boot-jpa-hibernate-atomikos-postgresql-exception">here</a></li>
+<li>When starting the spring data, JPA will try to connect to the PostgresSQL and execute a set of validation, one of them could generate the following exception: <code>Method org.postgresql.jdbc.PgConnection.createClob() is not yet implemented</code>. The explanation for the solution is <a href="https://vkuzel.com/spring-boot-jpa-hibernate-atomikos-postgresql-exception">here.</a></li>
+<li>When running the SpringContainer inside docker-compose the following exception may occur <code>org.postgresql.util.PSQLException: Connection to postgres:5432 refused. Check that the hostname and port are correct and that the postmaster is accepting TCP/IP connections</code> while running the same code with maven using the same local backend works. </li>
 <li>
-<p>Testing endpoint /health did not work on Spring 2.1.4. Thisi s due that there is the new Actuator capabilities (<code>spring-boot-starter-actuator</code>) that adds endpoints to manage a webapp in production. This is a nice feature. So remove any hold Health api class and modify the url to <code>/actuator/health</code>. Be sure to read <a href="https://docs.spring.io/spring-boot/docs/current/reference/html/production-ready-endpoints.html">this note</a> on actuator.</p>
+<p>Testing endpoint /health did not work on Spring 2.1.4. This is due a new Actuator capabilities (<code>spring-boot-starter-actuator</code>) that adds endpoints to manage a webapp in production. This is a nice feature. So remove any hold Health api class and modify the url to <code>/actuator/health</code>. Be sure to read <a href="https://docs.spring.io/spring-boot/docs/current/reference/html/production-ready-endpoints.html">this note</a> on actuator.</p>
 </li>
 <li>
 <p>Deployed in Kubernetes service, the pod has issue on postgress SSL handshake. (org.postgresql.util.PSQLException: SSL error: Received fatal alert: handshake_failure). SSL handshakes are a mechanism by which a client and server establish the trust and logistics required to secure their connection over the network. This problem may be linked to a SSL certificate not found or wrong encryption protocol. We need to be sure a Java Keystore is defined and includes the public certificate coming from the server. See <a href="#security">security section</a> above.</p>
