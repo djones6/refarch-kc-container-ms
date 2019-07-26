@@ -455,7 +455,7 @@
 
 
   <li class="md-nav__item">
-    <a href="https://ibm-cloud-architecture.github.io/refarch-kc-container-ms/springboot/#security" title="Security" class="md-nav__link">
+    <a href="springboot/#security" title="Security" class="md-nav__link">
       Security
     </a>
   </li>
@@ -467,7 +467,7 @@
 
 
   <li class="md-nav__item">
-    <a href="https://ibm-cloud-architecture.github.io/refarch-kc-container-ms/springboot/#the-integration-tests" title="Run integration tests" class="md-nav__link">
+    <a href="springboot/#the-integration-tests" title="Run integration tests" class="md-nav__link">
       Run integration tests
     </a>
   </li>
@@ -589,7 +589,7 @@
 <h2 id="analysis">Analysis</h2>
 <p>We have a dedicated article on how to transform event storming analysis to microservice, <a href="ES2DDD2MS">here</a>. </p>
 <h2 id="component-view">Component view</h2>
-<p>As the service needs to offer some basic APIs while consuming and producing events, the code has at least three main components: a kafka consumer, a kafka producer, and a HTTP server exposing the REST APIs. The following diagram illustrates the componentes involved in this container manager microservice:</p>
+<p>As the service needs to offer some basic APIs while consuming and producing events, the code has at least three main components: a kafka consumer, a kafka producer, and a HTTP server exposing the REST APIs. The following diagram illustrates the components involved in this container manager microservice:</p>
 <p><img alt="" src="comp-view.png" /></p>
 <ul>
 <li>A first component is responsible to define and expose APIs via RESTful protocol. It uses the services to delegate business logic implementation.</li>
@@ -603,10 +603,14 @@
 <p>When Kafka runs on IBM Cloud use:
 <div class="codehilite"><pre><span></span>./addContainer.sh IBMCLOUD
 </pre></div></p>
-<p>If you want to run using a kafka running on your computer:</p>
-<div class="codehilite"><pre><span></span>./addContainer.sh
+<p>If you want to run using a kafka running on your computer with docker-compose:</p>
+<div class="codehilite"><pre><span></span>./addContainer.sh LOCAL 
 </pre></div>
 
+<div class="codehilite"><pre><span></span>./addContainer.sh MINIKUBE
+</pre></div>
+
+<p>or with minikube:</p>
 <p>And for ICP</p>
 <div class="codehilite"><pre><span></span>./addContainer.sh ICP
 </pre></div>
